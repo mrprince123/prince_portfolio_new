@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Github, Calendar, Tag } from "lucide-react";
+import { ExternalLink, Github, Tag } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import axios from "axios";
 
@@ -18,86 +18,91 @@ const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   const projects = [
-  {
-    id: 7,
-    title: "AI Image Generator",
-    description:
-      "A web app that allows users to generate stunning AI-powered images using text prompts. Includes image history, download options, and category-based organization.",
-    coverImage: "/api/placeholder/400/200",
-    category: "fullstack",
-    technologies: [
-      "Next.js",
-      "Node.js",
-      "Cloudinary",
-      "OpenAI API",
-      "MongoDB",
-    ],
-    liveUrl: "#",
-    githubUrl: "#",
-    featured: true,
-  },
-  {
-    id: 8,
-    title: "Fitness Tracker App",
-    description:
-      "Native Android fitness tracking app with daily goals, activity insights, and progress analytics using Jetpack Compose and Room Database.",
-    coverImage: "/api/placeholder/400/200",
-    category: "android",
-    technologies: ["Kotlin", "Jetpack Compose", "Room DB", "Firebase", "MVVM"],
-    liveUrl: "#",
-    githubUrl: "#",
-    featured: false,
-  },
-  {
-    id: 9,
-    title: "DevLink – Developer Directory",
-    description:
-      "A platform to explore and connect with developers worldwide. Features profile creation, project showcase, and skill-based filtering.",
-    coverImage: "/api/placeholder/400/200",
-    category: "web",
-    technologies: ["Next.js", "Prisma", "PostgreSQL", "Tailwind CSS"],
-    liveUrl: "#",
-    githubUrl: "#",
-    featured: true,
-  },
-  {
-    id: 10,
-    title: "Code Rev – AI Code Review Platform",
-    description:
-      "An AI-powered platform that reviews code, detects bugs, and provides best-practice recommendations instantly.",
-    coverImage: "/api/placeholder/400/200",
-    category: "fullstack",
-    technologies: ["React", "Node.js", "Express", "MongoDB", "OpenAI API"],
-    liveUrl: "#",
-    githubUrl: "#",
-    featured: true,
-  },
-  {
-    id: 11,
-    title: "Blogify – Modern Blogging Platform",
-    description:
-      "A sleek blogging platform with markdown editor, image uploads, and SEO optimization. Built for creators to publish and grow their audience.",
-    coverImage: "/api/placeholder/400/200",
-    category: "web",
-    technologies: ["Next.js", "MongoDB", "JWT", "Tailwind CSS"],
-    liveUrl: "#",
-    githubUrl: "#",
-    featured: false,
-  },
-  {
-    id: 12,
-    title: "YouTune – Endless YouTube Playlist Player",
-    description:
-      "An Android app for uninterrupted YouTube playlist playback, allowing users to loop, shuffle, and enjoy continuous music or podcasts.",
-    coverImage: "/api/placeholder/400/200",
-    category: "android",
-    technologies: ["Kotlin", "Jetpack Compose", "YouTube API", "Coroutines"],
-    liveUrl: "#",
-    githubUrl: "#",
-    featured: true,
-  },
-];
-
+    {
+      id: 7,
+      title: "AI Image Generator",
+      description:
+        "A web app that allows users to generate stunning AI-powered images using text prompts. Includes image history, download options, and category-based organization.",
+      coverImage: "/api/placeholder/400/200",
+      category: "fullstack",
+      technologies: [
+        "Next.js",
+        "Node.js",
+        "Cloudinary",
+        "OpenAI API",
+        "MongoDB",
+      ],
+      liveUrl: "#",
+      githubUrl: "#",
+      featured: true,
+    },
+    {
+      id: 8,
+      title: "Fitness Tracker App",
+      description:
+        "Native Android fitness tracking app with daily goals, activity insights, and progress analytics using Jetpack Compose and Room Database.",
+      coverImage: "/api/placeholder/400/200",
+      category: "android",
+      technologies: [
+        "Kotlin",
+        "Jetpack Compose",
+        "Room DB",
+        "Firebase",
+        "MVVM",
+      ],
+      liveUrl: "#",
+      githubUrl: "#",
+      featured: false,
+    },
+    {
+      id: 9,
+      title: "DevLink – Developer Directory",
+      description:
+        "A platform to explore and connect with developers worldwide. Features profile creation, project showcase, and skill-based filtering.",
+      coverImage: "/api/placeholder/400/200",
+      category: "web",
+      technologies: ["Next.js", "Prisma", "PostgreSQL", "Tailwind CSS"],
+      liveUrl: "#",
+      githubUrl: "#",
+      featured: true,
+    },
+    {
+      id: 10,
+      title: "Code Rev – AI Code Review Platform",
+      description:
+        "An AI-powered platform that reviews code, detects bugs, and provides best-practice recommendations instantly.",
+      coverImage: "/api/placeholder/400/200",
+      category: "fullstack",
+      technologies: ["React", "Node.js", "Express", "MongoDB", "OpenAI API"],
+      liveUrl: "#",
+      githubUrl: "#",
+      featured: true,
+    },
+    {
+      id: 11,
+      title: "Blogify – Modern Blogging Platform",
+      description:
+        "A sleek blogging platform with markdown editor, image uploads, and SEO optimization. Built for creators to publish and grow their audience.",
+      coverImage: "/api/placeholder/400/200",
+      category: "web",
+      technologies: ["Next.js", "MongoDB", "JWT", "Tailwind CSS"],
+      liveUrl: "#",
+      githubUrl: "#",
+      featured: false,
+    },
+    {
+      id: 12,
+      title: "YouTune – Endless YouTube Playlist Player",
+      description:
+        "An Android app for uninterrupted YouTube playlist playback, allowing users to loop, shuffle, and enjoy continuous music or podcasts.",
+      coverImage: "/api/placeholder/400/200",
+      category: "android",
+      technologies: ["Kotlin", "Jetpack Compose", "YouTube API", "Coroutines"],
+      liveUrl: "#",
+      githubUrl: "#",
+      featured: true,
+    },
+  ];
 
   const categories = [
     { id: "all", label: "All Projects" },
@@ -107,7 +112,7 @@ const Projects = () => {
     { id: "script", label: "Scripts" },
   ];
 
-   useEffect(() => {
+  useEffect(() => {
     const loadProjects = async () => {
       setLoading(true);
 
@@ -141,7 +146,6 @@ const Projects = () => {
     loadProjects();
   }, []);
 
-
   const filteredProjects =
     selectedCategory === "all"
       ? projectData
@@ -150,7 +154,7 @@ const Projects = () => {
   if (loading) {
     return (
       <div className="min-h-screen py-12 px-4">
-        <div className="container mx-auto max-w-6xl">
+        <div className="container mx-auto max-w-7xl">
           {/* Header Skeleton */}
           <div className="text-center mb-12">
             <Skeleton className="h-12 w-64 mx-auto mb-6" />
@@ -198,7 +202,7 @@ const Projects = () => {
 
   return (
     <div className="min-h-screen py-12 px-4">
-      <div className="container mx-auto max-w-6xl">
+      <div className="container mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-12 animate-fade-in">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -234,14 +238,24 @@ const Projects = () => {
               key={project.id}
               className="hover-lift shadow-soft overflow-hidden"
             >
-              <div className="aspect-video bg-muted flex items-center justify-center">
-                <div className="text-center space-y-2">
-                  <div className="w-12 h-12 mx-auto rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">
-                    {project.title.charAt(0)}
-                  </div>
-                  <p className="text-xs text-muted-foreground">Preview</p>
+              {project.coverImage ? (
+                <div className="w-full aspect-video rounded-none overflow-hidden">
+                  <img
+                    src={project.coverImage}
+                    alt={project.title}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-              </div>
+              ) : (
+                <div className="aspect-video bg-muted flex items-center justify-center">
+                  <div className="text-center space-y-2">
+                    <div className="w-12 h-12 mx-auto rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">
+                      {project.title.charAt(0)}
+                    </div>
+                    <p className="text-xs text-muted-foreground">Preview</p>
+                  </div>
+                </div>
+              )}
 
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between gap-2">

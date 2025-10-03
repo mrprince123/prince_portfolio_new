@@ -167,7 +167,7 @@ const Blog = () => {
   if (loading) {
     return (
       <div className="min-h-screen py-12 px-4">
-        <div className="container mx-auto max-w-6xl">
+        <div className="container mx-auto max-w-7xl">
           {/* Header Skeleton */}
           <div className="text-center mb-12">
             <Skeleton className="h-12 w-64 mx-auto mb-6" />
@@ -230,7 +230,7 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen py-12 px-4">
-      <div className="container mx-auto max-w-6xl">
+      <div className="container mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-12 animate-fade-in">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -277,7 +277,7 @@ const Blog = () => {
               <BookOpen className="h-6 w-6 text-primary" />
               Featured Blogs
             </h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {filteredPosts.map((post) => (
                 <Card
                   key={post.id}

@@ -226,7 +226,7 @@ const Courses = () => {
   if (loading) {
     return (
       <div className="min-h-screen py-12 px-4 bg-gradient-to-br from-background via-background to-muted/30">
-        <div className="container mx-auto max-w-6xl">
+        <div className="container mx-auto max-w-7xl">
           {/* Header Skeleton */}
           <div className="text-center mb-12">
             <Skeleton className="h-12 w-64 mx-auto mb-6" />
@@ -292,7 +292,7 @@ const Courses = () => {
 
   return (
     <div className="min-h-screen py-12 px-4 bg-gradient-to-br from-background via-background to-muted/30">
-      <div className="container mx-auto max-w-6xl">
+      <div className="container mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-12 animate-fade-in">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -329,19 +329,19 @@ const Courses = () => {
             Featured Courses
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {featuredCourses.map((course) => (
+            {featuredCourses.slice(0, 2).map((course) => (
               <Card
                 key={course.id}
                 className="hover-lift shadow-soft overflow-hidden"
               >
-                <div className="aspect-video bg-gradient-primary flex items-center justify-center">
-                  <div className="text-center text-primary-foreground">
-                    <Play className="h-12 w-12 mx-auto mb-2 opacity-80" />
-                    <p className="text-sm font-medium">
-                      {course.duration} of content
-                    </p>
+                  {/* Cover Image */}
+                  <div className="w-full aspect-video rounded-none overflow-hidden">
+                    <img
+                      src={course.coverImage}
+                      alt={course.title}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                </div>
 
                 <CardHeader>
                   <div className="flex items-start justify-between gap-4">
@@ -399,14 +399,23 @@ const Courses = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {courseData.map((course) => (
               <Card key={course.id} className="hover-lift shadow-soft">
-                <div className="aspect-video bg-muted flex items-center justify-center">
+                {/* <div className="aspect-video bg-muted flex items-center justify-center">
                   <div className="text-center">
                     <Play className="h-8 w-8 mx-auto text-primary mb-2" />
                     <p className="text-xs text-muted-foreground">
                       {course.lessons} lessons
                     </p>
                   </div>
-                </div>
+                </div> */}
+
+                  {/* Cover Image */}
+                  <div className="w-full aspect-video rounded-none overflow-hidden">
+                    <img
+                      src={course.coverImage}
+                      alt={course.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
 
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between gap-2 mb-2">

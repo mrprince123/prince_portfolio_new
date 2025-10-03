@@ -116,7 +116,6 @@ const Skills = () => {
     },
   ];
 
-
   useEffect(() => {
     const loadSkills = async () => {
       setLoading(true);

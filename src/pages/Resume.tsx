@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
   Download,
   Mail,
@@ -194,7 +193,7 @@ const Resume = () => {
 
   return (
     <div className="min-h-screen py-12 px-4 bg-gradient-to-br from-background via-background to-muted/30">
-      <div className="container mx-auto max-w-4xl">
+      <div className="container mx-auto max-w-5xl">
         {/* Header & Download */}
         <div className="text-center mb-8 animate-fade-in">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">

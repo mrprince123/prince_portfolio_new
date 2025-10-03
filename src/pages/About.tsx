@@ -51,7 +51,7 @@ const About = () => {
 
   return (
     <div className="min-h-screen py-12 px-4">
-      <div className="container mx-auto max-w-4xl">
+      <div className="container mx-auto max-w-5xl">
         {/* Header */}
         <div className="text-center mb-12 animate-fade-in">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
