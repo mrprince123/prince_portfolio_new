@@ -20,6 +20,7 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Seo } from "@/components/seo";
 
 const Courses = () => {
   const [loading, setLoading] = useState(true);
@@ -291,49 +292,60 @@ const Courses = () => {
   }
 
   return (
-    <div className="min-h-screen py-12 px-4 bg-gradient-to-br from-background via-background to-muted/30">
-      <div className="container mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="text-center mb-12 animate-fade-in">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Learn & <span className="text-gradient">Grow</span>
-          </h1>
-          <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-            Comprehensive courses designed to help developers master modern web
-            technologies and advance their careers in software development.
-          </p>
-        </div>
+    <>
+      <Seo
+        title="Courses | Learn with Prince Kumar Sahni"
+        description="Learn programming, software engineering, and modern development practices with Prince Kumar Sahni through high-quality, practical courses."
+        url="https://princesahni.com/courses"
+        image="https://princesahni.com/og-images/courses-page.png"
+      />
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-          {stats.map((stat, index) => {
-            const Icon = stat.icon;
-            return (
-              <Card key={index} className="text-center shadow-soft">
-                <CardContent className="pt-6">
-                  <Icon className="h-6 w-6 mx-auto text-primary mb-2" />
-                  <div className="text-2xl font-bold text-gradient mb-1">
-                    {stat.value}
-                  </div>
-                  <p className="text-sm text-muted-foreground">{stat.label}</p>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
+      <div className="min-h-screen py-12 px-4 bg-gradient-to-br from-background via-background to-muted/30">
+        <div className="container mx-auto max-w-7xl">
+          {/* Header */}
+          <div className="text-center mb-12 animate-fade-in">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              Learn & <span className="text-gradient">Grow</span>
+            </h1>
+            <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+              Comprehensive courses designed to help developers master modern
+              web technologies and advance their careers in software
+              development.
+            </p>
+          </div>
 
-        {/* Featured Courses */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <Award className="h-6 w-6 text-primary" />
-            Featured Courses
-          </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {featuredCourses.slice(0, 2).map((course) => (
-              <Card
-                key={course.id}
-                className="hover-lift shadow-soft overflow-hidden"
-              >
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            {stats.map((stat, index) => {
+              const Icon = stat.icon;
+              return (
+                <Card key={index} className="text-center shadow-soft">
+                  <CardContent className="pt-6">
+                    <Icon className="h-6 w-6 mx-auto text-primary mb-2" />
+                    <div className="text-2xl font-bold text-gradient mb-1">
+                      {stat.value}
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      {stat.label}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+
+          {/* Featured Courses */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+              <Award className="h-6 w-6 text-primary" />
+              Featured Courses
+            </h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {featuredCourses.slice(0, 2).map((course) => (
+                <Card
+                  key={course.id}
+                  className="hover-lift shadow-soft overflow-hidden"
+                >
                   {/* Cover Image */}
                   <div className="w-full aspect-video rounded-none overflow-hidden">
                     <img
@@ -343,63 +355,63 @@ const Courses = () => {
                     />
                   </div>
 
-                <CardHeader>
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <CardTitle className="text-xl mb-2">
-                        {course.title}
-                      </CardTitle>
-                      <CardDescription className="leading-relaxed">
-                        {course.description}
-                      </CardDescription>
-                    </div>
-                    <Badge variant="default" className="shrink-0">
-                      Featured
-                    </Badge>
-                  </div>
-                </CardHeader>
-
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex flex-wrap gap-2">
-                      {course.tags.map((tag, index) => (
-                        <Badge
-                          key={index}
-                          variant="outline"
-                          className="text-xs"
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center justify-between">
+                  <CardHeader>
+                    <div className="flex items-start justify-between gap-4">
                       <div>
-                        <span className="text-2xl font-bold text-primary">
-                          Free
-                        </span>
+                        <CardTitle className="text-xl mb-2">
+                          {course.title}
+                        </CardTitle>
+                        <CardDescription className="leading-relaxed">
+                          {course.description}
+                        </CardDescription>
                       </div>
-                      <Button asChild className="group">
-                        <a href={`/courses/${course.slug}`}>
-                          Start Learning
-                          <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </a>
-                      </Button>
+                      <Badge variant="default" className="shrink-0">
+                        Featured
+                      </Badge>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
+                  </CardHeader>
 
-        {/* All Courses */}
-        <div>
-          <h2 className="text-2xl font-bold mb-6">All Courses</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {courseData.map((course) => (
-              <Card key={course.id} className="hover-lift shadow-soft">
-                {/* <div className="aspect-video bg-muted flex items-center justify-center">
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="flex flex-wrap gap-2">
+                        {course.tags.map((tag, index) => (
+                          <Badge
+                            key={index}
+                            variant="outline"
+                            className="text-xs"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="text-2xl font-bold text-primary">
+                            Free
+                          </span>
+                        </div>
+                        <Button asChild className="group">
+                          <a href={`/courses/${course.slug}`}>
+                            Start Learning
+                            <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                          </a>
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* All Courses */}
+          <div>
+            <h2 className="text-2xl font-bold mb-6">All Courses</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              {courseData.map((course) => (
+                <Card key={course.id} className="hover-lift shadow-soft">
+                  {/* <div className="aspect-video bg-muted flex items-center justify-center">
                   <div className="text-center">
                     <Play className="h-8 w-8 mx-auto text-primary mb-2" />
                     <p className="text-xs text-muted-foreground">
@@ -417,89 +429,90 @@ const Courses = () => {
                     />
                   </div>
 
-                <CardHeader className="pb-3">
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <CardTitle className="text-lg leading-tight">
-                      {course.title}
-                    </CardTitle>
-                    {course.featured && (
-                      <Badge variant="default" className="text-xs shrink-0">
-                        Featured
-                      </Badge>
-                    )}
-                  </div>
-                  <CardDescription className="text-sm leading-relaxed line-clamp-2">
-                    {course.description}
-                  </CardDescription>
-                </CardHeader>
-
-                <CardContent>
-                  <div className="space-y-3">
-                    <div className="flex flex-wrap gap-1">
-                      {course.tags.slice(0, 2).map((tag, index) => (
-                        <Badge
-                          key={index}
-                          variant="outline"
-                          className="text-xs"
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
-                      {course.tags.length > 2 && (
-                        <Badge variant="outline" className="text-xs">
-                          +{course.tags.length - 2}
+                  <CardHeader className="pb-3">
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <CardTitle className="text-lg leading-tight">
+                        {course.title}
+                      </CardTitle>
+                      {course.featured && (
+                        <Badge variant="default" className="text-xs shrink-0">
+                          Featured
                         </Badge>
                       )}
                     </div>
+                    <CardDescription className="text-sm leading-relaxed line-clamp-2">
+                      {course.description}
+                    </CardDescription>
+                  </CardHeader>
 
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <span className="font-bold text-primary">Free</span>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="flex flex-wrap gap-1">
+                        {course.tags.slice(0, 2).map((tag, index) => (
+                          <Badge
+                            key={index}
+                            variant="outline"
+                            className="text-xs"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                        {course.tags.length > 2 && (
+                          <Badge variant="outline" className="text-xs">
+                            +{course.tags.length - 2}
+                          </Badge>
+                        )}
                       </div>
-                      <Badge
-                        className={`border text-xs ${getLevelColor(
-                          course.level
-                        )}`}
-                      >
-                        {course.level.split(" ")[0]}
-                      </Badge>
-                    </div>
 
-                    <Button size="sm" className="w-full" asChild>
-                      <a href={`/courses/${course.slug}`}>Start Learning</a>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="font-bold text-primary">Free</span>
+                        </div>
+                        <Badge
+                          className={`border text-xs ${getLevelColor(
+                            course.level
+                          )}`}
+                        >
+                          {course.level.split(" ")[0]}
+                        </Badge>
+                      </div>
+
+                      <Button size="sm" className="w-full" asChild>
+                        <a href={`/courses/${course.slug}`}>Start Learning</a>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* CTA Section */}
+          <div className="mt-12">
+            <Card className="shadow-soft bg-gradient-card">
+              <CardContent className="py-8 text-center">
+                <h3 className="text-xl font-semibold mb-4">
+                  Ready to Start Learning?
+                </h3>
+                <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                  Join thousands of developers who have already advanced their
+                  careers with our comprehensive courses. Start your journey
+                  today!
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Button size="lg" asChild>
+                    <a href="#featured">Browse Featured Courses</a>
+                  </Button>
+                  <Button variant="outline" size="lg" asChild>
+                    <a href="/contact">Get Custom Training</a>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
-
-        {/* CTA Section */}
-        <div className="mt-12">
-          <Card className="shadow-soft bg-gradient-card">
-            <CardContent className="py-8 text-center">
-              <h3 className="text-xl font-semibold mb-4">
-                Ready to Start Learning?
-              </h3>
-              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                Join thousands of developers who have already advanced their
-                careers with our comprehensive courses. Start your journey
-                today!
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Button size="lg" asChild>
-                  <a href="#featured">Browse Featured Courses</a>
-                </Button>
-                <Button variant="outline" size="lg" asChild>
-                  <a href="/contact">Get Custom Training</a>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
       </div>
-    </div>
+    </>
   );
 };
 

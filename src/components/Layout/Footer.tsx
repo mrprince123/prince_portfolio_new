@@ -1,15 +1,20 @@
 import { Link } from "react-router-dom";
-import { Github, Linkedin, Instagram, MessageCircle } from "lucide-react";
+import { Github, Linkedin, Instagram, MessageCircle, Twitter } from "lucide-react";
+import princelogo from "@/assets/princesahni-logo.png";
+
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+
   const socialLinks = [
-    { name: "GitHub", icon: Github, href: "#", color: "hover:text-gray-600" },
-    { name: "LinkedIn", icon: Linkedin, href: "#", color: "hover:text-blue-600" },
-    { name: "Instagram", icon: Instagram, href: "#", color: "hover:text-pink-600" },
-    { name: "Medium", icon: MessageCircle, href: "#", color: "hover:text-green-600" },
-  ];
+  { name: "GitHub", icon: Github, href: "https://github.com/mrprince123", color: "hover:text-gray-600" },
+  { name: "LinkedIn", icon: Linkedin, href: "https://www.linkedin.com/in/mrprince123/", color: "hover:text-blue-600" },
+  { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/_mrprince123_/", color: "hover:text-pink-600" },
+  { name: "Medium", icon: MessageCircle, href: "https://medium.com/@mrprince123", color: "hover:text-green-600" },
+  { name: "Twitter", icon: Twitter, href: "https://twitter.com/mrprince123", color: "hover:text-blue-400" },
+];
+
 
   const footerLinks = [
     { name: "About", href: "/about" },
@@ -30,9 +35,11 @@ const Footer = () => {
           {/* Brand & Description */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold">
-                P
-              </div>
+               <img
+                            src={princelogo}
+                            alt="Prince Kumar Sahni Logo"
+                            className="w-10 h-10 rounded-lg object-cover border-2 border-primary"
+                          />
               <span className="font-bold text-lg">Prince Kumar Sahni</span>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
@@ -87,7 +94,7 @@ const Footer = () => {
             © {currentYear} Portfolio. All rights reserved.
           </p>
           <p className="text-xs text-muted-foreground">
-            Crafted with ❤️ using Prince Imignation and GPT
+            Crafted with ❤️ using Prince Imignation
           </p>
         </div>
       </div>

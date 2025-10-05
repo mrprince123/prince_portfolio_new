@@ -20,6 +20,7 @@ import {
 import { Link } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
 import axios from "axios";
+import { Seo } from "@/components/seo";
 
 const Blog = () => {
   const [loading, setLoading] = useState(true);
@@ -123,7 +124,6 @@ const Blog = () => {
           { signal: controller.signal }
         );
 
-        console.log(response.data.data);
         clearTimeout(timeout);
 
         const serverData = response.data?.data;
@@ -155,6 +155,10 @@ const Blog = () => {
     const matchesTag = selectedTag === "all" || post.tags.includes(selectedTag);
     return matchesSearch && matchesTag;
   });
+
+  const featuredPosts = blogData.filter((post) => post.featured);
+
+  console.log("Featured Posts ", blogData);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -229,165 +233,248 @@ const Blog = () => {
   }
 
   return (
-    <div className="min-h-screen py-12 px-4">
-      <div className="container mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="text-center mb-12 animate-fade-in">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            My <span className="text-gradient">Blog</span>
-          </h1>
-          <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-            Thoughts, tutorials, and insights about web development, technology
-            trends, and software engineering best practices.
-          </p>
-        </div>
+    <>
+      <Seo
+        title="Blog | Insights & Tech Articles by Prince Kumar Sahni"
+        description="Read insightful blogs and in-depth articles by Prince Kumar Sahni on software engineering, system design, programming, and technology trends."
+        url="https://princesahni.com/blog"
+        image="https://princesahni.com/og-images/blog-page.png"
+      />
 
-        {/* Search and Filter */}
-        <div className="mb-8 space-y-4">
-          <div className="relative max-w-md mx-auto">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder="Search blogs..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
+      <div className="min-h-screen py-12 px-4">
+        <div className="container mx-auto max-w-7xl">
+          {/* Header */}
+          <div className="text-center mb-12 animate-fade-in">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              My <span className="text-gradient">Blog</span>
+            </h1>
+            <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+              Thoughts, tutorials, and insights about web development,
+              technology trends, and software engineering best practices.
+            </p>
           </div>
 
-          <div className="flex flex-wrap gap-2 justify-center">
-            {allTags.map((tag) => (
-              <Button
-                key={tag}
-                variant={selectedTag === tag ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedTag(tag)}
-                className="capitalize"
-              >
-                <Tag className="h-3 w-3 mr-1" />
-                {tag.name}
-              </Button>
-            ))}
-          </div>
-        </div>
+          {/* Search and Filter */}
+          <div className="mb-8 space-y-4">
+            <div className="relative max-w-md mx-auto">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Input
+                placeholder="Search blogs..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
 
-        {/* Featured Posts */}
-        {filteredPosts.length > 0 ? (
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-              <BookOpen className="h-6 w-6 text-primary" />
-              Featured Blogs
-            </h2>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {filteredPosts.map((post) => (
-                <Card
-                  key={post.id}
-                  className="hover-lift shadow-soft overflow-hidden"
+            <div className="flex flex-wrap gap-2 justify-center">
+              {allTags.map((tag) => (
+                <Button
+                  key={tag}
+                  variant={selectedTag === tag ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedTag(tag)}
+                  className="capitalize"
                 >
-                  {/* Cover Image */}
-                  <div className="w-full aspect-video rounded-none overflow-hidden">
-                    <img
-                      src={post.coverImage}
-                      alt={post.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-
-                  <CardHeader>
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
-                        <CardTitle className="text-xl mb-2 line-clamp-2 leading-tight">
-                          {post.title}
-                        </CardTitle>
-                        <CardDescription className="leading-relaxed">
-                          {post.description}
-                        </CardDescription>
-                      </div>
-                      <Badge variant="default" className="shrink-0">
-                        Featured
-                      </Badge>
-                    </div>
-                  </CardHeader>
-
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-4 w-4" />
-                          {formatDate(post.createdAt)}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Clock className="h-4 w-4" />
-                          {post.readTime}
-                        </div>
-                      </div>
-
-                      <div className="flex flex-wrap gap-2">
-                        {post.tags.map((tag, index) => (
-                          <Badge
-                            key={index}
-                            variant="outline"
-                            className="text-xs"
-                          >
-                            {tag.name}
-                          </Badge>
-                        ))}
-                      </div>
-
-                      <Button className="w-full group" asChild>
-                        <Link to={`/blog/${post.slug}`}>
-                          Read Article
-                          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </Link>
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                  <Tag className="h-3 w-3 mr-1" />
+                  {tag.name}
+                </Button>
               ))}
             </div>
           </div>
-        ) : (
-          <Card className="shadow-soft">
-            <CardContent className="py-12 text-center">
-              <BookOpen className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-              <h3 className="text-lg font-semibold mb-2">No blogs found</h3>
-              <p className="text-muted-foreground mb-4">
-                Try adjusting your search terms or filters to find what you're
-                looking for.
-              </p>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setSearchTerm("");
-                  setSelectedTag("all");
-                }}
-              >
-                Clear Filters
-              </Button>
-            </CardContent>
-          </Card>
-        )}
 
-        {/* Newsletter CTA */}
-        <div className="mt-12">
-          <Card className="shadow-soft bg-gradient-card">
-            <CardContent className="py-8 text-center">
-              <h3 className="text-xl font-semibold mb-4">Stay Updated</h3>
-              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                Subscribe to get notified when I publish new articles about web
-                development, technology trends, and programming tutorials.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                <Input
-                  placeholder="Enter your email address"
-                  className="flex-1"
-                />
-                <Button>Subscribe</Button>
+          {/* Featured Posts */}
+          {selectedTag === "all" && searchTerm === "" && (
+            <div className="mb-12">
+              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                <BookOpen className="h-6 w-6 text-primary" />
+                Featured Blogs
+              </h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {featuredPosts.slice(0, 2).map((post) => (
+                  <Card
+                    key={post.id}
+                    className="hover-lift shadow-soft overflow-hidden"
+                  >
+                    {/* Cover Image */}
+                    <div className="w-full aspect-video rounded-none overflow-hidden">
+                      <img
+                        src={post.coverImage}
+                        alt={post.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
+                    <CardHeader>
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <CardTitle className="text-xl mb-2 line-clamp-2 leading-tight">
+                            {post.title}
+                          </CardTitle>
+                          <CardDescription className="leading-relaxed">
+                            {post.description}
+                          </CardDescription>
+                        </div>
+                        <Badge variant="default" className="shrink-0">
+                          Featured
+                        </Badge>
+                      </div>
+                    </CardHeader>
+
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <Calendar className="h-4 w-4" />
+                            {formatDate(post.createdAt)}
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Clock className="h-4 w-4" />
+                            {post.readTime}
+                          </div>
+                        </div>
+
+                        <div className="flex flex-wrap gap-2">
+                          {post.tags.map((tag, index) => (
+                            <Badge
+                              key={index}
+                              variant="outline"
+                              className="text-xs"
+                            >
+                              {tag.name}
+                            </Badge>
+                          ))}
+                        </div>
+
+                        <Button className="w-full group" asChild>
+                          <Link to={`/blog/${post.slug}`}>
+                            Read Article
+                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                          </Link>
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          )}
+
+          {/* All Posts */}
+          {filteredPosts.length > 0 ? (
+            <div className="mb-12">
+              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                <BookOpen className="h-6 w-6 text-primary" />
+                All Blogs
+              </h2>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                {filteredPosts.map((post) => (
+                  <Card
+                    key={post.id}
+                    className="hover-lift shadow-soft overflow-hidden"
+                  >
+                    {/* Cover Image */}
+                    <div className="w-full aspect-video rounded-none overflow-hidden">
+                      <img
+                        src={post.coverImage}
+                        alt={post.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
+                    <CardHeader>
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <CardTitle className="text-xl mb-2 line-clamp-2 leading-tight">
+                            {post.title}
+                          </CardTitle>
+                          <CardDescription className="leading-relaxed">
+                            {post.description}
+                          </CardDescription>
+                        </div>
+                      </div>
+                    </CardHeader>
+
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <Calendar className="h-4 w-4" />
+                            {formatDate(post.createdAt)}
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Clock className="h-4 w-4" />
+                            {post.readTime}
+                          </div>
+                        </div>
+
+                        <div className="flex flex-wrap gap-2">
+                          {post.tags.map((tag, index) => (
+                            <Badge
+                              key={index}
+                              variant="outline"
+                              className="text-xs"
+                            >
+                              {tag.name}
+                            </Badge>
+                          ))}
+                        </div>
+
+                        <Button className="w-full group" asChild>
+                          <Link to={`/blog/${post.slug}`}>
+                            Read Article
+                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                          </Link>
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <Card className="shadow-soft">
+              <CardContent className="py-12 text-center">
+                <BookOpen className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+                <h3 className="text-lg font-semibold mb-2">No blogs found</h3>
+                <p className="text-muted-foreground mb-4">
+                  Try adjusting your search terms or filters to find what you're
+                  looking for.
+                </p>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setSearchTerm("");
+                    setSelectedTag("all");
+                  }}
+                >
+                  Clear Filters
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Newsletter CTA */}
+          <div className="mt-12">
+            <Card className="shadow-soft bg-gradient-card">
+              <CardContent className="py-8 text-center">
+                <h3 className="text-xl font-semibold mb-4">Stay Updated</h3>
+                <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                  Subscribe to get notified when I publish new articles about
+                  web development, technology trends, and programming tutorials.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                  <Input
+                    placeholder="Enter your email address"
+                    className="flex-1"
+                  />
+                  <Button>Subscribe</Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

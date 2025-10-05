@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { ExternalLink, Github, Tag } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import axios from "axios";
+import { Seo } from "@/components/seo";
 
 const Projects = () => {
   const [loading, setLoading] = useState(true);
@@ -201,146 +202,163 @@ const Projects = () => {
   }
 
   return (
-    <div className="min-h-screen py-12 px-4">
-      <div className="container mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="text-center mb-12 animate-fade-in">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            My <span className="text-gradient">Projects</span>
-          </h1>
-          <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-            A showcase of my technical skills through real-world applications
-            and solutions. Each project represents a unique challenge and
-            learning experience.
-          </p>
-        </div>
+    <>
+      <Seo
+        title="Projects | Prince Kumar Sahni - Software Engineer"
+        description="Explore projects built by Prince Kumar Sahni showcasing expertise in creating scalable, secure, and high-performing web and mobile applications."
+        url="https://princesahni.com/projects"
+        image="https://princesahni.com/og-images/projects-page.png"
+      />
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap gap-2 mb-8 justify-center">
-          {categories.map((category) => (
-            <Button
-              key={category.id}
-              variant={selectedCategory === category.id ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSelectedCategory(category.id)}
-              className="transition-all"
-            >
-              <Tag className="h-4 w-4 mr-2" />
-              {category.label}
-            </Button>
-          ))}
-        </div>
+      <div className="min-h-screen py-12 px-4">
+        <div className="container mx-auto max-w-7xl">
+          {/* Header */}
+          <div className="text-center mb-12 animate-fade-in">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              My <span className="text-gradient">Projects</span>
+            </h1>
+            <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+              A showcase of my technical skills through real-world applications
+              and solutions. Each project represents a unique challenge and
+              learning experience.
+            </p>
+          </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 animate-fade-in">
-          {filteredProjects.map((project) => (
-            <Card
-              key={project.id}
-              className="hover-lift shadow-soft overflow-hidden"
-            >
-              {project.coverImage ? (
-                <div className="w-full aspect-video rounded-none overflow-hidden">
-                  <img
-                    src={project.coverImage}
-                    alt={project.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ) : (
-                <div className="aspect-video bg-muted flex items-center justify-center">
-                  <div className="text-center space-y-2">
-                    <div className="w-12 h-12 mx-auto rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">
-                      {project.title.charAt(0)}
-                    </div>
-                    <p className="text-xs text-muted-foreground">Preview</p>
+          {/* Category Filter */}
+          <div className="flex flex-wrap gap-2 mb-8 justify-center">
+            {categories.map((category) => (
+              <Button
+                key={category.id}
+                variant={
+                  selectedCategory === category.id ? "default" : "outline"
+                }
+                size="sm"
+                onClick={() => setSelectedCategory(category.id)}
+                className="transition-all"
+              >
+                <Tag className="h-4 w-4 mr-2" />
+                {category.label}
+              </Button>
+            ))}
+          </div>
+
+          {/* Projects Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 animate-fade-in">
+            {filteredProjects.map((project) => (
+              <Card
+                key={project.id}
+                className="hover-lift shadow-soft overflow-hidden"
+              >
+                {project.coverImage ? (
+                  <div className="w-full aspect-video rounded-none overflow-hidden">
+                    <img
+                      src={project.coverImage}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                </div>
-              )}
+                ) : (
+                  <div className="aspect-video bg-muted flex items-center justify-center">
+                    <div className="text-center space-y-2">
+                      <div className="w-12 h-12 mx-auto rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">
+                        {project.title.charAt(0)}
+                      </div>
+                      <p className="text-xs text-muted-foreground">Preview</p>
+                    </div>
+                  </div>
+                )}
 
-              <CardHeader className="pb-3">
-                <div className="flex items-start justify-between gap-2">
-                  <CardTitle className="text-lg leading-tight">
-                    {project.title}
-                  </CardTitle>
-                  {project.featured && (
-                    <Badge variant="default" className="text-xs shrink-0">
-                      Featured
-                    </Badge>
-                  )}
-                </div>
-                <CardDescription className="text-sm leading-relaxed line-clamp-2">
-                  {project.description}
-                </CardDescription>
-              </CardHeader>
-
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex flex-wrap gap-1">
-                    {project.technologies.slice(0, 3).map((tech, index) => (
-                      <Badge key={index} variant="outline" className="text-xs">
-                        {tech}
-                      </Badge>
-                    ))}
-                    {project.technologies.length > 3 && (
-                      <Badge variant="outline" className="text-xs">
-                        +{project.technologies.length - 3}
+                <CardHeader className="pb-3">
+                  <div className="flex items-start justify-between gap-2">
+                    <CardTitle className="text-lg leading-tight">
+                      {project.title}
+                    </CardTitle>
+                    {project.featured && (
+                      <Badge variant="default" className="text-xs shrink-0">
+                        Featured
                       </Badge>
                     )}
                   </div>
+                  <CardDescription className="text-sm leading-relaxed line-clamp-2">
+                    {project.description}
+                  </CardDescription>
+                </CardHeader>
 
-                  <div className="flex gap-2">
-                    <Button size="sm" className="flex-1 text-xs" asChild>
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                <CardContent>
+                  <div className="space-y-3">
+                    <div className="flex flex-wrap gap-1">
+                      {project.technologies.slice(0, 3).map((tech, index) => (
+                        <Badge
+                          key={index}
+                          variant="outline"
+                          className="text-xs"
+                        >
+                          {tech}
+                        </Badge>
+                      ))}
+                      {project.technologies.length > 3 && (
+                        <Badge variant="outline" className="text-xs">
+                          +{project.technologies.length - 3}
+                        </Badge>
+                      )}
+                    </div>
+
+                    <div className="flex gap-2">
+                      <Button size="sm" className="flex-1 text-xs" asChild>
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <ExternalLink className="h-3 w-3 mr-1" />
+                          Live
+                        </a>
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1 text-xs"
+                        asChild
                       >
-                        <ExternalLink className="h-3 w-3 mr-1" />
-                        Live
-                      </a>
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1 text-xs"
-                      asChild
-                    >
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Github className="h-3 w-3 mr-1" />
-                        Code
-                      </a>
-                    </Button>
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Github className="h-3 w-3 mr-1" />
+                          Code
+                        </a>
+                      </Button>
+                    </div>
                   </div>
-                </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* GitHub CTA */}
+          <div className="text-center mt-12">
+            <Card className="shadow-soft max-w-2xl mx-auto">
+              <CardContent className="pt-6">
+                <h3 className="text-xl font-semibold mb-4">
+                  Want to see more?
+                </h3>
+                <p className="text-muted-foreground mb-6">
+                  Check out my GitHub profile for more projects, contributions,
+                  and code samples.
+                </p>
+                <Button asChild className="group">
+                  <a href="#" target="_blank" rel="noopener noreferrer">
+                    <Github className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform" />
+                    Visit GitHub Profile
+                  </a>
+                </Button>
               </CardContent>
             </Card>
-          ))}
-        </div>
-
-        {/* GitHub CTA */}
-        <div className="text-center mt-12">
-          <Card className="shadow-soft max-w-2xl mx-auto">
-            <CardContent className="pt-6">
-              <h3 className="text-xl font-semibold mb-4">Want to see more?</h3>
-              <p className="text-muted-foreground mb-6">
-                Check out my GitHub profile for more projects, contributions,
-                and code samples.
-              </p>
-              <Button asChild className="group">
-                <a href="#" target="_blank" rel="noopener noreferrer">
-                  <Github className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform" />
-                  Visit GitHub Profile
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
