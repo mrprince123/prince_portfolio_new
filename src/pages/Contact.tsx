@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, MapPin, Send, Clock, MessageCircle } from "lucide-react";
+import axios from "axios";
 
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -13,6 +14,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone : "",
     subject: "",
     message: ""
   });
@@ -22,15 +24,17 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const url = 'http://localhost:5001/api/v1/contact/post';
+      const response = await axios.post(url, formData);
+      const message = response.data.message;
       
       toast({
         title: "Message sent!",
-        description: "Thank you for your message. I'll get back to you soon.",
+        description: message,
+        variant : "default",
       });
       
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      setFormData({ name: "", email: "", phone : "", subject: "", message: "" });
     } catch (error) {
       toast({
         title: "Error",
@@ -53,19 +57,19 @@ const Contact = () => {
     {
       icon: Mail,
       label: "Email",
-      value: "hello@yourname.com",
-      href: "mailto:hello@yourname.com"
+      value: "princekrdss2018@gmail.com",
+      href: "mailto:princekrdss2018@gmail.com"
     },
     {
       icon: Phone,
       label: "Phone",
-      value: "+1 (555) 123-4567",
-      href: "tel:+15551234567"
+      value: "+91 7369900185",
+      href: "tel:+917369900185"
     },
     {
       icon: MapPin,
       label: "Location",
-      value: "San Francisco, CA",
+      value: "New Delhi, India",
       href: "#"
     }
   ];
@@ -123,6 +127,19 @@ const Contact = () => {
                         placeholder="your.email@example.com"
                       />
                     </div>
+                  </div>
+
+
+                  <div className="space-y-2">
+                    <Label htmlFor="subject">Phone</Label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      required
+                      placeholder="Your phone"
+                    />
                   </div>
 
                   <div className="space-y-2">

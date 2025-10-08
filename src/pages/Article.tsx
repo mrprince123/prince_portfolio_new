@@ -283,12 +283,7 @@ const Articles = () => {
                     key={article.id}
                     className="hover-lift shadow-soft overflow-hidden"
                   >
-                    {/* <div className="aspect-video bg-gradient-primary flex items-center justify-center">
-                    <div className="text-center text-primary-foreground">
-                      <ExternalLink className="h-12 w-12 mx-auto mb-2 opacity-80" />
-                      <p className="text-sm font-medium">Featured on Medium</p>
-                    </div>
-                  </div> */}
+                    
 
                     {/* Cover Image */}
                     <div className="w-full aspect-video rounded-none overflow-hidden">
