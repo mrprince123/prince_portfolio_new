@@ -8,6 +8,8 @@ import { Separator } from "@/components/ui/separator";
 import { Calendar, Clock, Heart, ArrowLeft, Share2, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
+const apiUrl = import.meta.env.VITE_BLOG_URL;
+
 
 interface Tag {
   name: string;
@@ -145,7 +147,7 @@ Remember, the key is to start simple and add complexity only when needed. Happy 
         const timeout = setTimeout(() => controller.abort(), 3000);
 
         const response = await axios.get(
-          `http://localhost:5001/api/v1/blog/get/slug/${slug}`,
+          `${apiUrl}/slug/${slug}`,
           { signal: controller.signal }
         );
 

@@ -7,9 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import {
-  Play,
   Clock,
   Users,
   Star,
@@ -21,6 +19,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Seo } from "@/components/seo";
+const apiUrl = import.meta.env.VITE_COURSE_URL;
 
 const Courses = () => {
   const [loading, setLoading] = useState(true);
@@ -177,10 +176,7 @@ const Courses = () => {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 2000);
 
-        const response = await axios.get(
-          "http://localhost:5001/api/v1/course/get",
-          { signal: controller.signal }
-        );
+        const response = await axios.get(apiUrl, { signal: controller.signal });
 
         console.log(response.data.data);
         clearTimeout(timeout);

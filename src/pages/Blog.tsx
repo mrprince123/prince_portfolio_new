@@ -21,6 +21,8 @@ import { Link } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
 import axios from "axios";
 import { Seo } from "@/components/seo";
+const apiUrl = import.meta.env.VITE_BLOG_URL;
+
 
 const Blog = () => {
   const [loading, setLoading] = useState(true);
@@ -120,7 +122,7 @@ const Blog = () => {
         const timeout = setTimeout(() => controller.abort(), 2000);
 
         const response = await axios.get(
-          "http://localhost:5001/api/v1/blog/get",
+          apiUrl,
           { signal: controller.signal }
         );
 

@@ -7,6 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, MapPin, Send, Clock, MessageCircle } from "lucide-react";
 import axios from "axios";
+const apiUrl = import.meta.env.VITE_CONTACT_URL;
+
 
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -24,8 +26,7 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const url = 'http://localhost:5001/api/v1/contact/post';
-      const response = await axios.post(url, formData);
+      const response = await axios.post(apiUrl, formData);
       const message = response.data.message;
       
       toast({

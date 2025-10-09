@@ -21,6 +21,8 @@ import {
 import axios from "axios";
 import * as LucideIcons from "lucide-react";
 import { Seo } from "@/components/seo";
+const apiUrl = import.meta.env.VITE_SKILL_URL;
+
 
 const Skills = () => {
   const [loading, setLoading] = useState(true);
@@ -126,7 +128,7 @@ const Skills = () => {
         const timeout = setTimeout(() => controller.abort(), 2000);
 
         const response = await axios.get(
-          "http://localhost:5001/api/v1/skills/get",
+          apiUrl,
           { signal: controller.signal }
         );
 

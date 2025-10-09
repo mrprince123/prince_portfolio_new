@@ -21,6 +21,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import axios from "axios";
 import { Seo } from "@/components/seo";
+const apiUrl = import.meta.env.VITE_ARTICLE_URL;
 
 const Articles = () => {
   const [loading, setLoading] = useState(false);
@@ -52,7 +53,7 @@ const Articles = () => {
         const timeout = setTimeout(() => controller.abort(), 3000);
 
         const response = await axios.get(
-          "http://localhost:5001/api/v1/article/get",
+          apiUrl,
           { signal: controller.signal }
         );
 

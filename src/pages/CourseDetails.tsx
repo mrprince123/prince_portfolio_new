@@ -25,6 +25,8 @@ import {
 } from "lucide-react";
 import axios from "axios";
 import { Skeleton } from "@/components/ui/skeleton";
+const apiUrl = import.meta.env.VITE_COURSE_URL;
+
 
 const CourseDetails = () => {
   const { slug } = useParams();
@@ -608,7 +610,7 @@ Great job! You now have a solid understanding of React hooks. This completes our
         const timeout = setTimeout(() => controller.abort(), 3000);
 
         const response = await axios.get(
-          `http://localhost:5001/api/v1/course/get/${slug}`,
+          `${apiUrl}/${slug}`,
           { signal: controller.signal }
         );
 

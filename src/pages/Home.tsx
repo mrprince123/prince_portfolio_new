@@ -23,6 +23,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import DynamicPattern from "@/components/ui/dynamic-pattern";
 import { Seo } from "@/components/seo";
+const apiUrlArticle = import.meta.env.VITE_ARTICLE_URL;
+const apiUrlProject = import.meta.env.VITE_PROJECT_URL;
+
 
 const Home = () => {
   const [articleData, setArticleData] = useState([]);
@@ -211,7 +214,7 @@ const Home = () => {
         const timeout = setTimeout(() => controller.abort(), 3000);
 
         const response = await axios.get(
-          "http://localhost:5001/api/v1/article/get",
+          apiUrlArticle,
           { signal: controller.signal }
         );
 
@@ -248,7 +251,7 @@ const Home = () => {
         const timeout = setTimeout(() => controller.abort(), 3000);
 
         const response = await axios.get(
-          "http://localhost:5001/api/v1/project/get",
+          apiUrlProject,
           { signal: controller.signal }
         );
 
@@ -283,13 +286,12 @@ const Home = () => {
 
   return (
     <>
-   <Seo
-  title="Prince Kumar Sahni | Software Engineer"
-  description="Passionate Software Engineer specializing in building scalable, secure, and high-performing web and mobile applications. Turning innovative ideas into impactful digital products."
-  url="https://princesahni.com"
-  image="https://princesahni.com/og-images/home-page.png"
-/>
-
+      <Seo
+        title="Prince Kumar Sahni | Software Engineer"
+        description="Passionate Software Engineer specializing in building scalable, secure, and high-performing web and mobile applications. Turning innovative ideas into impactful digital products."
+        url="https://princesahni.com"
+        image="https://princesahni.com/og-images/home-page.png"
+      />
 
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
         {/* Hero Section */}
@@ -337,7 +339,17 @@ const Home = () => {
               </div>
 
               <div className="relative animate-fade-in-up">
-                <DynamicPattern width={600} height={300} shapeCount={120} />
+                {/* <DynamicPattern width={600} height={300} shapeCount={120} /> */}
+                <div className="w-full h-96 gradient-card rounded-2xl shadow-elegant flex items-center justify-center border border-border/50">
+                  <div className="text-center space-y-4">
+                    <div className="w-24 h-24 mx-auto rounded-full bg-primary flex items-center justify-center text-primary-foreground text-3xl font-bold shadow-glow">
+                      P
+                    </div>
+                    <p className="text-muted-foreground">
+                      "Driven by curiosity and crafted with care"
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

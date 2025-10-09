@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, X, Sun, Moon, FileDown } from "lucide-react";
 import { useTheme } from "@/components/ui/theme-provider";
-import princelogo from "@/assets/princesahni-logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,7 +16,6 @@ const Header = () => {
     { name: "Article at Medium", href: "/articles" },
     { name: "Course", href: "/courses" },
     { name: "Contact", href: "/contact" },
-    { name: "Resume", href: "/resume" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -28,14 +26,10 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
-            <img
-              src={princelogo}
-              alt="Prince Kumar Sahni Logo"
-              className="w-10 h-10 rounded-lg object-cover border-2 border-primary"
-            />
-            <span className="font-bold text-xl hidden sm:block">
-              Prince Kumar Sahni
-            </span>
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg group-hover:scale-105 transition-transform">
+              P
+            </div>
+            <span className="font-bold text-xl hidden sm:block">Portfolio</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -55,32 +49,35 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Theme Toggle & Mobile Menu */}
+          {/* Resume, Theme Toggle & Mobile Menu */}
           <div className="flex items-center space-x-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              asChild
+              className="hidden sm:flex"
+            >
+              <Link to="/resume">
+                <FileDown className="h-4 w-4" />
+              </Link>
+            </Button>
+            
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="hidden sm:flex"
             >
-              {theme === "dark" ? (
-                <Sun className="h-4 w-4" />
-              ) : (
-                <Moon className="h-4 w-4" />
-              )}
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
-
+            
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden"
             >
-              {isMenuOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" />
-              )}
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
@@ -103,18 +100,25 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
-              <div className="border-t pt-2 mt-2">
+              <div className="border-t pt-2 mt-2 space-y-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  asChild
+                  className="w-full justify-start"
+                >
+                  <Link to="/resume">
+                    <FileDown className="h-4 w-4 mr-2" />
+                    Resume
+                  </Link>
+                </Button>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                   className="w-full justify-start"
                 >
-                  {theme === "dark" ? (
-                    <Sun className="h-4 w-4 mr-2" />
-                  ) : (
-                    <Moon className="h-4 w-4 mr-2" />
-                  )}
+                  {theme === "dark" ? <Sun className="h-4 w-4 mr-2" /> : <Moon className="h-4 w-4 mr-2" />}
                   {theme === "dark" ? "Light Mode" : "Dark Mode"}
                 </Button>
               </div>

@@ -12,6 +12,8 @@ import { ExternalLink, Github, Tag } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import axios from "axios";
 import { Seo } from "@/components/seo";
+const apiUrl = import.meta.env.VITE_PROJECT_URL;
+
 
 const Projects = () => {
   const [loading, setLoading] = useState(true);
@@ -122,7 +124,7 @@ const Projects = () => {
         const timeout = setTimeout(() => controller.abort(), 3000);
 
         const response = await axios.get(
-          "http://localhost:5001/api/v1/project/get",
+          apiUrl,
           { signal: controller.signal }
         );
 
