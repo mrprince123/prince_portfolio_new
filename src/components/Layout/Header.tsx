@@ -3,6 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Sun, Moon, FileDown } from "lucide-react";
 import { useTheme } from "@/components/ui/theme-provider";
+import princelogo from "@/assets/princesahni-logo.png";
+
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,10 +28,12 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg group-hover:scale-105 transition-transform">
-              P
-            </div>
-            <span className="font-bold text-xl hidden sm:block">Portfolio</span>
+             <img
+                                       src={princelogo}
+                                       alt="Prince Kumar Sahni Logo"
+                                       className="w-10 h-10 rounded-lg object-cover border-2 border-primary"
+                                     />
+            <span className="font-bold text-xl hidden sm:block">Prince Kumar Sahni</span>
           </Link>
 
           {/* Desktop Navigation */}
