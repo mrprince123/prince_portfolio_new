@@ -32,7 +32,7 @@ const Courses = () => {
       title: "React.js Complete Guide",
       description:
         "Learn React from scratch and master modern frontend development with hooks, context API, and more.",
-      coverImage: "https://example.com/images/react-course.jpg",
+      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       isVisible: true,
       tags: ["React", "JavaScript", "Frontend"],
       level: "Beginner to Advanced",
@@ -46,7 +46,7 @@ const Courses = () => {
       title: "Node.js Masterclass",
       description:
         "Build scalable backend APIs using Node.js, Express.js, and MongoDB with real-world projects.",
-      coverImage: "https://example.com/images/node-course.jpg",
+      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       isVisible: true,
       tags: ["Node.js", "Express", "Backend"],
       level: "Intermediate to Advanced",
@@ -60,7 +60,7 @@ const Courses = () => {
       title: "JavaScript Fundamentals",
       description:
         "Understand the core concepts of JavaScript — variables, functions, DOM, and ES6 features.",
-      coverImage: "https://example.com/images/javascript-course.jpg",
+      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       isVisible: true,
       tags: ["JavaScript", "ES6", "Frontend"],
       level: "Beginner",
@@ -74,7 +74,7 @@ const Courses = () => {
       title: "Full Stack MERN Bootcamp",
       description:
         "Master MongoDB, Express, React, and Node.js by building a production-ready full stack application.",
-      coverImage: "https://example.com/images/mern-course.jpg",
+      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       isVisible: true,
       tags: ["MERN", "React", "Node.js", "MongoDB"],
       level: "Intermediate to Advanced",
@@ -88,7 +88,7 @@ const Courses = () => {
       title: "Python for Beginners",
       description:
         "Start your programming journey by learning Python fundamentals, syntax, and basic projects.",
-      coverImage: "https://example.com/images/python-course.jpg",
+      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       isVisible: true,
       tags: ["Python", "Programming", "Beginner"],
       level: "Beginner",
@@ -102,7 +102,7 @@ const Courses = () => {
       title: "TypeScript Crash Course",
       description:
         "Learn TypeScript and bring type safety and scalability to your JavaScript projects.",
-      coverImage: "https://example.com/images/typescript-course.jpg",
+      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       isVisible: true,
       tags: ["TypeScript", "JavaScript", "Frontend"],
       level: "Intermediate",
@@ -116,7 +116,7 @@ const Courses = () => {
       title: "Android Development with Kotlin",
       description:
         "Build beautiful native Android apps using Kotlin, Jetpack Compose, and modern Android tools.",
-      coverImage: "https://example.com/images/android-course.jpg",
+      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       isVisible: true,
       tags: ["Kotlin", "Android", "Jetpack Compose"],
       level: "Intermediate to Advanced",
@@ -130,7 +130,7 @@ const Courses = () => {
       title: "Next.js Advanced Guide",
       description:
         "Learn advanced concepts in Next.js including SSR, ISR, API routes, and authentication.",
-      coverImage: "https://example.com/images/nextjs-course.jpg",
+      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       isVisible: true,
       tags: ["Next.js", "React", "Fullstack"],
       level: "Advanced",
@@ -144,7 +144,7 @@ const Courses = () => {
       title: "Database Design & SQL Mastery",
       description:
         "Understand relational databases, normalization, and write efficient SQL queries.",
-      coverImage: "https://example.com/images/sql-course.jpg",
+      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       isVisible: true,
       tags: ["SQL", "Database", "Backend"],
       level: "Intermediate",
@@ -158,7 +158,7 @@ const Courses = () => {
       title: "DevOps with Docker & Kubernetes",
       description:
         "Learn how to containerize applications, deploy microservices, and manage infrastructure with Kubernetes.",
-      coverImage: "https://example.com/images/devops-course.jpg",
+      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       isVisible: true,
       tags: ["DevOps", "Docker", "Kubernetes"],
       level: "Advanced",

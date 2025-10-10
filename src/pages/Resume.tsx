@@ -36,10 +36,10 @@ const Resume = () => {
 
   const experience = [
     {
-      title: "Senior Full-Stack Developer",
-      company: "Tech Solutions Inc.",
-      location: "Remote",
-      period: "Jan 2022 - Present",
+      title: "Associate Software Developer",
+      company: "Webkul Software Pvt Ltd.",
+      location: "Noida, UP",
+      period: "April 2025 - Present",
       description:
         "Leading development of scalable web applications serving 100k+ users. Architected microservices infrastructure and mentored junior developers.",
       achievements: [
@@ -58,10 +58,10 @@ const Resume = () => {
       ],
     },
     {
-      title: "Full-Stack Developer",
-      company: "StartupXYZ",
-      location: "San Francisco, CA",
-      period: "Jun 2020 - Dec 2021",
+      title: "Trainee Software Developer",
+      company: "Chetu Inc",
+      location: "Nodia, UP",
+      period: "Jun 2024 - Dec 2024",
       description:
         "Built and maintained multiple web applications for early-stage startup. Collaborated closely with product team to deliver features rapidly.",
       achievements: [
@@ -80,10 +80,10 @@ const Resume = () => {
       ],
     },
     {
-      title: "Frontend Developer",
-      company: "Digital Agency Co.",
-      location: "New York, NY",
-      period: "Mar 2019 - May 2020",
+      title: "Full Stack Developer",
+      company: "Webbocket Pvt Ltd",
+      location: "Bhubneswar, Odisha",
+      period: "April 2023 - Sept 2023",
       description:
         "Developed responsive user interfaces for various client projects. Worked closely with designers to implement pixel-perfect designs.",
       achievements: [
@@ -106,11 +106,11 @@ const Resume = () => {
   const education = [
     {
       degree: "Bachelor of Science in Computer Science",
-      institution: "University of Technology",
-      location: "California, USA",
-      period: "2015 - 2019",
-      gpa: "3.8/4.0",
-      honors: "Magna Cum Laude",
+      institution: "Biju Patniak University of Technology",
+      location: "Bhubneswar, Odisah",
+      period: "2020 - 2024",
+      gpa: "8.4/10",
+      honors: "Graduated with CSE",
       relevant: [
         "Data Structures & Algorithms",
         "Software Engineering",
@@ -151,23 +151,59 @@ const Resume = () => {
 
   const projects = [
     {
-      name: "E-Commerce Platform",
+      name: "Code Rev",
       description:
-        "Full-stack e-commerce solution with payment processing and admin dashboard",
-      technologies: ["React", "Node.js", "PostgreSQL", "Stripe"],
-      impact: "Increased client revenue by 35%",
+        "An online platform where developers can share, review, and discover code snippets. Includes real-time commenting and user authentication.",
+      technologies: [
+        "React",
+        "Node.js",
+        "MongoDB",
+        "Express.js",
+        "Vercel",
+        "Cloudinary",
+      ],
+      impact: "500+ users sharing and reviewing code with real-time updates",
     },
     {
-      name: "Task Management App",
-      description: "Real-time collaborative task management with team features",
-      technologies: ["Next.js", "Prisma", "Socket.io"],
-      impact: "10k+ active users",
+      name: "AI Image Generation Platform",
+      description:
+        "A web application where users can generate AI-powered images and browse curated categories, with admin upload and management features.",
+      technologies: [
+        "Next.js",
+        "Node.js",
+        "Cloudinary",
+        "React Query",
+        "Express.js",
+      ],
+      impact:
+        "Serves hundreds of AI-generated images daily with organized category structure",
     },
     {
-      name: "Weather Analytics API",
-      description: "RESTful API service with caching and rate limiting",
-      technologies: ["Express.js", "Redis", "MongoDB"],
-      impact: "Handles 1M+ requests daily",
+      name: "YouTune",
+      description:
+        "A non-stop YouTube playlist player app for Android, allowing users to queue videos and play them continuously without interruption.",
+      technologies: [
+        "Kotlin",
+        "Jetpack Compose",
+        "YouTube API",
+        "Android Studio",
+      ],
+      impact:
+        "Improved user experience for continuous video playback on mobile",
+    },
+    {
+      name: "Habit Tracker App",
+      description:
+        "A simple Android app to track daily habits, view history, and measure progress over time. Built with Jetpack Compose and Kotlin.",
+      technologies: ["Kotlin", "Jetpack Compose", "Android Studio"],
+      impact: "Helps users track and improve daily habits efficiently",
+    },
+    {
+      name: "DevLink – Developer Profile Directory",
+      description:
+        "A web app to create and browse developer profiles. Built to strengthen understanding of Next.js and full-stack development.",
+      technologies: ["Next.js", "React", "Node.js", "MongoDB", "Vercel"],
+      impact: "Simplifies networking by centralizing developer profiles",
     },
   ];
 

@@ -46,7 +46,7 @@ const BlogDetail = () => {
     description:
       "Learn how to structure large-scale React applications with proven patterns, state management strategies, and performance optimization techniques.",
     coverImage:
-      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1280&h=720&fit=crop",
+      "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
     content: `
 # Introduction
 

@@ -35,12 +35,52 @@ const Articles = () => {
       title: "The Future of React: Server Components and Concurrent Features",
       description:
         "Exploring how React Server Components and Concurrent Features are reshaping the way we build modern web applications.",
-      coverImage: "www.google.com",
+      coverImage:
+        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       publishedAt: "2023-12-20",
       articleLink: "https://medium.com/@yourname/react-server-components",
       tags: ["React", "JavaScript", "Frontend"],
       featured: true,
       readTime: "5 mins",
+    },
+    {
+      id: 2,
+      title: "Mastering Node.js Streams for Efficient Data Handling",
+      description:
+        "A deep dive into Node.js streams, showing how to process large amounts of data efficiently without blocking the event loop.",
+      coverImage:
+        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+      publishedAt: "2024-01-10",
+      articleLink: "https://medium.com/@yourname/nodejs-streams",
+      tags: ["Node.js", "Backend", "JavaScript"],
+      featured: false,
+      readTime: "6 mins",
+    },
+    {
+      id: 3,
+      title: "Understanding Microservices Architecture in Modern Web Apps",
+      description:
+        "Learn the principles, benefits, and challenges of adopting a microservices architecture for scalable and maintainable applications.",
+      coverImage:
+        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+      publishedAt: "2024-02-05",
+      articleLink: "https://medium.com/@yourname/microservices-architecture",
+      tags: ["Microservices", "System Design", "Backend"],
+      featured: true,
+      readTime: "8 mins",
+    },
+    {
+      id: 4,
+      title: "CSS Grid vs Flexbox: Choosing the Right Layout Tool",
+      description:
+        "A practical comparison between CSS Grid and Flexbox, helping you decide which layout system is best for different scenarios.",
+      coverImage:
+        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+      publishedAt: "2024-03-01",
+      articleLink: "https://medium.com/@yourname/css-grid-vs-flexbox",
+      tags: ["CSS", "Frontend", "Web Design"],
+      featured: false,
+      readTime: "4 mins",
     },
   ];
 
@@ -52,10 +92,7 @@ const Articles = () => {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 3000);
 
-        const response = await axios.get(
-          apiUrl,
-          { signal: controller.signal }
-        );
+        const response = await axios.get(apiUrl, { signal: controller.signal });
 
         clearTimeout(timeout);
 
@@ -104,12 +141,6 @@ const Articles = () => {
     });
   };
 
-  const formatNumber = (num: number) => {
-    if (num >= 1000) {
-      return (num / 1000).toFixed(1) + "k";
-    }
-    return num.toString();
-  };
 
   if (loading) {
     return (
@@ -284,8 +315,6 @@ const Articles = () => {
                     key={article.id}
                     className="hover-lift shadow-soft overflow-hidden"
                   >
-                    
-
                     {/* Cover Image */}
                     <div className="w-full aspect-video rounded-none overflow-hidden">
                       <img

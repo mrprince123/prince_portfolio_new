@@ -21,11 +21,11 @@ import {
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import DynamicPattern from "@/components/ui/dynamic-pattern";
 import { Seo } from "@/components/seo";
+import { Skeleton } from "@/components/ui/skeleton";
 const apiUrlArticle = import.meta.env.VITE_ARTICLE_URL;
 const apiUrlProject = import.meta.env.VITE_PROJECT_URL;
-
+import princePortfolioVideo from "@/assets/princesahni.mp4";
 
 const Home = () => {
   const [articleData, setArticleData] = useState([]);
@@ -38,7 +38,8 @@ const Home = () => {
       title: "AI Image Generator",
       description:
         "A web app that allows users to generate stunning AI-powered images using text prompts. Includes image history, download options, and category-based organization.",
-      coverImage: "/api/placeholder/400/200",
+      coverImage:
+        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       category: "fullstack",
       technologies: [
         "Next.js",
@@ -56,7 +57,8 @@ const Home = () => {
       title: "Fitness Tracker App",
       description:
         "Native Android fitness tracking app with daily goals, activity insights, and progress analytics using Jetpack Compose and Room Database.",
-      coverImage: "/api/placeholder/400/200",
+      coverImage:
+        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       category: "android",
       technologies: [
         "Kotlin",
@@ -69,54 +71,6 @@ const Home = () => {
       githubUrl: "#",
       featured: false,
     },
-    {
-      id: 9,
-      title: "DevLink – Developer Directory",
-      description:
-        "A platform to explore and connect with developers worldwide. Features profile creation, project showcase, and skill-based filtering.",
-      coverImage: "/api/placeholder/400/200",
-      category: "web",
-      technologies: ["Next.js", "Prisma", "PostgreSQL", "Tailwind CSS"],
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: true,
-    },
-    {
-      id: 10,
-      title: "Code Rev – AI Code Review Platform",
-      description:
-        "An AI-powered platform that reviews code, detects bugs, and provides best-practice recommendations instantly.",
-      coverImage: "/api/placeholder/400/200",
-      category: "fullstack",
-      technologies: ["React", "Node.js", "Express", "MongoDB", "OpenAI API"],
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: true,
-    },
-    {
-      id: 11,
-      title: "Blogify – Modern Blogging Platform",
-      description:
-        "A sleek blogging platform with markdown editor, image uploads, and SEO optimization. Built for creators to publish and grow their audience.",
-      coverImage: "/api/placeholder/400/200",
-      category: "web",
-      technologies: ["Next.js", "MongoDB", "JWT", "Tailwind CSS"],
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: false,
-    },
-    {
-      id: 12,
-      title: "YouTune – Endless YouTube Playlist Player",
-      description:
-        "An Android app for uninterrupted YouTube playlist playback, allowing users to loop, shuffle, and enjoy continuous music or podcasts.",
-      coverImage: "/api/placeholder/400/200",
-      category: "android",
-      technologies: ["Kotlin", "Jetpack Compose", "YouTube API", "Coroutines"],
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: true,
-    },
   ];
 
   const articles = [
@@ -125,7 +79,8 @@ const Home = () => {
       title: "The Future of React: Server Components and Concurrent Features",
       description:
         "Exploring how React Server Components and Concurrent Features are reshaping the way we build modern web applications.",
-      coverImage: "https://images.unsplash.com/photo-1557683316-973673baf926",
+      coverImage:
+        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       publishedAt: "2023-12-20",
       articleLink: "https://medium.com/@yourname/react-server-components",
       tags: ["React", "JavaScript", "Frontend"],
@@ -138,7 +93,7 @@ const Home = () => {
       description:
         "Learn how to leverage FastAPI to create fast, modern, and scalable web APIs in Python with automatic documentation and async support.",
       coverImage:
-        "https://images.unsplash.com/photo-1581092580490-6b60f7d71e07",
+        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       publishedAt: "2024-01-15",
       articleLink: "https://medium.com/@yourname/python-fastapi-guide",
       tags: ["Python", "FastAPI", "Backend"],
@@ -151,25 +106,12 @@ const Home = () => {
       description:
         "A deep dive into TypeScript best practices, advanced types, and patterns for building maintainable and large-scale applications.",
       coverImage:
-        "https://images.unsplash.com/photo-1581092580490-6b60f7d71e08",
+        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       publishedAt: "2024-02-10",
       articleLink: "https://medium.com/@yourname/typescript-tips",
       tags: ["TypeScript", "JavaScript", "Web Development"],
       featured: false,
       readTime: "6 mins",
-    },
-    {
-      id: 4,
-      title: "Node.js Event Loop: Understanding Async JavaScript",
-      description:
-        "A comprehensive guide to understanding the Node.js event loop, asynchronous programming, and how to write efficient non-blocking code.",
-      coverImage:
-        "https://images.unsplash.com/photo-1581092580490-6b60f7d71e09",
-      publishedAt: "2024-03-05",
-      articleLink: "https://medium.com/@yourname/nodejs-event-loop",
-      tags: ["Node.js", "JavaScript", "Backend"],
-      featured: false,
-      readTime: "8 mins",
     },
   ];
 
@@ -213,10 +155,9 @@ const Home = () => {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 3000);
 
-        const response = await axios.get(
-          apiUrlArticle,
-          { signal: controller.signal }
-        );
+        const response = await axios.get(apiUrlArticle, {
+          signal: controller.signal,
+        });
 
         clearTimeout(timeout);
 
@@ -250,10 +191,9 @@ const Home = () => {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 3000);
 
-        const response = await axios.get(
-          apiUrlProject,
-          { signal: controller.signal }
-        );
+        const response = await axios.get(apiUrlProject, {
+          signal: controller.signal,
+        });
 
         clearTimeout(timeout);
 
@@ -341,14 +281,16 @@ const Home = () => {
               <div className="relative animate-fade-in-up">
                 {/* <DynamicPattern width={600} height={300} shapeCount={120} /> */}
                 <div className="w-full h-96 gradient-card rounded-2xl shadow-elegant flex items-center justify-center border border-border/50">
-                  <div className="text-center space-y-4">
-                    <div className="w-24 h-24 mx-auto rounded-full bg-primary flex items-center justify-center text-primary-foreground text-3xl font-bold shadow-glow">
-                      P
-                    </div>
-                    <p className="text-muted-foreground">
-                      "Driven by curiosity and crafted with care"
-                    </p>
-                  </div>
+                  
+                    <video
+                      src={princePortfolioVideo}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-auto rounded-2xl"
+                    ></video>
+                  
                 </div>
               </div>
             </div>
@@ -488,88 +430,136 @@ const Home = () => {
             {/* Articles  */}
             <div className="mb-12">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {articleData.slice(0, 3).map((article) => (
-                  <Card
-                    key={article.id}
-                    className="hover-lift shadow-soft overflow-hidden"
-                  >
-                    {/* Cover Image */}
-                    <div className="w-full aspect-video rounded-none overflow-hidden">
-                      <img
-                        src={article.coverImage}
-                        alt={article.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+                {loading
+                  ? [1, 2, 3].map((i) => (
+                      <Card
+                        key={i}
+                        className="shadow-soft overflow-hidden animate-pulse"
+                      >
+                        {/* Cover Image Skeleton */}
+                        <div className="w-full aspect-video rounded-none overflow-hidden bg-gray-200" />
 
-                    <CardHeader>
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1">
-                          <CardTitle className="text-xl mb-2 line-clamp-2 leading-tight">
-                            {article.title}
-                          </CardTitle>
-                          <CardDescription className="leading-relaxed">
-                            {article.description}
-                          </CardDescription>
-                        </div>
-                        <div className="flex flex-col gap-2 shrink-0">
-                          <Badge variant="default">Featured</Badge>
-                          {article.trending && (
-                            <Badge
-                              variant="secondary"
-                              className="bg-orange-100 text-orange-600 border-orange-200"
-                            >
-                              <TrendingUp className="h-3 w-3 mr-1" />
-                              Trending
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                    </CardHeader>
-
-                    <CardContent>
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between text-sm text-muted-foreground">
-                          <div className="flex items-center gap-4">
-                            <div className="flex items-center gap-1">
-                              <Calendar className="h-4 w-4" />
-                              {formatDate(article.publishedAt)}
+                        {/* Card Header Skeleton */}
+                        <CardHeader>
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex-1 space-y-2">
+                              <Skeleton className="h-6 w-3/4" /> {/* Title */}
+                              <Skeleton className="h-4 w-full" />{" "}
+                              {/* Description line 1 */}
+                              <Skeleton className="h-4 w-2/3" />{" "}
+                              {/* Description line 2 */}
                             </div>
-                            <div className="flex items-center gap-1">
-                              <Clock className="h-4 w-4" />
-                              {article.readTime}
+                            <div className="flex flex-col gap-2 shrink-0">
+                              <Skeleton className="h-6 w-16 rounded-full" />{" "}
+                              {/* Featured badge */}
+                              <Skeleton className="h-6 w-20 rounded-full" />{" "}
+                              {/* Trending badge */}
                             </div>
                           </div>
+                        </CardHeader>
+
+                        {/* Card Content Skeleton */}
+                        <CardContent>
+                          <div className="space-y-4">
+                            <div className="flex items-center justify-between text-sm text-muted-foreground">
+                              <div className="flex items-center gap-4">
+                                <Skeleton className="h-4 w-16" />{" "}
+                                {/* Calendar */}
+                                <Skeleton className="h-4 w-12" /> {/* Clock */}
+                              </div>
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                              <Skeleton className="h-5 w-12 rounded-full" />
+                              <Skeleton className="h-5 w-12 rounded-full" />
+                            </div>
+                            <Skeleton className="h-10 w-full rounded-md" />{" "}
+                            {/* Button */}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))
+                  : articleData.slice(0, 3).map((article) => (
+                      <Card
+                        key={article.id}
+                        className="hover-lift shadow-soft overflow-hidden"
+                      >
+                        {/* Cover Image */}
+                        <div className="w-full aspect-video rounded-none overflow-hidden">
+                          <img
+                            src={article.coverImage}
+                            alt={article.title}
+                            className="w-full h-full object-cover"
+                          />
                         </div>
 
-                        <div className="flex items-center justify-between">
-                          <div className="flex flex-wrap gap-2">
-                            {article.tags.slice(0, 2).map((tag, index) => (
-                              <Badge
-                                key={index}
-                                variant="outline"
-                                className="text-xs"
+                        <CardHeader>
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex-1">
+                              <CardTitle className="text-xl mb-2 line-clamp-2 leading-tight">
+                                {article.title}
+                              </CardTitle>
+                              <CardDescription className="leading-relaxed">
+                                {article.description}
+                              </CardDescription>
+                            </div>
+                            <div className="flex flex-col gap-2 shrink-0">
+                              <Badge variant="default">Featured</Badge>
+                              {article.trending && (
+                                <Badge
+                                  variant="secondary"
+                                  className="bg-orange-100 text-orange-600 border-orange-200"
+                                >
+                                  <TrendingUp className="h-3 w-3 mr-1" />
+                                  Trending
+                                </Badge>
+                              )}
+                            </div>
+                          </div>
+                        </CardHeader>
+
+                        <CardContent>
+                          <div className="space-y-4">
+                            <div className="flex items-center justify-between text-sm text-muted-foreground">
+                              <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-1">
+                                  <Calendar className="h-4 w-4" />
+                                  {formatDate(article.publishedAt)}
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <Clock className="h-4 w-4" />
+                                  {article.readTime}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center justify-between">
+                              <div className="flex flex-wrap gap-2">
+                                {article.tags.slice(0, 2).map((tag, index) => (
+                                  <Badge
+                                    key={index}
+                                    variant="outline"
+                                    className="text-xs"
+                                  >
+                                    {tag}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+
+                            <Button className="w-full group" asChild>
+                              <a
+                                href={article.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
                               >
-                                {tag}
-                              </Badge>
-                            ))}
+                                Read on Medium
+                                <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                              </a>
+                            </Button>
                           </div>
-                        </div>
-
-                        <Button className="w-full group" asChild>
-                          <a
-                            href={article.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Read on Medium
-                            <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                          </a>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                        </CardContent>
+                      </Card>
+                    ))}
               </div>
             </div>
 
@@ -596,79 +586,126 @@ const Home = () => {
               </p>
             </div>
 
+            {/* Project */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              {projectData.slice(0, 2).map((project, index) => (
-                <Card
-                  key={index}
-                  className="hover-lift shadow-soft border-0 bg-card/80 backdrop-blur-sm overflow-hidden"
-                >
-                  <div className="w-full aspect-video rounded-none overflow-hidden">
-                    <img
-                      src={project.coverImage}
-                      alt={project.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <CardHeader>
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <CardTitle className="text-xl mb-2">
-                          {project.title}
-                        </CardTitle>
-                        <CardDescription className="leading-relaxed">
-                          {project.description}
-                        </CardDescription>
+              {loading
+                ? [1, 2].map((i) => (
+                    <Card
+                      key={i}
+                      className="shadow-soft border-0 bg-card/80 backdrop-blur-sm overflow-hidden animate-pulse"
+                    >
+                      {/* Image Skeleton */}
+                      <div className="w-full aspect-video rounded-none overflow-hidden bg-gray-200" />
+
+                      {/* Card Header Skeleton */}
+                      <CardHeader>
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="space-y-2 flex-1">
+                            <Skeleton className="h-6 w-3/4" /> {/* Title */}
+                            <Skeleton className="h-4 w-full" />{" "}
+                            {/* Description line 1 */}
+                            <Skeleton className="h-4 w-2/3" />{" "}
+                            {/* Description line 2 */}
+                          </div>
+                          <Skeleton className="h-6 w-16 rounded-full" />{" "}
+                          {/* Featured badge */}
+                        </div>
+                      </CardHeader>
+
+                      {/* Card Content Skeleton */}
+                      <CardContent>
+                        <div className="space-y-4">
+                          <div className="flex flex-wrap gap-2">
+                            <Skeleton className="h-5 w-16 rounded-full" />
+                            <Skeleton className="h-5 w-16 rounded-full" />
+                            <Skeleton className="h-5 w-16 rounded-full" />
+                          </div>
+
+                          <div className="flex gap-2">
+                            <Skeleton className="h-8 flex-1 rounded-md" />{" "}
+                            {/* Live Demo button */}
+                            <Skeleton className="h-8 flex-1 rounded-md" />{" "}
+                            {/* Code button */}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))
+                : projectData.slice(0, 2).map((project, index) => (
+                    <Card
+                      key={index}
+                      className="hover-lift shadow-soft border-0 bg-card/80 backdrop-blur-sm overflow-hidden"
+                    >
+                      <div className="w-full aspect-video rounded-none overflow-hidden">
+                        <img
+                          src={project.coverImage}
+                          alt={project.title}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
-                      {project.featured && (
-                        <Badge variant="default" className="shrink-0 text-xs">
-                          Featured
-                        </Badge>
-                      )}
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex flex-wrap gap-2">
-                        {project.technologies.map((tech, idx) => (
-                          <Badge
-                            key={idx}
-                            variant="outline"
-                            className="text-xs"
-                          >
-                            {tech}
-                          </Badge>
-                        ))}
-                      </div>
-                      <div className="flex gap-2">
-                        <Button size="sm" asChild className="flex-1">
-                          <a
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Live Demo
-                            <ExternalLink className="ml-1 h-3 w-3" />
-                          </a>
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          asChild
-                          className="flex-1"
-                        >
-                          <a
-                            href={project.githubUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Code
-                          </a>
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                      <CardHeader>
+                        <div className="flex items-start justify-between gap-4">
+                          <div>
+                            <CardTitle className="text-xl mb-2">
+                              {project.title}
+                            </CardTitle>
+                            <CardDescription className="leading-relaxed">
+                              {project.description}
+                            </CardDescription>
+                          </div>
+                          {project.featured && (
+                            <Badge
+                              variant="default"
+                              className="shrink-0 text-xs"
+                            >
+                              Featured
+                            </Badge>
+                          )}
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          <div className="flex flex-wrap gap-2">
+                            {project.technologies.map((tech, idx) => (
+                              <Badge
+                                key={idx}
+                                variant="outline"
+                                className="text-xs"
+                              >
+                                {tech}
+                              </Badge>
+                            ))}
+                          </div>
+                          <div className="flex gap-2">
+                            <Button size="sm" asChild className="flex-1">
+                              <a
+                                href={project.liveUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                Live Demo
+                                <ExternalLink className="ml-1 h-3 w-3" />
+                              </a>
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              asChild
+                              className="flex-1"
+                            >
+                              <a
+                                href={project.githubUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                Code
+                              </a>
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
             </div>
 
             <div className="text-center">

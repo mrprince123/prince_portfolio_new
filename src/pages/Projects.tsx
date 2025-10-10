@@ -26,7 +26,7 @@ const Projects = () => {
       title: "AI Image Generator",
       description:
         "A web app that allows users to generate stunning AI-powered images using text prompts. Includes image history, download options, and category-based organization.",
-      coverImage: "/api/placeholder/400/200",
+      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       category: "fullstack",
       technologies: [
         "Next.js",
@@ -44,7 +44,7 @@ const Projects = () => {
       title: "Fitness Tracker App",
       description:
         "Native Android fitness tracking app with daily goals, activity insights, and progress analytics using Jetpack Compose and Room Database.",
-      coverImage: "/api/placeholder/400/200",
+      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       category: "android",
       technologies: [
         "Kotlin",
@@ -62,7 +62,7 @@ const Projects = () => {
       title: "DevLink – Developer Directory",
       description:
         "A platform to explore and connect with developers worldwide. Features profile creation, project showcase, and skill-based filtering.",
-      coverImage: "/api/placeholder/400/200",
+      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       category: "web",
       technologies: ["Next.js", "Prisma", "PostgreSQL", "Tailwind CSS"],
       liveUrl: "#",
@@ -74,7 +74,7 @@ const Projects = () => {
       title: "Code Rev – AI Code Review Platform",
       description:
         "An AI-powered platform that reviews code, detects bugs, and provides best-practice recommendations instantly.",
-      coverImage: "/api/placeholder/400/200",
+      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       category: "fullstack",
       technologies: ["React", "Node.js", "Express", "MongoDB", "OpenAI API"],
       liveUrl: "#",
@@ -86,7 +86,7 @@ const Projects = () => {
       title: "Blogify – Modern Blogging Platform",
       description:
         "A sleek blogging platform with markdown editor, image uploads, and SEO optimization. Built for creators to publish and grow their audience.",
-      coverImage: "/api/placeholder/400/200",
+      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       category: "web",
       technologies: ["Next.js", "MongoDB", "JWT", "Tailwind CSS"],
       liveUrl: "#",
@@ -98,7 +98,7 @@ const Projects = () => {
       title: "YouTune – Endless YouTube Playlist Player",
       description:
         "An Android app for uninterrupted YouTube playlist playback, allowing users to loop, shuffle, and enjoy continuous music or podcasts.",
-      coverImage: "/api/placeholder/400/200",
+      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
       category: "android",
       technologies: ["Kotlin", "Jetpack Compose", "YouTube API", "Coroutines"],
       liveUrl: "#",

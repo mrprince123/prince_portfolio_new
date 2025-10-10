@@ -56,7 +56,7 @@ const CourseDetails = () => {
     description:
       "Master React from basics to advanced concepts including hooks, context, testing, and modern development patterns. This comprehensive course will take you from a beginner to an advanced React developer with real-world projects and hands-on experience.",
     coverImage:
-      "https://dummyimage.com/1280x720/6366f1/ffffff?text=React+Course",
+      "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
     content: [
       {
         title: "Introduction to React",
