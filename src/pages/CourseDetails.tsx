@@ -627,7 +627,7 @@ Great job! You now have a solid understanding of React hooks. This completes our
           setCourseDetails(course);
         }
       } catch (error) {
-        console.warn("Error fetching course:", error.message);
+        console.warn("Error fetching course details:", error.message);
         setCourseDetails(course);
       } finally {
         setLoading(false);

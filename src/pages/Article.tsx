@@ -106,7 +106,7 @@ const Articles = () => {
           setArticleData(articles);
         }
       } catch (error) {
-        console.warn("Error fetching skills:", error.message);
+        console.warn("Error fetching Articles:", error.message);
         setArticleData(articles);
       } finally {
         setLoading(false);

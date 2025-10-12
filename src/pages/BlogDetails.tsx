@@ -163,7 +163,7 @@ Remember, the key is to start simple and add complexity only when needed. Happy 
           setBlogData(mockPost);
         }
       } catch (error) {
-        console.warn("Error fetching course:", error.message);
+        console.warn("Error fetching blog details:", error.message);
         setBlogData(mockPost);
       } finally {
         setLoading(false);

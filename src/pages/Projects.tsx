@@ -135,7 +135,7 @@ const Projects = () => {
           setProjectData(projects);
         }
       } catch (error) {
-        console.warn("Error fetching skills:", error.message);
+        console.warn("Error fetching Projects:", error.message);
         setProjectData(projects);
       } finally {
         setLoading(false);

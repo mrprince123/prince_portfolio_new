@@ -161,17 +161,14 @@ const Home = () => {
         clearTimeout(timeout);
 
         const serverData = response.data?.data;
-
-        console.log(serverData);
-
-        console.log(serverData);
+        
         if (serverData && serverData.length > 0) {
           setArticleData(serverData);
         } else {
           setArticleData(articles);
         }
       } catch (error) {
-        console.warn("Error fetching skills:", error.message);
+        console.warn("Error fetching articles:", error.message);
         setArticleData(articles);
       } finally {
         setLoading(false);
@@ -198,14 +195,13 @@ const Home = () => {
 
         const serverData = response.data?.data;
 
-        console.log(serverData);
         if (serverData && serverData.length > 0) {
           setProjectData(serverData);
         } else {
           setProjectData(projects);
         }
       } catch (error) {
-        console.warn("Error fetching skills:", error.message);
+        console.warn("Error fetching projects:", error.message);
         setProjectData(projects);
       } finally {
         setLoading(false);
