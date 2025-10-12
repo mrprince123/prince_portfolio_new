@@ -210,7 +210,7 @@ const Skills = () => {
         title="Skills | Prince Kumar Sahni - Software Engineer"
         description="Explore the technical skills and expertise of Prince Kumar Sahni, a Software Engineer specializing in building scalable, secure, and high-performing web and mobile applications."
         url="https://princesahni.com/skills"
-        image="https://princesahni.com/og-images/skills-page.png"
+        image="https://princesahni.com/og-images/princesahni-logo.png"
       />
 
       <div className="min-h-screen py-12 px-4 gradient-light-bg">

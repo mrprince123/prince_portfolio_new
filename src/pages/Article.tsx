@@ -223,7 +223,7 @@ const Articles = () => {
         title="Articles | Prince Kumar Sahni on Medium"
         description="Discover thought-provoking articles written by Prince Kumar Sahni on Medium — covering software engineering, system design, and tech innovations."
         url="https://princesahni.com/articles"
-        image="https://princesahni.com/og-images/articles-page.png"
+        image="https://princesahni.com/og-images/princesahni-logo.png"
       />
 
       <div className="min-h-screen py-12 px-4">

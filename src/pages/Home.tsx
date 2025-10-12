@@ -229,7 +229,7 @@ const Home = () => {
         title="Prince Kumar Sahni | Software Engineer"
         description="Passionate Software Engineer specializing in building scalable, secure, and high-performing web and mobile applications. Turning innovative ideas into impactful digital products."
         url="https://princesahni.com"
-        image="https://princesahni.com/og-images/home-page.png"
+        image="https://princesahni.com/og-images/princesahni-logo.png"
       />
 
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">

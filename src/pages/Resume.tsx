@@ -234,7 +234,7 @@ const Resume = () => {
         title="Resume | Prince Kumar Sahni - Software Engineer"
         description="View the professional resume of Prince Kumar Sahni, a Software Engineer experienced in building scalable, secure, and high-performing web and mobile applications."
         url="https://princesahni.com/resume"
-        image="https://princesahni.com/og-images/resume-page.png"
+        image="https://princesahni.com/og-images/princesahni-logo.png"
       />
 
       <div className="min-h-screen py-12 px-4 bg-gradient-to-br from-background via-background to-muted/30">

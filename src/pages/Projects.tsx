@@ -217,7 +217,7 @@ const Projects = () => {
         title="Projects | Prince Kumar Sahni - Software Engineer"
         description="Explore projects built by Prince Kumar Sahni showcasing expertise in creating scalable, secure, and high-performing web and mobile applications."
         url="https://princesahni.com/projects"
-        image="https://princesahni.com/og-images/projects-page.png"
+        image="https://princesahni.com/og-images/princesahni-logo.png"
       />
 
       <div className="min-h-screen py-12 px-4">

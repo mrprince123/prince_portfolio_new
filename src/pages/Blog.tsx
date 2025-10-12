@@ -42,9 +42,25 @@ const Blog = () => {
       coverImage: placeholder,
       readTime: "8 min read",
       createdAt: "2023-12-15",
-      tags: ["React", "JavaScript", "Architecture"],
+      tags: [
+        {
+          name: "React",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b311",
+        },
+        {
+          name: "JavaScript",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b312",
+        },
+        {
+          name: "Architecture",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b313",
+        },
+      ],
       featured: true,
-      author: "Your Name",
+      author: "Prince Kumar Sahni",
     },
     {
       id: 2,
@@ -56,9 +72,25 @@ const Blog = () => {
       coverImage: placeholder,
       readTime: "6 min read",
       publishedAt: "2023-12-10",
-      tags: ["CSS", "Frontend", "Design"],
+      tags: [
+        {
+          name: "CSS",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b314",
+        },
+        {
+          name: "Frontend",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b315",
+        },
+        {
+          name: "Design",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b316",
+        },
+      ],
       featured: false,
-      author: "Your Name",
+      author: "Prince Kumar Sahni",
     },
     {
       id: 3,
@@ -70,9 +102,25 @@ const Blog = () => {
       coverImage: placeholder,
       readTime: "12 min read",
       publishedAt: "2023-12-05",
-      tags: ["TypeScript", "JavaScript", "Development"],
+      tags: [
+        {
+          name: "TypeScript",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b317",
+        },
+        {
+          name: "JavaScript",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b318",
+        },
+        {
+          name: "Development",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b319",
+        },
+      ],
       featured: true,
-      author: "Your Name",
+      author: "Prince Kumar Sahni",
     },
     {
       id: 4,
@@ -84,9 +132,25 @@ const Blog = () => {
       coverImage: placeholder,
       readTime: "10 min read",
       publishedAt: "2023-11-28",
-      tags: ["API", "Backend", "Design"],
+      tags: [
+        {
+          name: "API",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b320",
+        },
+        {
+          name: "Backend",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b321",
+        },
+        {
+          name: "Design",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b322",
+        },
+      ],
       featured: false,
-      author: "Your Name",
+      author: "Prince Kumar Sahni",
     },
     {
       id: 5,
@@ -98,9 +162,25 @@ const Blog = () => {
       coverImage: placeholder,
       readTime: "15 min read",
       publishedAt: "2023-11-20",
-      tags: ["Performance", "Optimization", "Web Development"],
+      tags: [
+        {
+          name: "Performance",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b323",
+        },
+        {
+          name: "Optimization",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b324",
+        },
+        {
+          name: "Web Development",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b325",
+        },
+      ],
       featured: true,
-      author: "Your Name",
+      author: "Prince Kumar Sahni",
     },
     {
       id: 6,
@@ -112,9 +192,25 @@ const Blog = () => {
       coverImage: placeholder,
       readTime: "7 min read",
       publishedAt: "2023-11-15",
-      tags: ["Docker", "DevOps", "Development"],
+      tags: [
+        {
+          name: "Docker",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b326",
+        },
+        {
+          name: "DevOps",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b327",
+        },
+        {
+          name: "Development",
+          icon: "https://www.google.com",
+          _id: "68e2a5ca897a7ae74196b328",
+        },
+      ],
       featured: false,
-      author: "Your Name",
+      author: "Prince Kumar Sahni",
     },
   ];
 
@@ -240,7 +336,7 @@ const Blog = () => {
         title="Blog | Insights & Tech Articles by Prince Kumar Sahni"
         description="Read insightful blogs and in-depth articles by Prince Kumar Sahni on software engineering, system design, programming, and technology trends."
         url="https://princesahni.com/blog"
-        image="https://princesahni.com/og-images/blog-page.png"
+        image="https://princesahni.com/og-images/princesahni-logo.png"
       />
 
       <div className="min-h-screen py-12 px-4">
@@ -278,7 +374,7 @@ const Blog = () => {
                   className="capitalize"
                 >
                   <Tag className="h-3 w-3 mr-1" />
-                  {tag}
+                  {tag.name}
                 </Button>
               ))}
             </div>
@@ -342,7 +438,7 @@ const Blog = () => {
                               variant="outline"
                               className="text-xs"
                             >
-                              {typeof tag === "string" ? tag : tag.name}
+                              {tag.name}
                             </Badge>
                           ))}
                         </div>
@@ -416,7 +512,7 @@ const Blog = () => {
                               variant="outline"
                               className="text-xs"
                             >
-                              {typeof tag === "string" ? tag : tag.name}
+                              {tag.name}
                             </Badge>
                           ))}
                         </div>

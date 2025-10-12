@@ -103,6 +103,7 @@ const Footer = () => {
                 const Icon = social.icon;
                 return (
                   <a
+                    target="_blank"
                     key={social.name}
                     href={social.href}
                     className={`p-2 rounded-lg bg-muted text-muted-foreground transition-colors ${social.color} hover:bg-accent`}

@@ -294,7 +294,7 @@ const Courses = () => {
         title="Courses | Learn with Prince Kumar Sahni"
         description="Learn programming, software engineering, and modern development practices with Prince Kumar Sahni through high-quality, practical courses."
         url="https://princesahni.com/courses"
-        image="https://princesahni.com/og-images/courses-page.png"
+        image="https://princesahni.com/og-images/princesahni-logo.png"
       />
 
       <div className="min-h-screen py-12 px-4 bg-gradient-to-br from-background via-background to-muted/30">

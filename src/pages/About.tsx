@@ -60,7 +60,7 @@ const About = () => {
         title="About | Prince Kumar Sahni - Software Engineer"
         description="Learn more about Prince Kumar Sahni, a passionate Software Engineer dedicated to building scalable, secure, and high-performing applications."
         url="https://princesahni.com/about"
-        image="https://princesahni.com/og-images/about-page.png"
+        image="https://princesahni.com/og-images/princesahni-logo.png"
       />
 
       <div className="min-h-screen py-12 px-4">
