@@ -129,7 +129,6 @@ const Projects = () => {
 
         const serverData = response.data?.data;
 
-        console.log(serverData);
         if (serverData && serverData.length > 0) {
           setProjectData(serverData);
         } else {

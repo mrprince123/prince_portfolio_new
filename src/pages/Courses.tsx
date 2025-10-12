@@ -180,7 +180,6 @@ const Courses = () => {
 
         const response = await axios.get(apiUrl, { signal: controller.signal });
 
-        console.log(response.data.data);
         clearTimeout(timeout);
 
         const serverData = response.data?.data;

@@ -100,9 +100,6 @@ const Articles = () => {
 
         const serverData = response.data?.data;
 
-        console.log(serverData);
-
-        console.log(serverData);
         if (serverData && serverData.length > 0) {
           setArticleData(serverData);
         } else {

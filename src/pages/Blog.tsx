@@ -53,8 +53,7 @@ const Blog = () => {
         "Discover the latest CSS features and techniques that can enhance user experience, from container queries to scroll-driven animations.",
       content:
         "CSS has evolved significantly over the past few years. Modern browsers now support features that were once impossible...",
-      coverImage:
-        placeholder,
+      coverImage: placeholder,
       readTime: "6 min read",
       publishedAt: "2023-12-10",
       tags: ["CSS", "Frontend", "Design"],
@@ -68,8 +67,7 @@ const Blog = () => {
         "A complete journey through TypeScript, covering basic types, advanced patterns, and real-world application development strategies.",
       content:
         "TypeScript has become the standard for modern JavaScript development. This guide will take you from the basics...",
-      coverImage:
-        placeholder,
+      coverImage: placeholder,
       readTime: "12 min read",
       publishedAt: "2023-12-05",
       tags: ["TypeScript", "JavaScript", "Development"],
@@ -83,8 +81,7 @@ const Blog = () => {
         "Learn how to design RESTful APIs that are intuitive, performant, and maintainable. Covers authentication, versioning, and documentation.",
       content:
         "Good API design is crucial for successful web applications. In this post, we'll explore the principles...",
-      coverImage:
-        placeholder,
+      coverImage: placeholder,
       readTime: "10 min read",
       publishedAt: "2023-11-28",
       tags: ["API", "Backend", "Design"],
@@ -98,8 +95,7 @@ const Blog = () => {
         "Comprehensive guide to web performance optimization, covering everything from lazy loading to code splitting and caching strategies.",
       content:
         "Performance is crucial for user experience and SEO. This guide covers various techniques to make your web applications faster...",
-      coverImage:
-        placeholder,
+      coverImage: placeholder,
       readTime: "15 min read",
       publishedAt: "2023-11-20",
       tags: ["Performance", "Optimization", "Web Development"],
@@ -113,8 +109,7 @@ const Blog = () => {
         "Learn how to use Docker to containerize your applications, create consistent development environments, and streamline deployment.",
       content:
         "Docker has revolutionized how we develop and deploy applications. For frontend developers, it offers many benefits...",
-      coverImage:
-       placeholder,
+      coverImage: placeholder,
       readTime: "7 min read",
       publishedAt: "2023-11-15",
       tags: ["Docker", "DevOps", "Development"],
@@ -347,7 +342,7 @@ const Blog = () => {
                               variant="outline"
                               className="text-xs"
                             >
-                              {tag.name}
+                              {typeof tag === "string" ? tag : tag.name}
                             </Badge>
                           ))}
                         </div>
@@ -421,7 +416,7 @@ const Blog = () => {
                               variant="outline"
                               className="text-xs"
                             >
-                              {tag.name}
+                              {typeof tag === "string" ? tag : tag.name}
                             </Badge>
                           ))}
                         </div>
