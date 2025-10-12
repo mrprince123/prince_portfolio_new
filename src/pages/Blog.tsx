@@ -22,6 +22,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import axios from "axios";
 import { Seo } from "@/components/seo";
 const apiUrl = import.meta.env.VITE_BLOG_URL;
+import placeholder from "@/assets/placeholder.jpg";
 
 const Blog = () => {
   const [loading, setLoading] = useState(true);
@@ -38,8 +39,7 @@ const Blog = () => {
         "Learn how to structure large-scale React applications with proven patterns, state management strategies, and performance optimization techniques.",
       content:
         "In this comprehensive guide, we'll explore the architectural decisions that make React applications maintainable and scalable...",
-      coverImage:
-        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+      coverImage: placeholder,
       readTime: "8 min read",
       createdAt: "2023-12-15",
       tags: ["React", "JavaScript", "Architecture"],
@@ -49,12 +49,12 @@ const Blog = () => {
     {
       id: 2,
       title: "Modern CSS Techniques for Better User Experience",
-      excerpt:
+      description:
         "Discover the latest CSS features and techniques that can enhance user experience, from container queries to scroll-driven animations.",
       content:
         "CSS has evolved significantly over the past few years. Modern browsers now support features that were once impossible...",
       coverImage:
-        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+        placeholder,
       readTime: "6 min read",
       publishedAt: "2023-12-10",
       tags: ["CSS", "Frontend", "Design"],
@@ -64,12 +64,12 @@ const Blog = () => {
     {
       id: 3,
       title: "TypeScript: From Beginner to Advanced Developer",
-      excerpt:
+      description:
         "A complete journey through TypeScript, covering basic types, advanced patterns, and real-world application development strategies.",
       content:
         "TypeScript has become the standard for modern JavaScript development. This guide will take you from the basics...",
       coverImage:
-        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+        placeholder,
       readTime: "12 min read",
       publishedAt: "2023-12-05",
       tags: ["TypeScript", "JavaScript", "Development"],
@@ -79,12 +79,12 @@ const Blog = () => {
     {
       id: 4,
       title: "API Design Best Practices for Modern Web Development",
-      excerpt:
+      description:
         "Learn how to design RESTful APIs that are intuitive, performant, and maintainable. Covers authentication, versioning, and documentation.",
       content:
         "Good API design is crucial for successful web applications. In this post, we'll explore the principles...",
       coverImage:
-        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+        placeholder,
       readTime: "10 min read",
       publishedAt: "2023-11-28",
       tags: ["API", "Backend", "Design"],
@@ -94,12 +94,12 @@ const Blog = () => {
     {
       id: 5,
       title: "Performance Optimization Techniques for Web Applications",
-      excerpt:
+      description:
         "Comprehensive guide to web performance optimization, covering everything from lazy loading to code splitting and caching strategies.",
       content:
         "Performance is crucial for user experience and SEO. This guide covers various techniques to make your web applications faster...",
       coverImage:
-        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+        placeholder,
       readTime: "15 min read",
       publishedAt: "2023-11-20",
       tags: ["Performance", "Optimization", "Web Development"],
@@ -109,12 +109,12 @@ const Blog = () => {
     {
       id: 6,
       title: "Getting Started with Docker for Frontend Developers",
-      excerpt:
+      description:
         "Learn how to use Docker to containerize your applications, create consistent development environments, and streamline deployment.",
       content:
         "Docker has revolutionized how we develop and deploy applications. For frontend developers, it offers many benefits...",
       coverImage:
-        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+       placeholder,
       readTime: "7 min read",
       publishedAt: "2023-11-15",
       tags: ["Docker", "DevOps", "Development"],

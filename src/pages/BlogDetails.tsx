@@ -9,6 +9,7 @@ import { Calendar, Clock, Heart, ArrowLeft, Share2, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 const apiUrl = import.meta.env.VITE_BLOG_URL;
+import placeholder from "@/assets/placeholder.jpg";
 
 
 interface Tag {
@@ -46,7 +47,7 @@ const BlogDetail = () => {
     description:
       "Learn how to structure large-scale React applications with proven patterns, state management strategies, and performance optimization techniques.",
     coverImage:
-      "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+      placeholder,
     content: `
 # Introduction
 

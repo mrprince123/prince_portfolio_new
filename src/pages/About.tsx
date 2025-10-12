@@ -8,6 +8,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin, Briefcase, GraduationCap } from "lucide-react";
 import { Seo } from "@/components/seo";
+import { CometCard } from "@/components/ui/commet-card";
+import princesahni from "@/assets/princesahni.jpg";
 
 const About = () => {
   const experiences = [
@@ -43,6 +45,8 @@ const About = () => {
     "Technical Writing",
     "AI/ML Research",
     "Mobile App Developer",
+    "Medium Article",
+    "Local Guide at Google Map",
     "Photography",
     "Audiophile",
     "Cricket",
@@ -89,9 +93,9 @@ const About = () => {
               <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
                 {/* Left Side - Text */}
                 <div className="flex-1 flex flex-col gap-4">
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed text-justify">
                     Hi! I'm <strong>Prince Kumar Sahni</strong>, a passionate{" "}
-                    <strong>Full-Stack Developer</strong> who loves building
+                    <strong>Software Engineer</strong> who loves building
                     impactful digital products. Over the past few years, I’ve
                     worked on everything from
                     <strong> Android apps</strong> to{" "}
@@ -99,35 +103,84 @@ const About = () => {
                     on performance, scalability, and user experience.
                   </p>
 
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed text-justify">
+                    I take pride in approaching every project with a
+                    problem-solving mindset. Whether it’s optimizing
+                    performance, designing scalable architectures, or debugging
+                    complex issues, I enjoy breaking down challenges into clear,
+                    actionable steps. My focus is always on writing clean,
+                    efficient, and maintainable code that drives real results
+                    and makes development a craft, not just a task.
+                  </p>
+
+                  <p className="text-muted-foreground leading-relaxed text-justify">
                     My journey began in college when I built my first app — and
-                    I’ve been creating ever since. Today, I specialize in modern
-                    technologies like <strong>React.js</strong>,{" "}
-                    <strong>Node.js</strong>, <strong>Express.js</strong>, and{" "}
-                    <strong>MongoDB</strong>. I enjoy solving complex problems,
-                    turning ideas into clean, maintainable code, and learning
-                    new tools that push my skills forward.
+                    since then, I’ve been. <strong>passionate</strong> about
+                    creating impactful software. I focus on building reliable,
+                    high-quality products that solve real problems — no matter
+                    what <strong>technology</strong> it takes. For me, it’s not
+                    just about code; it’s about delivering software that works,
+                    scales, and makes a difference.
                   </p>
                 </div>
 
                 {/* Right Side - Image */}
                 <div className="flex-shrink-0">
-                  <img
-                    className="rounded-lg w-64 h-64 object-cover shadow-md"
-                    src="https://avatars.githubusercontent.com/u/79322933?v=4"
+                  {/* <img
+                    className="rounded-lg w-64 h-84 object-cover shadow-md"
+                    src={princesahni}
                     alt="Prince Kumar Sahni Picture"
-                  />
+                  /> */}
+
+                  <CometCard>
+                    <button
+                      type="button"
+                      className="flex w-80 cursor-pointer flex-col items-stretch rounded-[16px] border-0 bg-[#1F2121] p-2 md:p-4"
+                      aria-label="View invite F7RA"
+                      style={{
+                        transformStyle: "preserve-3d",
+                        transform: "none",
+                        opacity: 1,
+                      }}
+                    >
+                      <div className="mx-2 flex-1">
+                        <div className="relative mt-2 aspect-[3/4] w-full">
+                          <img
+                            loading="lazy"
+                            className="absolute inset-0 h-full w-full rounded-[16px] bg-[#000000] object-cover "
+                            alt="Prince Kumar Sahni Image"
+                            src={princesahni}
+                            style={{
+                              boxShadow: "rgba(0, 0, 0, 0.05) 0px 5px 6px 0px",
+                              opacity: 1,
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div className="mt-2 flex flex-shrink-0 items-center justify-between p-4 font-mono text-white">
+                        <div className="text-xs">Prince Kumar Sahni</div>
+                        <div className="text-xs text-gray-300 opacity-50">
+                          #Sniper XP
+                        </div>
+                      </div>
+                    </button>
+                  </CometCard>
                 </div>
               </div>
 
               {/* Bottom Section - Full Width Paragraph */}
               <div className="mt-6">
-                <p className="text-muted-foreground leading-relaxed">
-                  Beyond coding, I run <strong>RoboKatha</strong> — India’s
-                  first AI-powered Hindi storytelling YouTube channel. I also
-                  write about <strong>technology, AI, and programming</strong>{" "}
-                  on my blog to share my experiences and insights with other
-                  developers.
+                <p className="text-muted-foreground leading-relaxed text-justify">
+                  Beyond coding, I love sharing knowledge and creativity in
+                  different forms. I write tech articles on{" "}
+                  <strong>Medium</strong>, create videos on my
+                  <strong> YouTube channel</strong>, and explore the world
+                  through my lens as a passionate <strong>photographer</strong>.
+                  I’m also an
+                  <strong> audiophile</strong> who appreciates good sound and
+                  contribute as a<strong> Local Guide</strong> on Google Maps,
+                  where my photos and reviews have crossed over{" "}
+                  <strong>600K+ views</strong>.
                 </p>
               </div>
             </CardContent>

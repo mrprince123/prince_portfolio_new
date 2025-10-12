@@ -13,7 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import axios from "axios";
 import { Seo } from "@/components/seo";
 const apiUrl = import.meta.env.VITE_PROJECT_URL;
-
+import placeholder from "@/assets/placeholder.jpg";
 
 const Projects = () => {
   const [loading, setLoading] = useState(true);
@@ -26,7 +26,7 @@ const Projects = () => {
       title: "AI Image Generator",
       description:
         "A web app that allows users to generate stunning AI-powered images using text prompts. Includes image history, download options, and category-based organization.",
-      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+      coverImage: placeholder,
       category: "fullstack",
       technologies: [
         "Next.js",
@@ -44,7 +44,7 @@ const Projects = () => {
       title: "Fitness Tracker App",
       description:
         "Native Android fitness tracking app with daily goals, activity insights, and progress analytics using Jetpack Compose and Room Database.",
-      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+      coverImage: placeholder,
       category: "android",
       technologies: [
         "Kotlin",
@@ -62,7 +62,7 @@ const Projects = () => {
       title: "DevLink – Developer Directory",
       description:
         "A platform to explore and connect with developers worldwide. Features profile creation, project showcase, and skill-based filtering.",
-      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+      coverImage: placeholder,
       category: "web",
       technologies: ["Next.js", "Prisma", "PostgreSQL", "Tailwind CSS"],
       liveUrl: "#",
@@ -74,7 +74,7 @@ const Projects = () => {
       title: "Code Rev – AI Code Review Platform",
       description:
         "An AI-powered platform that reviews code, detects bugs, and provides best-practice recommendations instantly.",
-      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+      coverImage: placeholder,
       category: "fullstack",
       technologies: ["React", "Node.js", "Express", "MongoDB", "OpenAI API"],
       liveUrl: "#",
@@ -86,7 +86,7 @@ const Projects = () => {
       title: "Blogify – Modern Blogging Platform",
       description:
         "A sleek blogging platform with markdown editor, image uploads, and SEO optimization. Built for creators to publish and grow their audience.",
-      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+      coverImage: placeholder,
       category: "web",
       technologies: ["Next.js", "MongoDB", "JWT", "Tailwind CSS"],
       liveUrl: "#",
@@ -98,7 +98,7 @@ const Projects = () => {
       title: "YouTune – Endless YouTube Playlist Player",
       description:
         "An Android app for uninterrupted YouTube playlist playback, allowing users to loop, shuffle, and enjoy continuous music or podcasts.",
-      coverImage: "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+      coverImage: placeholder,
       category: "android",
       technologies: ["Kotlin", "Jetpack Compose", "YouTube API", "Coroutines"],
       liveUrl: "#",
@@ -123,10 +123,7 @@ const Projects = () => {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 3000);
 
-        const response = await axios.get(
-          apiUrl,
-          { signal: controller.signal }
-        );
+        const response = await axios.get(apiUrl, { signal: controller.signal });
 
         clearTimeout(timeout);
 
@@ -163,6 +160,18 @@ const Projects = () => {
             <Skeleton className="h-12 w-64 mx-auto mb-6" />
             <Skeleton className="h-6 w-96 mx-auto mb-2" />
             <Skeleton className="h-6 w-80 mx-auto" />
+          </div>
+
+          {/* Stats Skeleton */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            {[1, 2, 3, 4].map((i) => (
+              <Card key={i} className="text-center shadow-soft">
+                <CardContent className="pt-6">
+                  <Skeleton className="h-6 w-16 mx-auto mb-2" />
+                  <Skeleton className="h-4 w-24 mx-auto" />
+                </CardContent>
+              </Card>
+            ))}
           </div>
 
           {/* Category Filter Skeleton */}
@@ -224,6 +233,48 @@ const Projects = () => {
               and solutions. Each project represents a unique challenge and
               learning experience.
             </p>
+          </div>
+
+          {/* Quick Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <Card className="text-center shadow-soft">
+              <CardContent className="pt-6">
+                <div className="text-2xl font-bold text-gradient mb-2">
+                  {projectData.reduce(
+                    (acc, project) => acc + project.length,
+                    0
+                  )}
+                  +
+                </div>
+                <p className="text-sm text-muted-foreground">Technologies</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center shadow-soft">
+              <CardContent className="pt-6">
+                <div className="text-2xl font-bold text-gradient mb-2">2+</div>
+                <p className="text-sm text-muted-foreground">
+                  Years Experience
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="text-center shadow-soft">
+              <CardContent className="pt-6">
+                <div className="text-2xl font-bold text-gradient mb-2">
+                  {projectData.length}
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Project Categories
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="text-center shadow-soft">
+              <CardContent className="pt-6">
+                <div className="text-2xl font-bold text-gradient mb-2">
+                  {projectData.length}
+                </div>
+                <p className="text-sm text-muted-foreground">Total Projects</p>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Category Filter */}

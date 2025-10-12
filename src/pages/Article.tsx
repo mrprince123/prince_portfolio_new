@@ -22,6 +22,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import axios from "axios";
 import { Seo } from "@/components/seo";
 const apiUrl = import.meta.env.VITE_ARTICLE_URL;
+import placeholder from "@/assets/placeholder.jpg";
+
 
 const Articles = () => {
   const [loading, setLoading] = useState(false);
@@ -36,7 +38,7 @@ const Articles = () => {
       description:
         "Exploring how React Server Components and Concurrent Features are reshaping the way we build modern web applications.",
       coverImage:
-        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+        placeholder,
       publishedAt: "2023-12-20",
       articleLink: "https://medium.com/@yourname/react-server-components",
       tags: ["React", "JavaScript", "Frontend"],
@@ -49,7 +51,7 @@ const Articles = () => {
       description:
         "A deep dive into Node.js streams, showing how to process large amounts of data efficiently without blocking the event loop.",
       coverImage:
-        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+        placeholder,
       publishedAt: "2024-01-10",
       articleLink: "https://medium.com/@yourname/nodejs-streams",
       tags: ["Node.js", "Backend", "JavaScript"],
@@ -62,7 +64,7 @@ const Articles = () => {
       description:
         "Learn the principles, benefits, and challenges of adopting a microservices architecture for scalable and maintainable applications.",
       coverImage:
-        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+        placeholder,
       publishedAt: "2024-02-05",
       articleLink: "https://medium.com/@yourname/microservices-architecture",
       tags: ["Microservices", "System Design", "Backend"],
@@ -75,7 +77,7 @@ const Articles = () => {
       description:
         "A practical comparison between CSS Grid and Flexbox, helping you decide which layout system is best for different scenarios.",
       coverImage:
-        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+      placeholder,
       publishedAt: "2024-03-01",
       articleLink: "https://medium.com/@yourname/css-grid-vs-flexbox",
       tags: ["CSS", "Frontend", "Web Design"],

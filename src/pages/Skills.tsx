@@ -23,7 +23,6 @@ import * as LucideIcons from "lucide-react";
 import { Seo } from "@/components/seo";
 const apiUrl = import.meta.env.VITE_SKILL_URL;
 
-
 const Skills = () => {
   const [loading, setLoading] = useState(true);
   const [skillsData, setSkillsData] = useState([]);
@@ -126,11 +125,7 @@ const Skills = () => {
       try {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 2000);
-
-        const response = await axios.get(
-          apiUrl,
-          { signal: controller.signal }
-        );
+        const response = await axios.get(apiUrl, { signal: controller.signal });
 
         clearTimeout(timeout);
 
@@ -168,6 +163,47 @@ const Skills = () => {
     return iconMap[categoryName] || Code;
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen py-12 px-4">
+        <div className="container mx-auto max-w-7xl">
+          {/* Header Skeleton */}
+          <div className="text-center mb-12">
+            <Skeleton className="h-12 w-64 mx-auto mb-6" />
+            <Skeleton className="h-6 w-96 mx-auto mb-2" />
+            <Skeleton className="h-6 w-80 mx-auto" />
+          </div>
+
+          {/* Stats Skeleton */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            {[1, 2, 3, 4].map((i) => (
+              <Card key={i} className="text-center shadow-soft">
+                <CardContent className="pt-6">
+                  <Skeleton className="h-6 w-16 mx-auto mb-2" />
+                  <Skeleton className="h-4 w-24 mx-auto" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Skill Grid Skeleton */}
+          <div className="space-y-12">
+            {[1, 2, 3].map((section) => (
+              <div key={section} className="space-y-4">
+                <Skeleton className="h-20 w-full rounded-lg" />
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+                  {[1, 2, 3, 4].map((i) => (
+                    <Skeleton key={i} className="h-24 w-full rounded-lg" />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <Seo
@@ -190,173 +226,130 @@ const Skills = () => {
             </p>
           </div>
 
-          {loading ? (
-            /* Loading State */
-            <div className="space-y-12">
-              {[1, 2, 3].map((section) => (
-                <div key={section} className="space-y-4">
-                  <Skeleton className="h-12 w-64 rounded-lg" />
-                  <Skeleton className="h-20 w-full rounded-lg" />
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-                    {[1, 2, 3, 4].map((i) => (
-                      <Skeleton key={i} className="h-24 w-full rounded-lg" />
-                    ))}
-                  </div>
+          {/* Quick Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <Card className="text-center shadow-soft">
+              <CardContent className="pt-6">
+                <div className="text-2xl font-bold text-gradient mb-2">
+                  {skillsData.reduce(
+                    (acc, category) => acc + category.skillsList.length,
+                    0
+                  )}
+                  +
                 </div>
-              ))}
-            </div>
-          ) : (
-            /* Skills Content */
-            <>
-              {/* All Skills Categories */}
-              <div className="space-y-12 mb-12">
-                {skillsData.map((category, categoryIndex) => {
-                  const CategoryIcon = getCategoryIcon(category.name);
-                  return (
-                    <div
-                      key={category._id}
-                      className="animate-fade-in"
-                      style={{ animationDelay: `${categoryIndex * 0.1}s` }}
-                    >
-                      <Card className="shadow-elegant border-2 overflow-hidden">
-                        <CardHeader className="bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 border-b">
-                          <div className="flex items-center gap-3 mb-2">
-                            <div className="p-3 rounded-xl bg-primary/10 text-primary shadow-soft">
-                              <CategoryIcon className="h-6 w-6" />
-                            </div>
-                            <div>
-                              <CardTitle className="text-2xl">
-                                {category.name}
-                              </CardTitle>
-                              <CardDescription className="text-base mt-1">
-                                {category.description}
-                              </CardDescription>
-                            </div>
-                          </div>
-                        </CardHeader>
-                        <CardContent className="pt-6">
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                            {category.skillsList.map((skill, index) => {
-                              const SkillIcon = getIconComponent(skill.icon);
-                              return (
-                                <Card
-                                  key={index}
-                                  className="hover-lift shadow-soft border transition-all"
-                                >
-                                  <CardContent className="p-4">
-                                    <div className="flex items-center gap-3">
-                                      <div className="p-2 rounded-lg bg-primary/10 text-primary shrink-0">
-                                        <SkillIcon className="h-5 w-5" />
-                                      </div>
-                                      <div className="flex-1 min-w-0">
-                                        <p className="font-semibold truncate">
-                                          {skill.name}
-                                        </p>
-                                        <Badge
-                                          variant="outline"
-                                          className="text-xs mt-1"
-                                        >
-                                          <CheckCircle className="h-3 w-3 mr-1" />
-                                          Proficient
-                                        </Badge>
-                                      </div>
-                                    </div>
-                                  </CardContent>
-                                </Card>
-                              );
-                            })}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  );
-                })}
-              </div>
+                <p className="text-sm text-muted-foreground">Technologies</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center shadow-soft">
+              <CardContent className="pt-6">
+                <div className="text-2xl font-bold text-gradient mb-2">2+</div>
+                <p className="text-sm text-muted-foreground">
+                  Years Experience
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="text-center shadow-soft">
+              <CardContent className="pt-6">
+                <div className="text-2xl font-bold text-gradient mb-2">
+                  {skillsData.length}
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Skill Categories
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="text-center shadow-soft">
+              <CardContent className="pt-6">
+                <div className="text-2xl font-bold text-gradient mb-2">10+</div>
+                <p className="text-sm text-muted-foreground">Projects Built</p>
+              </CardContent>
+            </Card>
+          </div>
 
-              {/* Quick Stats */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <Card className="text-center shadow-soft">
-                  <CardContent className="pt-6">
-                    <div className="text-2xl font-bold text-gradient mb-2">
-                      {skillsData.reduce(
-                        (acc, category) => acc + category.skillsList.length,
-                        0
-                      )}
-                      +
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      Technologies
-                    </p>
-                  </CardContent>
-                </Card>
-                <Card className="text-center shadow-soft">
-                  <CardContent className="pt-6">
-                    <div className="text-2xl font-bold text-gradient mb-2">
-                      5+
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      Years Experience
-                    </p>
-                  </CardContent>
-                </Card>
-                <Card className="text-center shadow-soft">
-                  <CardContent className="pt-6">
-                    <div className="text-2xl font-bold text-gradient mb-2">
-                      {skillsData.length}
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      Skill Categories
-                    </p>
-                  </CardContent>
-                </Card>
-                <Card className="text-center shadow-soft">
-                  <CardContent className="pt-6">
-                    <div className="text-2xl font-bold text-gradient mb-2">
-                      100+
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      Projects Built
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Learning Journey */}
-              <Card className="shadow-soft">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Clock className="h-5 w-5 text-primary" />
-                    Continuous Learning
-                  </CardTitle>
-                  <CardDescription>
-                    Currently exploring and improving my skills in these areas
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    {[
-                      "AI/ML",
-                      "Web3",
-                      "Rust",
-                      "Go",
-                      "Kubernetes",
-                      "Microservices",
-                      "GraphQL",
-                      "Blockchain",
-                    ].map((tech, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center gap-2 p-2 rounded-lg bg-muted/50"
-                      >
-                        <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                        <span className="text-sm font-medium">{tech}</span>
+          {/* All Skills Categories */}
+          <div className="space-y-12 mb-12">
+            {skillsData.map((category, categoryIndex) => {
+              const CategoryIcon = getCategoryIcon(category.name);
+              return (
+                <div
+                  key={category._id}
+                  className="animate-fade-in"
+                  style={{ animationDelay: `${categoryIndex * 0.1}s` }}
+                >
+                  <Card className="shadow-elegant border-2 overflow-hidden">
+                    <CardHeader className="bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 border-b">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="p-3 rounded-xl bg-primary/10 text-primary shadow-soft">
+                          <CategoryIcon className="h-6 w-6" />
+                        </div>
+                        <div>
+                          <CardTitle className="text-2xl">
+                            {category.name}
+                          </CardTitle>
+                          <CardDescription className="text-base mt-1">
+                            {category.description}
+                          </CardDescription>
+                        </div>
                       </div>
-                    ))}
+                    </CardHeader>
+                    <CardContent className="pt-6">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        {category.skillsList.map((skill, index) => {
+                          const SkillIcon = getIconComponent(skill.icon);
+                          return (
+                            <div
+                              key={index}
+                              className="flex items-center gap-2 p-2 rounded-lg bg-muted/50"
+                            >
+                              <SkillIcon className="h-5 w-5 text-primary shrink-0" />
+                              <span className="text-sm font-medium">
+                                {skill.name}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Learning Journey */}
+          <Card className="shadow-soft">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Clock className="h-5 w-5 text-primary" />
+                Continuous Learning
+              </CardTitle>
+              <CardDescription>
+                Currently exploring and improving my skills in these areas
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {[
+                  "AI/ML",
+                  "Web3",
+                  "Rust",
+                  "Go",
+                  "Kubernetes",
+                  "Microservices",
+                  "GraphQL",
+                  "Blockchain",
+                ].map((tech, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center gap-2 p-2 rounded-lg bg-muted/50"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                    <span className="text-sm font-medium">{tech}</span>
                   </div>
-                </CardContent>
-              </Card>
-            </>
-          )}
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </>
