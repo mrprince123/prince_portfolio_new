@@ -403,19 +403,11 @@ const Courses = () => {
           </div>
 
           {/* All Courses */}
-          <div>
+          <div className="">
             <h2 className="text-2xl font-bold mb-6">All Courses</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {courseData.map((course) => (
-                <Card key={course.id} className="hover-lift shadow-soft">
-                  {/* <div className="aspect-video bg-muted flex items-center justify-center">
-                  <div className="text-center">
-                    <Play className="h-8 w-8 mx-auto text-primary mb-2" />
-                    <p className="text-xs text-muted-foreground">
-                      {course.lessons} lessons
-                    </p>
-                  </div>
-                </div> */}
+                <Card key={course.id} className="hover-lift shadow-soft overflow-hidden">
 
                   {/* Cover Image */}
                   <div className="w-full aspect-video rounded-none overflow-hidden">
