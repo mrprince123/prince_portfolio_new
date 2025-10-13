@@ -379,7 +379,7 @@ const Articles = () => {
 
                         <Button className="w-full group" asChild>
                           <a
-                            href={article.url}
+                            href={article.articleLink}
                             target="_blank"
                             rel="noopener noreferrer"
                           >
