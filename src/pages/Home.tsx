@@ -30,7 +30,8 @@ import placeholder from "@/assets/placeholder.jpg";
 
 const Home = () => {
   const [articleData, setArticleData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [projectloading, setProjectLoading] = useState(false);
+  const [articleloading, setArticleLoading] = useState(false);
   const [projectData, setProjectData] = useState([]);
 
   const projects = [
@@ -148,7 +149,7 @@ const Home = () => {
   // Articles
   useEffect(() => {
     const loadArticles = async () => {
-      setLoading(true);
+      setArticleLoading(true);
 
       try {
         const controller = new AbortController();
@@ -171,7 +172,7 @@ const Home = () => {
         console.warn("Error fetching articles:", error.message);
         setArticleData(articles);
       } finally {
-        setLoading(false);
+        setArticleLoading(false);
       }
     };
 
@@ -181,7 +182,7 @@ const Home = () => {
   // Projects
   useEffect(() => {
     const loadProjects = async () => {
-      setLoading(true);
+      setProjectLoading(true);
 
       try {
         const controller = new AbortController();
@@ -204,7 +205,7 @@ const Home = () => {
         console.warn("Error fetching projects:", error.message);
         setProjectData(projects);
       } finally {
-        setLoading(false);
+        setProjectLoading(false);
       }
     };
 
@@ -423,7 +424,7 @@ const Home = () => {
             {/* Articles  */}
             <div className="mb-12">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {loading
+                {articleloading
                   ? [1, 2, 3].map((i) => (
                       <Card
                         key={i}
@@ -481,7 +482,7 @@ const Home = () => {
                           <img
                             src={article.coverImage}
                             alt={article.title}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-fill"
                           />
                         </div>
 
@@ -541,7 +542,7 @@ const Home = () => {
 
                             <Button className="w-full group" asChild>
                               <a
-                                href={article.url}
+                                href={article.articleLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
@@ -581,7 +582,7 @@ const Home = () => {
 
             {/* Project */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              {loading
+              {projectloading
                 ? [1, 2].map((i) => (
                     <Card
                       key={i}
