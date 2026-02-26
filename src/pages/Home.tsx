@@ -25,7 +25,7 @@ import { Seo } from "@/components/seo";
 import { Skeleton } from "@/components/ui/skeleton";
 const apiUrlArticle = import.meta.env.VITE_ARTICLE_URL;
 const apiUrlProject = import.meta.env.VITE_PROJECT_URL;
-import princePortfolioVideo from "@/assets/princesahni.mp4";
+import princeSahniImage from "@/assets/princesahni3.jpg";
 import placeholder from "@/assets/placeholder.jpg";
 
 const Home = () => {
@@ -162,7 +162,7 @@ const Home = () => {
         clearTimeout(timeout);
 
         const serverData = response.data?.data;
-        
+
         if (serverData && serverData.length > 0) {
           setArticleData(serverData);
         } else {
@@ -244,8 +244,6 @@ const Home = () => {
 
                   <h1 className="text-4xl md:text-6xl font-bold leading-tight">
                     <span className="text-gradient">Prince Kumar Sahni</span>
-                    <br />
-                    <span className="text-foreground">Here</span>
                   </h1>
 
                   <p className="text-xl text-muted-foreground leading-relaxed">
@@ -277,14 +275,11 @@ const Home = () => {
               <div className="relative animate-fade-in-up">
                 {/* <DynamicPattern width={600} height={300} shapeCount={120} /> */}
                 <div className="w-full h-auto gradient-card rounded-2xl shadow-elegant flex items-center justify-center border border-border/50">
-                  <video
-                    src={princePortfolioVideo}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="w-full h-auto rounded-2xl"
-                  ></video>
+                  <img
+                    src={princeSahniImage}
+                    alt="Prince Kumar Sahni"
+                    className="w-full h-auto rounded-2xl object-cover"
+                  />
                 </div>
               </div>
             </div>
