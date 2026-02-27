@@ -713,16 +713,17 @@ const Home = () => {
           <div className="container mx-auto text-center">
             <div className="max-w-3xl mx-auto space-y-8">
               <h2 className="text-3xl md:text-4xl font-bold">
-                Ready to Build Something Amazing?
+                Let's Learn, Build & Grow Together!
               </h2>
               <p className="text-xl text-muted-foreground">
-                Let's collaborate and turn your ideas into reality. I'm always
-                excited to work on innovative projects.
+                I'm always open to open-source contributions, hackathons, and
+                sharing knowledge on tech topics. Let's connect and create
+                something meaningful!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" asChild className="group">
                   <Link to="/contact">
-                    Start a Project
+                    Get in Touch
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </Button>

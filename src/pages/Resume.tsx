@@ -594,11 +594,12 @@ const Resume = () => {
           <Card className="shadow-soft bg-gradient-card">
             <CardContent className="py-8 text-center">
               <h3 className="text-xl font-semibold mb-4">
-                Interested in Working Together?
+                Let's Connect & Collaborate!
               </h3>
               <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                I'm always open to discussing new opportunities and exciting
-                projects. Let's connect and explore how we can collaborate.
+                I'm always open to contributing to open-source projects, joining
+                hackathons, and sharing knowledge on tech topics. If that sounds
+                exciting to you, let's connect!
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Button size="lg" asChild className="group">

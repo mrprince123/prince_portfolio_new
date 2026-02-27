@@ -54,7 +54,7 @@ const Contact = () => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormData({
       ...formData,
@@ -100,9 +100,8 @@ const Contact = () => {
               Get in <span className="text-gradient">Touch</span>
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-              Have a project in mind or just want to chat? I'd love to hear from
-              you. Let's discuss how we can work together to bring your ideas to
-              life.
+              Have a question or want to connect? Feel free to reach out — I'd
+              love to hear from you!
             </p>
           </div>
 
@@ -116,8 +115,8 @@ const Contact = () => {
                     Send a Message
                   </CardTitle>
                   <CardDescription>
-                    Fill out the form below and I'll get back to you within 24
-                    hours.
+                    Fill out the form below and I'll get back to you as soon as
+                    possible.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -180,7 +179,7 @@ const Contact = () => {
                         value={formData.message}
                         onChange={handleChange}
                         required
-                        placeholder="Tell me about your project or idea..."
+                        placeholder="Write your message here..."
                         className="min-h-[120px] resize-none"
                       />
                     </div>
@@ -212,7 +211,7 @@ const Contact = () => {
                 <CardHeader>
                   <CardTitle>Contact Information</CardTitle>
                   <CardDescription>
-                    Prefer direct contact? Reach me through any of these
+                    You can also reach me directly through any of these
                     channels.
                   </CardDescription>
                 </CardHeader>
@@ -240,30 +239,26 @@ const Contact = () => {
                 </CardContent>
               </Card>
 
-              {/* Response Time */}
+              {/* Dev Quotes */}
               <Card className="shadow-soft">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-lg">
                     <Clock className="h-5 w-5 text-primary" />
-                    Response Time
+                    Dev Vibes
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-3 text-sm">
-                    <div className="flex justify-between items-center">
-                      <span className="text-muted-foreground">Email</span>
-                      <span className="font-medium">Within 24 hours</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-muted-foreground">Phone</span>
-                      <span className="font-medium">Same day</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-muted-foreground">
-                        Project Inquiry
-                      </span>
-                      <span className="font-medium">1-2 business days</span>
-                    </div>
+                  <div className="space-y-4 text-sm">
+                    <p className="italic text-muted-foreground border-l-2 border-primary pl-3">
+                      "First, solve the problem. Then, write the code."
+                    </p>
+                    <p className="italic text-muted-foreground border-l-2 border-primary pl-3">
+                      "Code is like humor. When you have to explain it, it's
+                      bad."
+                    </p>
+                    <p className="italic text-muted-foreground border-l-2 border-primary pl-3">
+                      "It's not a bug — it's an undocumented feature."
+                    </p>
                   </div>
                 </CardContent>
               </Card>
@@ -271,21 +266,19 @@ const Contact = () => {
               {/* Availability */}
               <Card className="shadow-soft">
                 <CardHeader>
-                  <CardTitle className="text-lg">
-                    Current Availability
-                  </CardTitle>
+                  <CardTitle className="text-lg">Let's Connect</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center gap-2 mb-3">
                     <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                     <span className="text-sm font-medium">
-                      Available for new projects
+                      Open to opportunities
                     </span>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    I'm currently accepting new client work and exciting project
-                    opportunities. Let's discuss how I can help bring your
-                    vision to life!
+                    I'm always excited to contribute to open-source projects,
+                    participate in hackathons, and share knowledge on tech
+                    topics. Let's connect and build something awesome!
                   </p>
                 </CardContent>
               </Card>
@@ -303,40 +296,44 @@ const Contact = () => {
                   <div className="space-y-4">
                     <div>
                       <h4 className="font-semibold mb-2">
-                        What's your typical response time?
+                        What technologies do you work with?
                       </h4>
                       <p className="text-sm text-muted-foreground">
-                        I respond to all inquiries within 24 hours, usually much
-                        sooner during business hours.
+                        I primarily work with React, Node.js, TypeScript,
+                        Next.js, and MongoDB. I'm always exploring new tools and
+                        frameworks to stay up to date.
                       </p>
                     </div>
                     <div>
                       <h4 className="font-semibold mb-2">
-                        Do you work with international clients?
+                        How many years of experience do you have?
                       </h4>
                       <p className="text-sm text-muted-foreground">
-                        Absolutely! I've worked with clients from various time
-                        zones and am flexible with meeting schedules.
+                        I have hands-on experience building full-stack web
+                        applications and have been actively developing and
+                        learning in the field for several years.
                       </p>
                     </div>
                   </div>
                   <div className="space-y-4">
                     <div>
                       <h4 className="font-semibold mb-2">
-                        What information should I include?
+                        Do you contribute to open source?
                       </h4>
                       <p className="text-sm text-muted-foreground">
-                        Please share your project goals, timeline, budget range,
-                        and any specific requirements you have in mind.
+                        Yes! I enjoy contributing to open-source projects and
+                        sharing my work on GitHub. Feel free to check out my
+                        repositories.
                       </p>
                     </div>
                     <div>
                       <h4 className="font-semibold mb-2">
-                        Do you offer free consultations?
+                        Are you open to collaborations?
                       </h4>
                       <p className="text-sm text-muted-foreground">
-                        Yes! I offer a free 30-minute consultation to discuss
-                        your project and see how I can help.
+                        Absolutely! I'm always open to collaborating on
+                        interesting open-source projects, hackathons, or any fun dev ideas.
+                        Just drop me a message!
                       </p>
                     </div>
                   </div>
