@@ -26,12 +26,12 @@ const Resume = () => {
   const personalInfo = {
     name: "Prince Kumar Sahni",
     title: "Associate Software Developer",
-    email: "princekumarsahni2002@gmail.com",
-    phone: "+91 8855667788",
+    email: "princekrdss2018@gmail.com",
+    phone: "+91 7369900185",
     location: "Noida, UP",
-    website: "princekumarsahni.com",
-    linkedin: "linkedin.com/in/princekumarsahni",
-    github: "github.com/princekumarsahni",
+    website: "https://princesahni.com",
+    linkedin: "https://www.linkedin.com/in/mrprince123/",
+    github: "https://github.com/mrprince123",
   };
 
   const experience = [
