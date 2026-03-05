@@ -22,7 +22,6 @@ import { Seo } from "@/components/seo";
 const apiUrl = import.meta.env.VITE_COURSE_URL;
 import placeholder from "@/assets/placeholder.jpg";
 
-
 const Courses = () => {
   const [loading, setLoading] = useState(true);
   const [courseData, setCourseData] = useState([]);
@@ -385,7 +384,7 @@ const Courses = () => {
                       <div className="flex items-center justify-between">
                         <div>
                           <span className="text-2xl font-bold text-primary">
-                            Free
+                            #{course.id}
                           </span>
                         </div>
                         <Button asChild className="group">
@@ -455,7 +454,9 @@ const Courses = () => {
 
                       <div className="flex items-center justify-between">
                         <div>
-                          <span className="font-bold text-primary">Free</span>
+                          <span className="font-bold text-primary">
+                             #{course.id}
+                          </span>
                         </div>
                         <Badge
                           className={`border text-xs ${getLevelColor(

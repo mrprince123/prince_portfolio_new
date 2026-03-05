@@ -92,8 +92,7 @@ const Home = () => {
       title: "Python FastAPI: Building High-Performance APIs Quickly",
       description:
         "Learn how to leverage FastAPI to create fast, modern, and scalable web APIs in Python with automatic documentation and async support.",
-      coverImage:
-        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+      coverImage: placeholder,
       publishedAt: "2024-01-15",
       articleLink: "https://medium.com/@yourname/python-fastapi-guide",
       tags: ["Python", "FastAPI", "Backend"],
@@ -105,8 +104,7 @@ const Home = () => {
       title: "Mastering TypeScript: Tips and Tricks for Scalable Applications",
       description:
         "A deep dive into TypeScript best practices, advanced types, and patterns for building maintainable and large-scale applications.",
-      coverImage:
-        "https://www.gynprog.com.br/wp-content/uploads/2017/06/wood-blog-placeholder.jpg",
+      coverImage: placeholder,
       publishedAt: "2024-02-10",
       articleLink: "https://medium.com/@yourname/typescript-tips",
       tags: ["TypeScript", "JavaScript", "Web Development"],
@@ -261,8 +259,8 @@ const Home = () => {
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button asChild size="lg" className="group">
-                    <Link to="/contact">
-                      Get in Touch
+                    <Link to="/articles">
+                      Read me article
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </Button>
@@ -331,7 +329,7 @@ const Home = () => {
                 return (
                   <Card
                     key={index}
-                    className="hover-lift shadow-soft border-0 bg-card/80 backdrop-blur-sm"
+                    className="hover-lift shadow-soft border bg-card/80 backdrop-blur-sm"
                   >
                     <CardContent className="p-6 text-center">
                       <Icon className="h-10 w-10 mx-auto text-primary mb-4" />
@@ -379,7 +377,7 @@ const Home = () => {
                 return (
                   <Card
                     key={index}
-                    className="hover-lift group cursor-pointer border-0 shadow-soft"
+                    className="hover-lift group cursor-pointer border shadow-soft"
                   >
                     <CardContent className="p-6 text-center">
                       <Link to={stat.href} className="block">
@@ -722,8 +720,8 @@ const Home = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" asChild className="group">
-                  <Link to="/contact">
-                    Get in Touch
+                  <Link to="/articles">
+                    Read me article
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </Button>

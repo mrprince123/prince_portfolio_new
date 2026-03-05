@@ -24,14 +24,14 @@ import { Seo } from "@/components/seo";
 
 const Resume = () => {
   const personalInfo = {
-    name: "Your Full Name",
-    title: "Senior Full-Stack Developer",
-    email: "hello@yourname.com",
-    phone: "+1 (555) 123-4567",
-    location: "San Francisco, CA",
-    website: "yourname.com",
-    linkedin: "linkedin.com/in/yourname",
-    github: "github.com/yourname",
+    name: "Prince Kumar Sahni",
+    title: "Associate Software Developer",
+    email: "princekumarsahni2002@gmail.com",
+    phone: "+91 8855667788",
+    location: "Noida, UP",
+    website: "princekumarsahni.com",
+    linkedin: "linkedin.com/in/princekumarsahni",
+    github: "github.com/princekumarsahni",
   };
 
   const experience = [
