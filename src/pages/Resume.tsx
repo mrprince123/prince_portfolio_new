@@ -237,7 +237,7 @@ const Resume = () => {
         image="https://princesahni.com/og-images/princesahni-logo.png"
       />
 
-      <div className="min-h-screen py-12 px-4 bg-gradient-to-br from-background via-background to-muted/30">
+      <div className="min-h-screen py-12 px-4 bg-background">
         <div className="container mx-auto max-w-5xl">
           {/* Header & Download */}
           <div className="text-center mb-8 animate-fade-in">

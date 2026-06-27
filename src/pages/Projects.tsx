@@ -240,7 +240,7 @@ const Projects = () => {
               <CardContent className="pt-6">
                 <div className="text-2xl font-bold text-gradient mb-2">
                   {projectData.reduce(
-                    (acc, project) => acc + project.length,
+                    (acc, project) => acc + (project.technologies?.length || 0),
                     0
                   )}
                   +

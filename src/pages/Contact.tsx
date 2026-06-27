@@ -92,7 +92,7 @@ const Contact = () => {
         image="https://princesahni.com/og-images/princesahni-logo.png"
       />
 
-      <div className="min-h-screen py-12 px-4">
+      <div className="min-h-screen pt-28 pb-12 px-4">
         <div className="container mx-auto max-w-5xl">
           {/* Header */}
           <div className="text-center mb-12 animate-fade-in">
