@@ -26,7 +26,7 @@ export function ProjectCard({ project, index }: { project: ProjectCardData; inde
   const inner = (
     <>
       {/* Gradient cover */}
-      <div className="relative h-32 overflow-hidden bg-gradient-to-br from-primary/25 via-primary/10 to-transparent">
+      <div className="relative h-48 overflow-hidden bg-gradient-to-br from-primary/25 via-primary/10 to-transparent">
         {project.coverImage ? (
           <img
             src={project.coverImage}
