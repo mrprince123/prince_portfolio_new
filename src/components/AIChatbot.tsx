@@ -1,7 +1,8 @@
-import { useState, useRef, useEffect } from "react";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { useEffect, useRef, useState } from "react";
+import type { GoogleGenerativeAI as GoogleGenerativeAIClient } from "@google/generative-ai";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X, Send, Bot, User, Sparkles, ChevronDown } from "lucide-react";
-import axios from "axios";
+import { getResource } from "@/lib/apiClient";
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
@@ -68,13 +69,21 @@ Open Source Contributing, Technical Writing, AI/ML Research, Mobile App Developm
 - Encourage visitors to explore the portfolio or get in touch
 `;
 
+// Loose shapes for the untyped content the API returns; every field is
+// optional because the prompt builder guards each access.
+interface ServerSkillCategory { name?: string; skillsList?: { name?: string }[] }
+interface ServerProject { title?: string; description?: string; technologies?: string[]; liveUrl?: string; githubUrl?: string }
+interface ServerArticle { title?: string; tags?: string[]; articleLink?: string }
+interface ServerBlog { title?: string; tags?: string[] }
+interface ServerCourse { title?: string; description?: string; technologies?: string[] }
+
 // Build dynamic prompt sections from server data
 function buildDynamicPrompt(serverData: {
-  skills?: any[];
-  projects?: any[];
-  articles?: any[];
-  blogs?: any[];
-  courses?: any[];
+  skills?: ServerSkillCategory[];
+  projects?: ServerProject[];
+  articles?: ServerArticle[];
+  blogs?: ServerBlog[];
+  courses?: ServerCourse[];
 }): string {
   let dynamicParts = "";
 
@@ -83,7 +92,7 @@ function buildDynamicPrompt(serverData: {
     dynamicParts += "\n## Technical Skills (from server)\n";
     serverData.skills.forEach((category) => {
       const skillNames = category.skillsList
-        ?.map((s: any) => s.name)
+        ?.map((s) => s.name)
         .join(", ");
       if (skillNames) {
         dynamicParts += `- ${category.name}: ${skillNames}\n`;
@@ -143,15 +152,13 @@ function buildDynamicPrompt(serverData: {
   return BASE_PROMPT + dynamicParts;
 }
 
-// Fetch data from a single API endpoint with timeout
-async function fetchData(url: string): Promise<any[]> {
+// Fetch a single content endpoint via the shared API client; any failure
+// (missing url, timeout, network error) resolves to an empty list so the
+// dynamic prompt just falls back to the static bio.
+async function fetchResource<T>(url?: string): Promise<T[]> {
   if (!url) return [];
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000);
-    const response = await axios.get(url, { signal: controller.signal });
-    clearTimeout(timeout);
-    return response.data?.data || [];
+    return (await getResource<T[]>(url, { timeoutMs: 5000 })) ?? [];
   } catch {
     return [];
   }
@@ -171,7 +178,8 @@ const QUICK_REPLIES = [
   "How can I contact you?",
 ];
 
-const genAI = GEMINI_API_KEY ? new GoogleGenerativeAI(GEMINI_API_KEY) : null;
+const formatTime = (date: Date) =>
+  date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
 export default function AIChatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -180,7 +188,7 @@ export default function AIChatbot() {
       id: "welcome",
       role: "assistant",
       content:
-        "Hey! 👋 I'm Prince's AI assistant. Ask me anything about his skills, experience, or projects!",
+        "Hey! I'm Prince's AI assistant. Ask me anything about his skills, experience, or projects.",
       timestamp: new Date(),
     },
   ]);
@@ -190,39 +198,9 @@ export default function AIChatbot() {
   const [systemPrompt, setSystemPrompt] = useState(BASE_PROMPT);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const chatRef = useRef<HTMLDivElement>(null);
-
-  // Fetch all server data on mount and build dynamic prompt
-  useEffect(() => {
-    const loadServerData = async () => {
-      const [skills, projects, articles, blogs, courses] = await Promise.all([
-        fetchData(API_URLS.skills),
-        fetchData(API_URLS.projects),
-        fetchData(API_URLS.articles),
-        fetchData(API_URLS.blogs),
-        fetchData(API_URLS.courses),
-      ]);
-
-      const prompt = buildDynamicPrompt({
-        skills,
-        projects,
-        articles,
-        blogs,
-        courses,
-      });
-
-      setSystemPrompt(prompt);
-      console.log("[AIChatbot] System prompt built with server data:", {
-        skills: skills.length,
-        projects: projects.length,
-        articles: articles.length,
-        blogs: blogs.length,
-        courses: courses.length,
-      });
-    };
-
-    loadServerData();
-  }, []);
+  const genAIRef = useRef<GoogleGenerativeAIClient | null>(null);
+  const contentFetchedRef = useRef(false);
+  const prefersReducedMotion = useReducedMotion();
 
   // Auto-scroll to latest message
   useEffect(() => {
@@ -235,6 +213,43 @@ export default function AIChatbot() {
       setTimeout(() => inputRef.current?.focus(), 300);
     }
   }, [isOpen]);
+
+  // Fetch server content the first time the panel is opened (not on mount)
+  // and fold it into the system prompt.
+  const loadServerDataOnce = async () => {
+    if (contentFetchedRef.current) return;
+    contentFetchedRef.current = true;
+
+    const [skills, projects, articles, blogs, courses] = await Promise.all([
+      fetchResource<ServerSkillCategory>(API_URLS.skills),
+      fetchResource<ServerProject>(API_URLS.projects),
+      fetchResource<ServerArticle>(API_URLS.articles),
+      fetchResource<ServerBlog>(API_URLS.blogs),
+      fetchResource<ServerCourse>(API_URLS.courses),
+    ]);
+
+    setSystemPrompt(
+      buildDynamicPrompt({ skills, projects, articles, blogs, courses })
+    );
+  };
+
+  const toggleOpen = () => {
+    setIsOpen((prev) => {
+      const next = !prev;
+      if (next) void loadServerDataOnce();
+      return next;
+    });
+  };
+
+  // Lazily obtain (and cache) the Gemini client, dynamically importing the
+  // SDK on first use so it never lands in an eagerly-loaded chunk.
+  const getGenAI = async (): Promise<GoogleGenerativeAIClient> => {
+    if (genAIRef.current) return genAIRef.current;
+    const { GoogleGenerativeAI } = await import("@google/generative-ai");
+    const instance = new GoogleGenerativeAI(GEMINI_API_KEY as string);
+    genAIRef.current = instance;
+    return instance;
+  };
 
   const sendMessage = async (text: string) => {
     if (!text.trim() || isLoading) return;
@@ -253,9 +268,11 @@ export default function AIChatbot() {
     setIsLoading(true);
 
     try {
-      if (!genAI) {
+      if (!GEMINI_API_KEY) {
         throw new Error("API key not configured");
       }
+
+      const genAI = await getGenAI();
 
       const model = genAI.getGenerativeModel({
         model: "gemini-2.5-flash",
@@ -284,17 +301,15 @@ export default function AIChatbot() {
 
       setMessages((prev) => [...prev, assistantMsg]);
     } catch (err: unknown) {
-      const isApiKeyMissing = !genAI;
-      const errMsg = err instanceof Error ? err.message : String(err);
-      console.error("[AIChatbot] Gemini error:", errMsg);
+      const isApiKeyMissing = !GEMINI_API_KEY;
       setMessages((prev) => [
         ...prev,
         {
           id: (Date.now() + 1).toString(),
           role: "assistant",
           content: isApiKeyMissing
-            ? "⚠️ Gemini API key is not configured. Please add VITE_GEMINI_API_KEY to your .env file."
-            : `Sorry, I couldn't get a response right now. Please try again in a moment.`,
+            ? "Gemini API key is not configured. Please add VITE_GEMINI_API_KEY to your .env file."
+            : "Sorry, I couldn't get a response right now. Please try again in a moment.",
           timestamp: new Date(),
         },
       ]);
@@ -310,156 +325,212 @@ export default function AIChatbot() {
     }
   };
 
+  const panelMotionProps = prefersReducedMotion
+    ? {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        exit: { opacity: 0 },
+        transition: { duration: 0.12 },
+      }
+    : {
+        initial: { opacity: 0, y: 16, scale: 0.98 },
+        animate: { opacity: 1, y: 0, scale: 1 },
+        exit: { opacity: 0, y: 16, scale: 0.98 },
+        transition: { duration: 0.2, ease: "easeOut" as const },
+      };
+
+  const messageMotionProps = prefersReducedMotion
+    ? {}
+    : {
+        initial: { opacity: 0, y: 8 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.18, ease: "easeOut" as const },
+      };
+
   return (
     <>
       {/* Chat Panel */}
-      <div
-        ref={chatRef}
-        className={`fixed bottom-24 right-5 z-50 w-[360px] max-w-[calc(100vw-40px)] flex flex-col transition-all duration-300 ease-in-out ${
-          isOpen
-            ? "opacity-100 translate-y-0 pointer-events-auto"
-            : "opacity-0 translate-y-6 pointer-events-none"
-        }`}
-        style={{ height: "500px" }}
-      >
-        <div className="flex flex-col h-full rounded-2xl overflow-hidden shadow-2xl border border-border/60 bg-background">
-          {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 bg-primary text-primary-foreground shrink-0">
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <div className="w-9 h-9 rounded-full bg-primary-foreground/20 flex items-center justify-center">
-                  <Bot className="w-5 h-5" />
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            key="ai-chat-panel"
+            {...panelMotionProps}
+            className="fixed bottom-24 right-5 z-50 flex h-[500px] w-[360px] max-w-[calc(100vw-40px)] flex-col overflow-hidden rounded-lg border border-border bg-card shadow-lg"
+          >
+            {/* Header */}
+            <div className="flex shrink-0 items-center justify-between border-b border-border bg-background px-4 py-3">
+              <div className="flex items-center gap-3">
+                <div className="relative flex h-9 w-9 items-center justify-center rounded-full border border-border bg-primary/10 text-primary">
+                  <Bot className="h-4 w-4" />
+                  <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-background bg-emerald-500" />
                 </div>
-                <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-400 border-2 border-primary rounded-full" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold leading-none">
-                  Prince's AI
-                </p>
-                <p className="text-xs text-primary-foreground/70 mt-0.5">
-                  Powered by Gemini
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="p-1.5 rounded-lg hover:bg-primary-foreground/20 transition-colors"
-              aria-label="Close chat"
-            >
-              <ChevronDown className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth">
-            {messages.map((msg) => (
-              <div
-                key={msg.id}
-                className={`flex gap-2.5 ${
-                  msg.role === "user" ? "flex-row-reverse" : "flex-row"
-                }`}
-              >
-                {/* Avatar */}
-                <div
-                  className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
-                    msg.role === "assistant"
-                      ? "bg-primary/10 text-primary"
-                      : "bg-muted text-muted-foreground"
-                  }`}
-                >
-                  {msg.role === "assistant" ? (
-                    <Bot className="w-4 h-4" />
-                  ) : (
-                    <User className="w-4 h-4" />
-                  )}
-                </div>
-
-                {/* Bubble */}
-                <div
-                  className={`max-w-[78%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
-                    msg.role === "assistant"
-                      ? "bg-muted text-foreground rounded-tl-sm"
-                      : "bg-primary text-primary-foreground rounded-tr-sm"
-                  }`}
-                >
-                  {msg.content}
+                <div>
+                  <p className="font-mono text-xs uppercase tracking-wide text-foreground">
+                    prince's ai
+                  </p>
+                  <p className="font-mono text-[10px] text-muted-foreground">
+                    powered by gemini
+                  </p>
                 </div>
               </div>
-            ))}
-
-            {/* Typing indicator */}
-            {isLoading && (
-              <div className="flex gap-2.5">
-                <div className="w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                  <Bot className="w-4 h-4" />
-                </div>
-                <div className="bg-muted rounded-2xl rounded-tl-sm px-4 py-3 flex gap-1 items-center">
-                  <span className="w-1.5 h-1.5 bg-muted-foreground/60 rounded-full animate-bounce [animation-delay:-0.3s]" />
-                  <span className="w-1.5 h-1.5 bg-muted-foreground/60 rounded-full animate-bounce [animation-delay:-0.15s]" />
-                  <span className="w-1.5 h-1.5 bg-muted-foreground/60 rounded-full animate-bounce" />
-                </div>
-              </div>
-            )}
-
-            {/* Quick replies */}
-            {showQuickReplies && !isLoading && (
-              <div className="flex flex-wrap gap-2 pt-1">
-                {QUICK_REPLIES.map((q) => (
-                  <button
-                    key={q}
-                    onClick={() => sendMessage(q)}
-                    className="text-xs px-3 py-1.5 rounded-full border border-primary/30 text-primary bg-primary/5 hover:bg-primary/15 transition-colors"
-                  >
-                    {q}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Input */}
-          <div className="p-3 border-t border-border/60 shrink-0">
-            <div className="flex items-center gap-2 bg-muted rounded-xl px-3 py-2">
-              <input
-                ref={inputRef}
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Ask me anything..."
-                disabled={isLoading}
-                className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground/60 disabled:opacity-50"
-              />
               <button
-                onClick={() => sendMessage(input)}
-                disabled={!input.trim() || isLoading}
-                className="p-1.5 rounded-lg bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
-                aria-label="Send message"
+                onClick={() => setIsOpen(false)}
+                className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+                aria-label="Close chat"
               >
-                <Send className="w-3.5 h-3.5" />
+                <ChevronDown className="h-4 w-4" />
               </button>
             </div>
-            <p className="text-center text-[10px] text-muted-foreground/50 mt-2">
-              Prince's AI · Gemini 2.5 Flash
-            </p>
-          </div>
-        </div>
-      </div>
+
+            {/* Messages */}
+            <div className="flex-1 space-y-4 overflow-y-auto bg-background p-4 scroll-smooth">
+              {messages.map((msg) => (
+                <motion.div
+                  key={msg.id}
+                  {...messageMotionProps}
+                  className={`flex gap-2.5 ${
+                    msg.role === "user" ? "flex-row-reverse" : "flex-row"
+                  }`}
+                >
+                  {/* Avatar */}
+                  <div
+                    className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border ${
+                      msg.role === "assistant"
+                        ? "bg-primary/10 text-primary"
+                        : "bg-muted text-muted-foreground"
+                    }`}
+                  >
+                    {msg.role === "assistant" ? (
+                      <Bot className="h-3.5 w-3.5" />
+                    ) : (
+                      <User className="h-3.5 w-3.5" />
+                    )}
+                  </div>
+
+                  {/* Bubble */}
+                  <div
+                    className={`max-w-[78%] rounded-md border px-3.5 py-2.5 ${
+                      msg.role === "assistant"
+                        ? "rounded-tl-sm border-border bg-muted text-foreground"
+                        : "rounded-tr-sm border-primary/20 bg-primary text-primary-foreground"
+                    }`}
+                  >
+                    <p className="font-sans text-sm leading-relaxed">
+                      {msg.content}
+                    </p>
+                    <p
+                      className={`mt-1 font-mono text-[10px] ${
+                        msg.role === "assistant"
+                          ? "text-muted-foreground/70"
+                          : "text-primary-foreground/70"
+                      }`}
+                    >
+                      {formatTime(msg.timestamp)}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+
+              {/* Typing indicator */}
+              {isLoading && (
+                <div className="flex gap-2.5">
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border bg-primary/10 text-primary">
+                    <Bot className="h-3.5 w-3.5" />
+                  </div>
+                  <div className="flex items-center gap-1 rounded-md rounded-tl-sm border border-border bg-muted px-4 py-3">
+                    <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60 [animation-delay:-0.3s] motion-reduce:animate-none" />
+                    <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60 [animation-delay:-0.15s] motion-reduce:animate-none" />
+                    <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60 motion-reduce:animate-none" />
+                  </div>
+                </div>
+              )}
+
+              {/* Quick replies */}
+              {showQuickReplies && !isLoading && (
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {QUICK_REPLIES.map((q) => (
+                    <button
+                      key={q}
+                      onClick={() => sendMessage(q)}
+                      className="rounded-md border border-border px-3 py-1.5 font-mono text-xs text-muted-foreground transition-colors hover:border-primary/40 hover:bg-accent hover:text-primary"
+                    >
+                      {q}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* Input */}
+            <div className="shrink-0 border-t border-border bg-background p-3">
+              <div className="flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 transition-colors focus-within:border-primary/50">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Ask me anything..."
+                  disabled={isLoading}
+                  className="flex-1 bg-transparent font-sans text-sm outline-none placeholder:text-muted-foreground/60 disabled:opacity-50"
+                />
+                <button
+                  onClick={() => sendMessage(input)}
+                  disabled={!input.trim() || isLoading}
+                  className="shrink-0 rounded-md bg-primary p-1.5 text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+                  aria-label="Send message"
+                >
+                  <Send className="h-3.5 w-3.5" />
+                </button>
+              </div>
+              <p className="mt-2 text-center font-mono text-[10px] text-muted-foreground/50">
+                prince's ai · gemini 2.5 flash
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Floating Toggle Button */}
-      <button
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="fixed bottom-5 right-5 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
-        aria-label="Open AI chatbot"
+      <motion.button
+        onClick={toggleOpen}
+        className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full border border-border bg-primary text-primary-foreground shadow-lg transition-colors hover:opacity-90"
+        aria-label={isOpen ? "Close AI chatbot" : "Open AI chatbot"}
+        whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }}
+        whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
       >
         {/* Pulse ring */}
         {!isOpen && (
-          <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-30" />
+          <span className="absolute inset-0 rounded-full bg-primary opacity-30 motion-safe:animate-ping motion-reduce:hidden" />
         )}
-        {isOpen ? <X className="w-6 h-6" /> : <Sparkles className="w-6 h-6" />}
-      </button>
+        <AnimatePresence mode="wait" initial={false}>
+          {isOpen ? (
+            <motion.span
+              key="close"
+              className="inline-flex"
+              initial={prefersReducedMotion ? undefined : { rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={prefersReducedMotion ? undefined : { rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.18 }}
+            >
+              <X className="h-6 w-6" />
+            </motion.span>
+          ) : (
+            <motion.span
+              key="open"
+              className="inline-flex"
+              initial={prefersReducedMotion ? undefined : { rotate: 90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={prefersReducedMotion ? undefined : { rotate: -90, opacity: 0 }}
+              transition={{ duration: 0.18 }}
+            >
+              <Sparkles className="h-6 w-6" />
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </motion.button>
     </>
   );
 }

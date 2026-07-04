@@ -1,138 +1,116 @@
-import { Suspense, useEffect, useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { Canvas } from "@react-three/fiber";
-import { Preload } from "@react-three/drei";
-import HeroScene from "../3d/HeroScene";
-import NeonButton from "../ui/NeonButton";
+import { lazy, Suspense, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
 import { personalInfo, stats } from "@/data/portfolioData";
-import { ArrowDown } from "lucide-react";
+import { Button } from "@/components/ui/primitives/Button";
+import { StatStrip } from "@/components/ui/primitives/StatStrip";
+import { useIsMobile } from "@/hooks/use-mobile";
 
-const roles = personalInfo.taglines;
+const HeroCanvas = lazy(() => import("@/components/hero/HeroCanvas"));
+
+const TAGLINES = personalInfo.taglines;
+
+const useTypewriter = (words: string[]) => {
+  const [index, setIndex] = useState(0);
+  const [text, setText] = useState("");
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = words[index % words.length];
+    const done = !deleting && text === current;
+    const cleared = deleting && text === "";
+    const delay = done ? 1600 : cleared ? 200 : deleting ? 40 : 70;
+
+    const timer = setTimeout(() => {
+      if (done) setDeleting(true);
+      else if (cleared) {
+        setDeleting(false);
+        setIndex((i) => i + 1);
+      } else {
+        setText(current.slice(0, deleting ? text.length - 1 : text.length + 1));
+      }
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [text, deleting, index, words]);
+
+  return text;
+};
+
+// Staggered entrance for the hero copy.
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
+};
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
+};
 
 const HeroSection = () => {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [displayText, setDisplayText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true });
-
-  // Typewriter effect
-  useEffect(() => {
-    const currentRole = roles[roleIndex];
-    const timeout = setTimeout(
-      () => {
-        if (!isDeleting) {
-          setDisplayText(currentRole.substring(0, displayText.length + 1));
-          if (displayText === currentRole) {
-            setTimeout(() => setIsDeleting(true), 2000);
-          }
-        } else {
-          setDisplayText(currentRole.substring(0, displayText.length - 1));
-          if (displayText === "") {
-            setIsDeleting(false);
-            setRoleIndex((prev) => (prev + 1) % roles.length);
-          }
-        }
-      },
-      isDeleting ? 50 : 100
-    );
-    return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, roleIndex]);
-
-  const scrollToNext = () => {
-    const nextSection = document.getElementById("about-section");
-    nextSection?.scrollIntoView({ behavior: "smooth" });
-  };
+  const typed = useTypewriter(TAGLINES);
+  const reduced = useReducedMotion();
+  const isMobile = useIsMobile();
 
   return (
-    <section
-      ref={sectionRef}
-      id="hero-section"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
-      {/* 3D Background */}
-      <div className="absolute inset-0">
-        <Suspense fallback={<div className="w-full h-full bg-transparent" />}>
-          <Canvas
-            camera={{ position: [0, 0, 5], fov: 60 }}
-            dpr={[1, 1.5]}
-            gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-          >
-            <HeroScene />
-            <Preload all />
-          </Canvas>
-        </Suspense>
+    <section className="relative flex min-h-[92vh] items-center overflow-hidden">
+      {/* Ambient hero backdrop: a single bespoke wireframe object on capable
+          devices, a gradient otherwise. Lazy-loaded so three.js ships only here.
+          Kept at z-0 (not negative) so it paints above the page background. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_70%_10%,hsl(var(--primary)/0.12),transparent_70%)]" />
+        <div className="absolute inset-0 bg-grid opacity-60" />
+        {!reduced && !isMobile && (
+          <Suspense fallback={null}>
+            <HeroCanvas />
+          </Suspense>
+        )}
       </div>
 
-      {/* Content Overlay */}
-      <div className="relative z-10 container mx-auto px-6 min-h-screen flex flex-col justify-center items-center lg:items-start text-center lg:text-left">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="space-y-6 max-w-4xl lg:max-w-[50%] flex flex-col items-center lg:items-start"
-        >
-          {/* Subtitle / Role Tag */}
-          <motion.p
-            className="text-primary font-mono text-[11px] md:text-xs tracking-[0.3em] uppercase font-semibold"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-          >
-            Full-Stack Software Engineer
-          </motion.p>
+      <div className="relative z-10 container mx-auto px-6 py-24">
+        <div className="grid grid-cols-1 gap-0 md:grid-cols-[44px_1fr] md:gap-7">
+          <div className="hidden md:block">
+            <span className="mt-1 inline-block rotate-180 font-mono text-[11px] tracking-[0.12em] text-muted-foreground [writing-mode:vertical-rl]">
+              PORTFOLIO / 2026
+            </span>
+          </div>
+          <motion.div variants={container} initial={reduced ? false : "hidden"} animate="show" className="max-w-3xl">
+            <motion.div variants={item} className="mb-6 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.1em] text-primary">
+              Software Engineer — {personalInfo.location}
+              <span className="h-px w-14 bg-primary/40" />
+            </motion.div>
 
-          {/* Headline */}
-          <motion.h1
-            className="text-4xl md:text-6xl lg:text-7xl font-display font-semibold tracking-tight text-foreground leading-[1.15]"
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.8 }}
-          >
-            Building scalable apps with <br className="hidden md:block" />
-            <span className="text-gradient bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 dark:from-[#00f0ff] dark:via-sky-400 dark:to-[#0066ff]">clean code</span> &{" "}
-            <span className="text-gradient bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-400 dark:from-[#0066ff] dark:via-indigo-500 dark:to-[#00f0ff]">secure architecture</span>
-          </motion.h1>
+            <motion.h1 variants={item} className="text-balance font-display text-5xl font-bold leading-[0.98] tracking-tight text-foreground md:text-7xl">
+              I build software that{" "}
+              <em className="not-italic text-primary">solves the problem</em> first, then writes clean code.
+            </motion.h1>
 
-          {/* Description */}
-          <motion.p
-            className="text-foreground/70 text-base md:text-lg max-w-2xl leading-relaxed mt-2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.4 }}
-          >
-            I craft high-performance web applications, robust backend systems, seamless third-party API integrations, and intuitive user experiences that deliver real value.
-          </motion.p>
+            <motion.p variants={item} className="mt-6 font-mono text-sm text-muted-foreground">
+              <span className="text-primary">$</span> {typed}
+              <span className="ml-0.5 inline-block h-4 w-2 translate-y-0.5 animate-pulse bg-primary align-middle motion-reduce:animate-none" />
+            </motion.p>
 
-          {/* CTAs */}
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center pt-6 w-full"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.7 }}
-          >
-            <NeonButton href="/projects" variant="primary" size="lg" className="w-full sm:w-auto">
-              View My Work
-            </NeonButton>
-            <NeonButton href="/contact" variant="outline" size="lg" className="w-full sm:w-auto">
-              Get in Touch
-            </NeonButton>
+            <motion.p variants={item} className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
+              {personalInfo.bio}
+            </motion.p>
+
+            <motion.div variants={item} className="mt-8 flex flex-wrap items-center gap-5">
+              <Button asChild variant="primary">
+                <Link to="/projects">View selected work</Link>
+              </Button>
+              <Button asChild variant="link">
+                <a href={personalInfo.resumeUrl} target="_blank" rel="noreferrer">
+                  Download résumé →
+                </a>
+              </Button>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
 
-        {/* Scroll indicator */}
-        <motion.button
-          onClick={scrollToNext}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-primary/60 hover:text-primary transition-colors"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <ArrowDown className="w-6 h-6" />
-        </motion.button>
+        <div className="mt-16">
+          <StatStrip items={stats.map((s) => ({ value: s.number, label: s.label }))} />
+        </div>
       </div>
-
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
     </section>
   );
 };

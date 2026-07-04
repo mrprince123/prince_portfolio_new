@@ -1,283 +1,231 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Briefcase, GraduationCap } from "lucide-react";
 import { Seo } from "@/components/seo";
-import { CometCard } from "@/components/ui/commet-card";
-import princesahni from "@/assets/princesahni.jpg";
+import { Link } from "react-router-dom";
+import { MapPin, Briefcase, Sparkles } from "lucide-react";
+import {
+  personalInfo,
+  experiences,
+  education,
+  interests,
+  stats,
+} from "@/data/portfolioData";
+import { SectionHeader } from "@/components/ui/primitives/SectionHeader";
+import { Chip } from "@/components/ui/primitives/Chip";
+import { Button } from "@/components/ui/primitives/Button";
+import { StatStrip } from "@/components/ui/primitives/StatStrip";
+import { Reveal } from "@/components/ui/primitives/Reveal";
+import portrait from "@/assets/princesahni.jpg";
+import portrait2 from "@/assets/princesahni2.jpg";
+import introVideo from "@/assets/princesahni.mp4";
 
-const About = () => {
-  const experiences = [
-    {
-      title: "Associate Software Developer",
-      company: "Chetu Inc.",
-      period: "2024 - Present",
-      location: "Noida, India",
-      description:
-        "Leading development of scalable web applications using React, Node.js, and cloud technologies.",
-    },
-    {
-      title: "Full-Stack Developer",
-      company: "Webbocket",
-      period: "2023 - 2024",
-      location: "Bhubnaswer, Odisha",
-      description:
-        "Built and maintained multiple web applications, collaborated with cross-functional teams.",
-    },
-  ];
+const facts = [
+  { icon: MapPin, label: "Based in", value: personalInfo.location },
+  { icon: Briefcase, label: "Currently", value: "Associate Developer · Webkul" },
+  { icon: Sparkles, label: "Focus", value: "Full-Stack · Cloud" },
+];
 
-  const education = [
-    {
-      degree: "Bachelor of Science in Computer Science",
-      institution: "Biju Patnaik University of Technology",
-      period: "2020 - 2024",
-      gpa: "8.34/10.0",
-    },
-  ];
+const About = () => (
+  <>
+    <Seo
+      title="About | Prince Kumar Sahni - Software Engineer"
+      description="Learn more about Prince Kumar Sahni, a passionate Software Engineer dedicated to building scalable, secure, and high-performing applications."
+      url="https://princesahni.com/about"
+      image="https://princesahni.com/og-images/princesahni-logo.png"
+    />
 
-  const interests = [
-    "Open Source Contributing",
-    "Technical Writing",
-    "AI/ML Research",
-    "Mobile App Developer",
-    "Medium Article",
-    "Local Guide at Google Map",
-    "Photography",
-    "Audiophile",
-    "Cricket",
-    "Hiking",
-    "Chess",
-  ];
+    <section className="container mx-auto px-6 py-16">
+      {/* ── Intro ── */}
+      <div className="grid items-center gap-10 lg:grid-cols-[1fr_380px] lg:gap-16">
+        <div>
+          <span className="font-mono text-xs uppercase tracking-[0.12em] text-primary">Who I am</span>
+          <h1 className="mt-3 font-display text-4xl font-bold tracking-tight text-foreground md:text-6xl">
+            Hi, I'm <span className="text-gradient">Prince</span>.
+          </h1>
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">{personalInfo.bio}</p>
 
-  return (
-    <>
-      <Seo
-        title="About | Prince Kumar Sahni - Software Engineer"
-        description="Learn more about Prince Kumar Sahni, a passionate Software Engineer dedicated to building scalable, secure, and high-performing applications."
-        url="https://princesahni.com/about"
-        image="https://princesahni.com/og-images/princesahni-logo.png"
-      />
+          <div className="mt-8 grid gap-4 sm:grid-cols-3">
+            {facts.map(({ icon: Icon, label, value }) => (
+              <div key={label} className="rounded-xl border border-border bg-card p-4">
+                <Icon className="h-4 w-4 text-primary" />
+                <p className="mt-2 font-mono text-[10px] uppercase tracking-wide text-muted-foreground">{label}</p>
+                <p className="mt-0.5 text-sm text-foreground">{value}</p>
+              </div>
+            ))}
+          </div>
 
-      <div className="min-h-screen py-12 px-4">
-        <div className="container mx-auto max-w-5xl">
-          {/* Header */}
-          <div className="text-center mb-12 animate-fade-in">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              About <span className="text-gradient">Me</span>
-            </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-              Passionate about creating digital experiences that make a
-              difference. Here's my journey in the world of technology and
-              beyond.
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <Button asChild variant="primary">
+              <Link to="/contact">Get in touch →</Link>
+            </Button>
+            <Button asChild variant="link">
+              <a href={personalInfo.resumeUrl} target="_blank" rel="noreferrer">
+                Download résumé
+              </a>
+            </Button>
+          </div>
+        </div>
+
+        <Reveal delay={0.1}>
+          <div className="group relative">
+            <div className="absolute -inset-3 -z-10 rounded-2xl bg-gradient-to-br from-primary/20 to-transparent opacity-70 blur-xl" />
+            <div className="overflow-hidden rounded-2xl border border-border">
+              <img
+                src={portrait}
+                alt={personalInfo.name}
+                width={640}
+                height={800}
+                className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+            <p className="mt-3 text-center font-mono text-xs text-muted-foreground">
+              {personalInfo.name} — {personalInfo.title}
             </p>
           </div>
+        </Reveal>
+      </div>
 
-          {/* Bio Section */}
-          <Card className="mb-8 shadow-soft animate-fade-in-up">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-sm">
-                  P
-                </div>
-                My Story
-              </CardTitle>
-            </CardHeader>
+      {/* ── Stats ── */}
+      <div className="mt-16">
+        <StatStrip items={stats.map((s) => ({ value: s.number, label: s.label }))} />
+      </div>
 
-            <CardContent className="prose prose-gray dark:prose-invert max-w-none">
-              {/* Top Section: Text + Image */}
-              <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-                {/* Left Side - Text */}
-                <div className="flex-1 flex flex-col gap-4">
-                  <p className="text-muted-foreground leading-relaxed text-justify">
-                    Hi! I'm <strong>Prince Kumar Sahni</strong>, a passionate{" "}
-                    <strong>Software Engineer</strong> who loves building
-                    impactful digital products. Over the past few years, I’ve
-                    worked on everything from
-                    <strong> Android apps</strong> to{" "}
-                    <strong>full-stack web platforms</strong>, always focusing
-                    on performance, scalability, and user experience.
-                  </p>
-
-                  <p className="text-muted-foreground leading-relaxed text-justify">
-                    I take pride in approaching every project with a
-                    problem-solving mindset. Whether it’s optimizing
-                    performance, designing scalable architectures, or debugging
-                    complex issues, I enjoy breaking down challenges into clear,
-                    actionable steps. My focus is always on writing clean,
-                    efficient, and maintainable code that drives real results
-                    and makes development a craft, not just a task.
-                  </p>
-
-                  <p className="text-muted-foreground leading-relaxed text-justify">
-                    My journey began in college when I built my first app — and
-                    since then, I’ve been. <strong>passionate</strong> about
-                    creating impactful software. I focus on building reliable,
-                    high-quality products that solve real problems — no matter
-                    what <strong>technology</strong> it takes. For me, it’s not
-                    just about code; it’s about delivering software that works,
-                    scales, and makes a difference.
-                  </p>
-                </div>
-
-                {/* Right Side - Image */}
-                <div className="flex-shrink-0">
-                  {/* <img
-                    className="rounded-lg w-64 h-84 object-cover shadow-md"
-                    src={princesahni}
-                    alt="Prince Kumar Sahni Picture"
-                  /> */}
-
-                  <CometCard>
-                    <button
-                      type="button"
-                      className="flex w-80 cursor-pointer flex-col items-stretch rounded-[16px] border-0 bg-[#1F2121] p-2 md:p-4"
-                      aria-label="View invite F7RA"
-                      style={{
-                        transformStyle: "preserve-3d",
-                        transform: "none",
-                        opacity: 1,
-                      }}
-                    >
-                      <div className="mx-2 flex-1">
-                        <div className="relative mt-2 aspect-[3/4] w-full">
-                          <img
-                            loading="lazy"
-                            className="absolute inset-0 h-full w-full rounded-[16px] bg-[#000000] object-cover "
-                            alt="Prince Kumar Sahni Image"
-                            src={princesahni}
-                            style={{
-                              boxShadow: "rgba(0, 0, 0, 0.05) 0px 5px 6px 0px",
-                              opacity: 1,
-                            }}
-                          />
-                        </div>
-                      </div>
-                      <div className="mt-2 flex flex-shrink-0 items-center justify-between p-4 font-mono text-white">
-                        <div className="text-xs">Prince Kumar Sahni</div>
-                        <div className="text-xs text-gray-300 opacity-50">
-                          #Sniper XP
-                        </div>
-                      </div>
-                    </button>
-                  </CometCard>
-                </div>
-              </div>
-
-              {/* Bottom Section - Full Width Paragraph */}
-              <div className="mt-6">
-                <p className="text-muted-foreground leading-relaxed text-justify">
-                  Beyond coding, I love sharing knowledge and creativity in
-                  different forms. I write tech articles on{" "}
-                  <strong>Medium</strong>, create videos on my
-                  <strong> YouTube channel</strong>, and explore the world
-                  through my lens as a passionate <strong>photographer</strong>.
-                  I’m also an
-                  <strong> audiophile</strong> who appreciates good sound and
-                  contribute as a<strong> Local Guide</strong> on Google Maps,
-                  where my photos and reviews have crossed over{" "}
-                  <strong>600K+ views</strong>.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Experience Section */}
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-              <Briefcase className="h-6 w-6 text-primary" />
-              Professional Experience
+      {/* ── My Story (image + text) ── */}
+      <div className="mt-24 grid items-center gap-10 md:grid-cols-2 md:gap-16">
+        <Reveal>
+          <div className="overflow-hidden rounded-2xl border border-border">
+            <img
+              src={portrait2}
+              alt={`${personalInfo.name} at work`}
+              width={720}
+              height={540}
+              loading="lazy"
+              className="aspect-[4/3] w-full object-cover"
+            />
+          </div>
+        </Reveal>
+        <Reveal delay={0.08}>
+          <div>
+            <span className="font-mono text-xs uppercase tracking-[0.12em] text-primary">My story</span>
+            <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground">
+              From Android apps to full-stack platforms.
             </h2>
-            <div className="space-y-6">
-              {experiences.map((exp, index) => (
-                <Card key={index} className="hover-lift shadow-soft">
-                  <CardHeader>
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                      <div>
-                        <CardTitle className="text-lg">{exp.title}</CardTitle>
-                        <CardDescription className="text-primary font-medium">
-                          {exp.company}
-                        </CardDescription>
-                      </div>
-                      <div className="flex flex-col md:items-end gap-1">
-                        <Badge variant="outline" className="w-fit">
-                          <Calendar className="h-3 w-3 mr-1" />
-                          {exp.period}
-                        </Badge>
-                        <Badge variant="secondary" className="w-fit">
-                          <MapPin className="h-3 w-3 mr-1" />
-                          {exp.location}
-                        </Badge>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">{exp.description}</p>
-                  </CardContent>
-                </Card>
+            <p className="mt-4 leading-relaxed text-muted-foreground">{personalInfo.bioExtended}</p>
+            <p className="mt-4 leading-relaxed text-muted-foreground">{personalInfo.bio}</p>
+          </div>
+        </Reveal>
+      </div>
+
+      {/* ── Beyond Code (text + video) ── */}
+      <div className="mt-24 grid items-center gap-10 md:grid-cols-2 md:gap-16">
+        <Reveal>
+          <div>
+            <span className="font-mono text-xs uppercase tracking-[0.12em] text-primary">Beyond code</span>
+            <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-foreground">
+              Curious by default.
+            </h2>
+            <p className="mt-4 leading-relaxed text-muted-foreground">{personalInfo.bioCreative}</p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {interests.map((interest) => (
+                <Chip key={interest} className="transition-colors hover:border-primary/50 hover:text-primary">
+                  {interest}
+                </Chip>
               ))}
             </div>
           </div>
-
-          {/* Education Section */}
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-              <GraduationCap className="h-6 w-6 text-primary" />
-              Education
-            </h2>
-            <div className="space-y-4">
-              {education.map((edu, index) => (
-                <Card key={index} className="hover-lift shadow-soft">
-                  <CardContent className="pt-6">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                      <div>
-                        <h3 className="font-semibold">{edu.degree}</h3>
-                        <p className="text-primary">{edu.institution}</p>
-                      </div>
-                      <div className="flex flex-col md:items-end gap-1">
-                        <Badge variant="outline">
-                          <Calendar className="h-3 w-3 mr-1" />
-                          {edu.period}
-                        </Badge>
-                        <Badge variant="secondary">GPA: {edu.gpa}</Badge>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+        </Reveal>
+        <Reveal delay={0.08}>
+          <div className="overflow-hidden rounded-2xl border border-border">
+            <video
+              src={introVideo}
+              poster={portrait2}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="aspect-[4/5] w-full object-cover md:aspect-[4/3]"
+            />
           </div>
+        </Reveal>
+      </div>
 
-          {/* Interests Section */}
-          <Card className="shadow-soft">
-            <CardHeader>
-              <CardTitle>Interests & Hobbies</CardTitle>
-              <CardDescription>
-                What I do when I'm not building amazing software
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-2">
-                {interests.map((interest, index) => (
-                  <Badge
-                    key={index}
-                    variant="secondary"
-                    className="hover:bg-primary hover:text-primary-foreground transition-colors cursor-default"
-                  >
-                    {interest}
-                  </Badge>
-                ))}
+      {/* ── Experience ── */}
+      <div className="mt-24">
+        <SectionHeader index="01" title="Experience" />
+        <div className="mt-8">
+          {experiences.map((exp, i) => (
+            <Reveal key={exp.company} delay={i * 0.05}>
+              <div className="group relative grid gap-4 border-l border-border py-8 pl-8 md:grid-cols-[200px_1fr] md:gap-10">
+                <span className="absolute -left-[5px] top-9 h-2.5 w-2.5 rounded-full border-2 border-background bg-border transition-colors group-hover:bg-primary" />
+                <div>
+                  <p className="font-mono text-xs text-primary">{exp.period}</p>
+                  <p className="mt-1 font-mono text-xs text-muted-foreground">{exp.location}</p>
+                </div>
+                <div>
+                  <h3 className="font-display text-xl text-foreground md:text-2xl">{exp.title}</h3>
+                  <p className="mt-0.5 font-mono text-sm text-muted-foreground">{exp.company}</p>
+                  <p className="mt-3 max-w-2xl text-muted-foreground">{exp.description}</p>
+                  <ul className="mt-4 space-y-1.5">
+                    {exp.achievements.map((a) => (
+                      <li key={a} className="flex gap-2.5 text-sm text-foreground/80">
+                        <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-primary" />
+                        {a}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {exp.technologies.map((t) => (
+                      <span key={t} className="rounded-md bg-secondary px-2 py-0.5 font-mono text-[11px] text-muted-foreground">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </CardContent>
-          </Card>
+            </Reveal>
+          ))}
         </div>
       </div>
-    </>
-  );
-};
+
+      {/* ── Education ── */}
+      <div className="mt-24">
+        <SectionHeader index="02" title="Education" />
+        <div className="mt-8 grid gap-5">
+          {education.map((edu) => (
+            <Reveal key={edu.degree}>
+              <div className="rounded-2xl border border-border bg-card p-6 md:p-8">
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <h3 className="font-display text-xl text-foreground md:text-2xl">{edu.degree}</h3>
+                  <span className="font-mono text-xs text-primary">{edu.period}</span>
+                </div>
+                <p className="mt-1 font-mono text-sm text-muted-foreground">
+                  {edu.institution} · {edu.location}
+                </p>
+                <div className="mt-3 flex flex-wrap gap-3 font-mono text-xs text-muted-foreground">
+                  <span>GPA {edu.gpa}</span>
+                  <span className="text-primary">{edu.honors}</span>
+                </div>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {edu.relevant.map((course) => (
+                    <Chip key={course}>{course}</Chip>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+
+      {/* ── CTA ── */}
+      <div className="mt-24 rounded-2xl border border-border bg-card p-10 text-center">
+        <h2 className="font-display text-2xl font-bold text-foreground md:text-3xl">Let's work together.</h2>
+        <p className="mt-3 font-mono text-sm text-muted-foreground">{personalInfo.email}</p>
+        <div className="mt-6 flex justify-center">
+          <Button asChild variant="primary">
+            <Link to="/contact">Start a conversation →</Link>
+          </Button>
+        </div>
+      </div>
+    </section>
+  </>
+);
 
 export default About;

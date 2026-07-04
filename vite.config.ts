@@ -15,4 +15,20 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    // The three.js hero chunk is intentionally large and lazy-loaded.
+    chunkSizeWarningLimit: 900,
+    rollupOptions: {
+      output: {
+        // Split large, stable vendors into their own long-cacheable chunks so
+        // the app entry stays small. three.js is already isolated via the lazy
+        // HeroCanvas import, so it is intentionally not listed here.
+        manualChunks: {
+          "react-vendor": ["react", "react-dom", "react-router-dom"],
+          query: ["@tanstack/react-query"],
+          motion: ["framer-motion"],
+        },
+      },
+    },
+  },
 }));

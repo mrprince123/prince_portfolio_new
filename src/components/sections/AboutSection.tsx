@@ -1,164 +1,73 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import GlassCard from "../ui/GlassCard";
-import { personalInfo, experiences, education, interests } from "@/data/portfolioData";
-import { Briefcase, GraduationCap, MapPin, Calendar, Heart } from "lucide-react";
-import princesahniImage from "@/assets/princesahni.jpg";
+import { Link } from "react-router-dom";
+import { personalInfo, interests, education } from "@/data/portfolioData";
+import { SectionHeader } from "@/components/ui/primitives/SectionHeader";
+import { Chip } from "@/components/ui/primitives/Chip";
+import { Button } from "@/components/ui/primitives/Button";
+import { Reveal } from "@/components/ui/primitives/Reveal";
+import portrait from "@/assets/princesahni2.jpg";
 
-const AboutSection = () => {
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+const AboutSection = () => (
+  <section id="about-section" className="container mx-auto px-6 py-20">
+    <SectionHeader index="06" title="About" />
 
-  return (
-    <section
-      ref={sectionRef}
-      id="about-section"
-      className="relative py-24 px-6 bg-transparent"
-    >
-      <div className="absolute inset-0 bg-radial-glow opacity-30" />
-      <div className="relative container mx-auto max-w-6xl">
-        {/* Section Header */}
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <p className="text-primary font-mono text-sm tracking-[0.2em] uppercase mb-3">
-            // about me
-          </p>
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground">
-            My <span className="text-gradient">Story</span>
-          </h2>
-        </motion.div>
+    <div className="mt-8 grid gap-10 md:grid-cols-[1fr_320px] md:gap-16">
+      <Reveal>
+        <div>
+          <p className="text-lg leading-relaxed text-foreground/90">{personalInfo.bio}</p>
+          <p className="mt-4 leading-relaxed text-muted-foreground">{personalInfo.bioExtended}</p>
 
-        {/* Bio + Photo */}
-        <motion.div
-          className="grid md:grid-cols-5 gap-8 mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <div className="md:col-span-3 space-y-4">
-            <GlassCard className="p-6 md:p-8">
-              <p className="text-foreground/80 leading-relaxed mb-4">{personalInfo.bio}</p>
-              <p className="text-foreground/80 leading-relaxed mb-4">{personalInfo.bioExtended}</p>
-              <p className="text-foreground/80 leading-relaxed">{personalInfo.bioCreative}</p>
-            </GlassCard>
+          {/* Education */}
+          <div className="mt-8">
+            <h3 className="font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">Education</h3>
+            <div className="mt-4 space-y-4">
+              {education.map((edu) => (
+                <div key={edu.institution} className="border-l border-border pl-4">
+                  <p className="font-mono text-xs text-primary">{edu.period}</p>
+                  <h4 className="mt-1 font-display text-lg text-foreground">{edu.degree}</h4>
+                  <p className="font-mono text-sm text-muted-foreground">
+                    {edu.institution} · GPA {edu.gpa}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="md:col-span-2 flex items-center justify-center">
-            <motion.div
-              className="relative group"
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary to-primary/60 rounded-2xl opacity-20 group-hover:opacity-40 blur-lg transition-opacity" />
-              <img
-                src={princesahniImage}
-                alt="Prince Kumar Sahni"
-                className="relative w-full max-w-[320px] rounded-2xl object-cover border border-border"
-              />
-            </motion.div>
+          {/* Interests */}
+          <div className="mt-8">
+            <h3 className="font-mono text-xs uppercase tracking-[0.1em] text-muted-foreground">Beyond code</h3>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {interests.map((interest) => (
+                <Chip key={interest} className="transition-colors hover:border-primary/50 hover:text-primary">
+                  {interest}
+                </Chip>
+              ))}
+            </div>
           </div>
-        </motion.div>
 
-        {/* Experience */}
-        <motion.div
-          className="mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <h3 className="text-2xl font-bold text-foreground mb-8 flex items-center gap-3">
-            <Briefcase className="w-6 h-6 text-primary" />
-            Professional Experience
-          </h3>
-          <div className="space-y-4">
-            {experiences.map((exp, i) => (
-              <GlassCard key={i} className="p-6">
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-3">
-                  <div>
-                    <h4 className="text-lg font-semibold text-foreground">{exp.title}</h4>
-                    <p className="text-primary font-medium">{exp.company}</p>
-                  </div>
-                  <div className="flex flex-col md:items-end gap-1">
-                    <span className="text-muted-foreground font-mono text-sm flex items-center gap-1">
-                      <Calendar className="w-3 h-3" /> {exp.period}
-                    </span>
-                    <span className="text-muted-foreground/70 text-sm flex items-center gap-1">
-                      <MapPin className="w-3 h-3" /> {exp.location}
-                    </span>
-                  </div>
-                </div>
-                <p className="text-foreground/70 mb-3 text-sm">{exp.description}</p>
-                <div className="flex flex-wrap gap-2">
-                  {exp.technologies.map((tech, j) => (
-                    <span
-                      key={j}
-                      className="px-2 py-1 text-xs font-mono rounded-md bg-primary/5 text-primary/80 border border-primary/10"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </GlassCard>
-            ))}
+          <div className="mt-8">
+            <Button asChild variant="ghost">
+              <Link to="/about">Read the full story →</Link>
+            </Button>
           </div>
-        </motion.div>
+        </div>
+      </Reveal>
 
-        {/* Education */}
-        <motion.div
-          className="mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-        >
-          <h3 className="text-2xl font-bold text-foreground mb-8 flex items-center gap-3">
-            <GraduationCap className="w-6 h-6 text-primary" />
-            Education
-          </h3>
-          {education.map((edu, i) => (
-            <GlassCard key={i} className="p-6">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                <div>
-                  <h4 className="font-semibold text-foreground">{edu.degree}</h4>
-                  <p className="text-primary">{edu.institution}</p>
-                </div>
-                <div className="flex flex-col md:items-end gap-1">
-                  <span className="text-muted-foreground font-mono text-sm">{edu.period}</span>
-                  <span className="text-muted-foreground/70 text-sm">GPA: {edu.gpa}</span>
-                </div>
-              </div>
-            </GlassCard>
-          ))}
-        </motion.div>
-
-        {/* Interests */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
-          <h3 className="text-2xl font-bold text-foreground mb-8 flex items-center gap-3">
-            <Heart className="w-6 h-6 text-primary" />
-            Interests & Hobbies
-          </h3>
-          <div className="flex flex-wrap gap-3">
-            {interests.map((interest, i) => (
-              <motion.span
-                key={i}
-                className="px-4 py-2 text-sm rounded-full bg-primary/5 border border-primary/10 text-foreground/70 hover:text-primary hover:border-primary/30 transition-all cursor-default"
-                whileHover={{ scale: 1.05 }}
-              >
-                {interest}
-              </motion.span>
-            ))}
+      <Reveal delay={0.1}>
+        <div className="order-first md:order-last">
+          <div className="group overflow-hidden rounded-xl border border-border">
+            <img
+              src={portrait}
+              alt={personalInfo.name}
+              width={640}
+              height={800}
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
           </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-};
+        </div>
+      </Reveal>
+    </div>
+  </section>
+);
 
 export default AboutSection;

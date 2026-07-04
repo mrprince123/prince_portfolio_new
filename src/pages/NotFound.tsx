@@ -1,81 +1,49 @@
-import { useLocation, Link } from "react-router-dom";
-import { useEffect } from "react";
-import { Home, Search, AlertCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Link, useLocation } from "react-router-dom";
+import { Home, Search } from "lucide-react";
+import { Button } from "@/components/ui/primitives/Button";
 
 const NotFound = () => {
   const location = useLocation();
 
-  useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname
-    );
-  }, [location.pathname]);
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden">
-      {/* Animated background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5 animate-gradient" />
+    <section className="container mx-auto flex min-h-[70vh] flex-col items-center justify-center px-6 py-16 text-center">
+      <span className="font-mono text-xs uppercase tracking-[0.1em] text-primary">
+        Error 404
+      </span>
+      <h1 className="mt-4 font-display text-7xl text-foreground md:text-9xl">
+        404
+      </h1>
+      <p className="mt-6 font-display text-2xl text-foreground md:text-3xl">
+        Page Not Found
+      </p>
+      <p className="mt-4 max-w-md text-muted-foreground">
+        Oops! The page you're looking for seems to have wandered off into the
+        digital void. Don't worry though, even the best explorers get lost
+        sometimes.
+      </p>
 
-      {/* Floating elements */}
-      <div className="absolute top-20 left-20 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-20 right-20 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse delay-700" />
-
-      <div className="relative z-10 text-center px-4 max-w-2xl mx-auto">
-        {/* 404 Text */}
-        <div className="mb-8 animate-fade-in">
-          <h1 className="text-9xl md:text-[200px] font-bold text-gradient leading-none mb-4">
-            404
-          </h1>
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <AlertCircle className="w-6 h-6 text-destructive animate-pulse" />
-            <p className="text-2xl md:text-3xl font-semibold text-foreground">
-              Page Not Found
-            </p>
-          </div>
-        </div>
-
-        {/* Description */}
-        <div className="mb-8 space-y-3 animate-fade-in delay-200">
-          <p className="text-lg text-muted-foreground">
-            Oops! The page you're looking for seems to have wandered off into
-            the digital void.
-          </p>
-          <p className="text-sm text-muted-foreground/80">
-            Don't worry though, even the best explorers get lost sometimes.
-          </p>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in delay-300">
-          <Button
-            asChild
-            size="lg"
-            className="gap-2 shadow-elegant hover:shadow-glow transition-all"
-          >
-            <Link to="/">
-              <Home className="w-5 h-5" />
-              Back to Home
-            </Link>
-          </Button>
-          <Button asChild variant="outline" size="lg" className="gap-2">
-            <Link to="/blog">
-              <Search className="w-5 h-5" />
-              Explore Blog
-            </Link>
-          </Button>
-        </div>
-
-        {/* Error Path Info */}
-        <div className="mt-12 p-4 rounded-lg bg-muted/50 border border-border animate-fade-in delay-500">
-          <p className="text-xs text-muted-foreground font-mono">
-            Requested path:{" "}
-            <span className="text-foreground">{location.pathname}</span>
-          </p>
-        </div>
+      <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+        <Button asChild variant="primary">
+          <Link to="/">
+            <Home className="h-4 w-4" />
+            Back to Home
+          </Link>
+        </Button>
+        <Button asChild variant="ghost">
+          <Link to="/blog">
+            <Search className="h-4 w-4" />
+            Explore Blog
+          </Link>
+        </Button>
       </div>
-    </div>
+
+      <div className="mt-12 rounded-lg border border-border bg-card px-4 py-3">
+        <p className="font-mono text-xs text-muted-foreground">
+          Requested path:{" "}
+          <span className="text-foreground">{location.pathname}</span>
+        </p>
+      </div>
+    </section>
   );
 };
 

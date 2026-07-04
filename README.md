@@ -1,73 +1,44 @@
-# React + TypeScript + Vite
+<div align="center">
+  <img src=".github/media/logo.png" width="72" alt="Prince Sahni logo" />
+  <h1>Prince Kumar Sahni — Portfolio</h1>
+  <p>Software Engineer · New Delhi, India · <a href="https://princesahni.com">princesahni.com</a></p>
+</div>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Portfolio hero](.github/media/hero.png)
 
-Currently, two official plugins are available:
+Hi, I'm **Prince Kumar Sahni** — a Software Engineer who builds performant,
+scalable products, from Android apps to full-stack web platforms.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This is my personal portfolio website — my work, experience, and ideas in one place.
 
-## React Compiler
+## Highlights
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🎨 Light & dark theme with a custom design system
+- 🌀 Interactive 3D hero
+- ✨ Smooth animations and scroll reveals
+- 🤖 AI assistant that answers questions about my work
+- ⚡ Fast, code-split, and fully responsive
 
-## Expanding the ESLint configuration
+## What's inside
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Work** — selected projects I'm proud of
+- **Experience** — where I've worked and what I shipped
+- **Skills** — the stack I build with
+- **Writing** — my articles on engineering and the web
+- **Courses** — the things I teach
+- **About** — a bit more about me, beyond the code
+- **Contact** — the easiest way to reach me
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Built with
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+React · TypeScript · Vite · Tailwind CSS · Framer Motion · React Three Fiber · TanStack Query
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Find me
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+[Website](https://princesahni.com) · [GitHub](https://github.com/mrprince123) · [LinkedIn](https://www.linkedin.com/in/mrprince123/) · [Medium](https://medium.com/@mrprince123)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+<div align="center">
+  <sub>Designed & built by Prince Kumar Sahni.</sub>
+</div>

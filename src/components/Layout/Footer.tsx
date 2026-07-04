@@ -1,122 +1,82 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { Github, Linkedin, Instagram, MessageCircle, Twitter } from "lucide-react";
-import princelogo from "@/assets/princesahni-logo.png";
+import { Github, Linkedin, Instagram, BookText, Twitter } from "lucide-react";
+import { navLinks, personalInfo } from "@/data/portfolioData";
 
-const socialLinks = [
-  { name: "GitHub", icon: Github, href: "https://github.com/mrprince123", color: "#ffffff" },
-  { name: "LinkedIn", icon: Linkedin, href: "https://www.linkedin.com/in/mrprince123/", color: "#0077B5" },
-  { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/_mrprince123_/", color: "#E4405F" },
-  { name: "Medium", icon: MessageCircle, href: "https://medium.com/@mrprince123", color: "#00ab6c" },
-  { name: "Twitter", icon: Twitter, href: "https://twitter.com/MrPrince185", color: "#1DA1F2" },
+const socials = [
+  { name: "GitHub", icon: Github, href: personalInfo.github },
+  { name: "LinkedIn", icon: Linkedin, href: personalInfo.linkedin },
+  { name: "Instagram", icon: Instagram, href: personalInfo.instagram },
+  { name: "Medium", icon: BookText, href: personalInfo.medium },
+  { name: "Twitter", icon: Twitter, href: personalInfo.twitter },
 ];
 
-const footerLinks = [
-  { name: "About", href: "/about" },
-  { name: "Skills", href: "/skills" },
-  { name: "Projects", href: "/projects" },
-  { name: "Blog", href: "/blog" },
-  { name: "Courses", href: "/courses" },
-  { name: "Resume", href: "/resume" },
-  { name: "Articles", href: "/articles" },
-];
+const Footer = () => (
+  <footer className="border-t border-border">
+    <div className="container mx-auto px-6 py-14">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-[1.4fr,1fr,1fr]">
+        {/* Brand */}
+        <div className="max-w-xs">
+          <span className="font-display text-lg font-bold tracking-tight text-foreground">
+            Prince Kumar Sahni<span className="text-primary">.</span>
+          </span>
+          <p className="mt-1 font-mono text-xs text-muted-foreground">Software Engineer · New Delhi</p>
+          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+            Building performant, scalable products — from Android apps to full-stack platforms.
+          </p>
+        </div>
 
-const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
-  return (
-    <footer className="relative border-t border-border/40 bg-card/60 backdrop-blur-md">
-      {/* Scan lines */}
-      <div className="absolute inset-0 bg-scanlines opacity-30 pointer-events-none" />
-
-      <div className="relative container mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {/* Brand */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <div className="absolute -inset-0.5 bg-primary/20 rounded-lg blur" />
-                <img
-                  src={princelogo}
-                  alt="Prince Kumar Sahni"
-                  className="relative w-10 h-10 rounded-lg object-cover"
-                />
-              </div>
-              <div>
-                <span className="font-display font-bold text-foreground text-lg">
-                  Prince Kumar Sahni
-                </span>
-                <p className="text-muted-foreground/50 text-xs font-mono">Software Engineer</p>
-              </div>
-            </div>
-            <p className="text-muted-foreground/75 text-sm leading-relaxed max-w-xs">
-              Crafting seamless, secure, and scalable web experiences. Building the future, one line of code at a time.
-            </p>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-primary/60 mb-4">
-              Navigation
-            </h3>
-            <div className="grid grid-cols-2 gap-2">
-              {footerLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Social */}
-          <div>
-            <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-primary/60 mb-4">
-              Connect
-            </h3>
-            <div className="flex gap-3 mb-4">
-              {socialLinks.map((social) => {
-                const Icon = social.icon;
-                return (
-                  <motion.a
-                    key={social.name}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-lg bg-card/40 border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/20 hover:bg-primary/5 transition-all"
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    aria-label={social.name}
-                  >
-                    <Icon className="w-4 h-4" />
-                  </motion.a>
-                );
-              })}
-            </div>
-            <p className="text-muted-foreground/50 text-xs">
-              Open to collaborations and tech discussions!
-            </p>
+        {/* Navigation */}
+        <div>
+          <h3 className="mb-4 font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">
+            Navigation
+          </h3>
+          <div className="grid grid-cols-2 gap-y-2">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.href}
+                className="font-mono text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {link.name.toLowerCase()}
+              </Link>
+            ))}
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="section-divider mt-12 mb-8" />
-
-        {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
-          <p className="text-muted-foreground/50 text-xs font-mono">
-            © {currentYear} Prince Kumar Sahni. All rights reserved.
-          </p>
-          <p className="text-muted-foreground/30 text-xs font-mono">
-            Crafted with ❤️ & Three.js
-          </p>
+        {/* Connect */}
+        <div>
+          <h3 className="mb-4 font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">
+            Connect
+          </h3>
+          <div className="flex gap-2">
+            {socials.map(({ name, icon: Icon, href }) => (
+              <a
+                key={name}
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={name}
+                className="flex h-9 w-9 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+              >
+                <Icon className="h-4 w-4" />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
-    </footer>
-  );
-};
+
+      <div className="mt-12 flex flex-col items-center justify-between gap-2 border-t border-border pt-6 sm:flex-row">
+        <p className="font-mono text-xs text-muted-foreground">
+          © {new Date().getFullYear()} Prince Kumar Sahni — built in New Delhi
+        </p>
+        <p className="font-mono text-xs text-muted-foreground">
+          <a href={`mailto:${personalInfo.email}`} className="transition-colors hover:text-foreground">
+            {personalInfo.email}
+          </a>
+        </p>
+      </div>
+    </div>
+  </footer>
+);
 
 export default Footer;

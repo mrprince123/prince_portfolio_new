@@ -1,124 +1,105 @@
-import { useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Calendar,
-  Clock,
-  ExternalLink,
-  Search,
-  Tag,
-  TrendingUp,
-  BookOpen,
-} from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
-import axios from "axios";
+import { useState } from "react";
+import { Search } from "lucide-react";
 import { Seo } from "@/components/seo";
-const apiUrl = import.meta.env.VITE_ARTICLE_URL;
+import { useResource } from "@/hooks/useResource";
+import { personalInfo } from "@/data/portfolioData";
+import { SectionHeader } from "@/components/ui/primitives/SectionHeader";
+import { PostCard } from "@/components/ui/primitives/PostCard";
+import { Button } from "@/components/ui/primitives/Button";
+import { Skeleton } from "@/components/ui/primitives/Skeleton";
+import { EmptyState } from "@/components/ui/primitives/EmptyState";
+import { cn } from "@/lib/utils";
 import placeholder from "@/assets/placeholder.jpg";
 
+interface Article {
+  id?: number | string;
+  title: string;
+  description: string;
+  coverImage?: string;
+  publishedAt?: string;
+  articleLink: string;
+  tags?: string[];
+  featured?: boolean;
+  readTime?: string;
+}
+
+const formatDate = (dateString?: string) => {
+  if (!dateString) return "";
+  const date = new Date(dateString);
+  if (Number.isNaN(date.getTime())) return dateString;
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};
+
+const fallback: Article[] = [
+  {
+    id: 1,
+    title: "The Future of React: Server Components and Concurrent Features",
+    description:
+      "Exploring how React Server Components and Concurrent Features are reshaping the way we build modern web applications.",
+    coverImage: placeholder,
+    publishedAt: "2023-12-20",
+    articleLink: `${personalInfo.medium}/react-server-components`,
+    tags: ["React", "JavaScript", "Frontend"],
+    featured: true,
+    readTime: "5 mins",
+  },
+  {
+    id: 2,
+    title: "Mastering Node.js Streams for Efficient Data Handling",
+    description:
+      "A deep dive into Node.js streams, showing how to process large amounts of data efficiently without blocking the event loop.",
+    coverImage: placeholder,
+    publishedAt: "2024-01-10",
+    articleLink: `${personalInfo.medium}/nodejs-streams`,
+    tags: ["Node.js", "Backend", "JavaScript"],
+    featured: false,
+    readTime: "6 mins",
+  },
+  {
+    id: 3,
+    title: "Understanding Microservices Architecture in Modern Web Apps",
+    description:
+      "Learn the principles, benefits, and challenges of adopting a microservices architecture for scalable and maintainable applications.",
+    coverImage: placeholder,
+    publishedAt: "2024-02-05",
+    articleLink: `${personalInfo.medium}/microservices-architecture`,
+    tags: ["Microservices", "System Design", "Backend"],
+    featured: true,
+    readTime: "8 mins",
+  },
+  {
+    id: 4,
+    title: "CSS Grid vs Flexbox: Choosing the Right Layout Tool",
+    description:
+      "A practical comparison between CSS Grid and Flexbox, helping you decide which layout system is best for different scenarios.",
+    coverImage: placeholder,
+    publishedAt: "2024-03-01",
+    articleLink: `${personalInfo.medium}/css-grid-vs-flexbox`,
+    tags: ["CSS", "Frontend", "Web Design"],
+    featured: false,
+    readTime: "4 mins",
+  },
+];
 
 const Articles = () => {
-  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTag, setSelectedTag] = useState("all");
-  const [articleData, setArticleData] = useState([]);
 
-  const articles = [
-    {
-      id: 1,
-      title: "The Future of React: Server Components and Concurrent Features",
-      description:
-        "Exploring how React Server Components and Concurrent Features are reshaping the way we build modern web applications.",
-      coverImage:
-        placeholder,
-      publishedAt: "2023-12-20",
-      articleLink: "https://medium.com/@yourname/react-server-components",
-      tags: ["React", "JavaScript", "Frontend"],
-      featured: true,
-      readTime: "5 mins",
-    },
-    {
-      id: 2,
-      title: "Mastering Node.js Streams for Efficient Data Handling",
-      description:
-        "A deep dive into Node.js streams, showing how to process large amounts of data efficiently without blocking the event loop.",
-      coverImage:
-        placeholder,
-      publishedAt: "2024-01-10",
-      articleLink: "https://medium.com/@yourname/nodejs-streams",
-      tags: ["Node.js", "Backend", "JavaScript"],
-      featured: false,
-      readTime: "6 mins",
-    },
-    {
-      id: 3,
-      title: "Understanding Microservices Architecture in Modern Web Apps",
-      description:
-        "Learn the principles, benefits, and challenges of adopting a microservices architecture for scalable and maintainable applications.",
-      coverImage:
-        placeholder,
-      publishedAt: "2024-02-05",
-      articleLink: "https://medium.com/@yourname/microservices-architecture",
-      tags: ["Microservices", "System Design", "Backend"],
-      featured: true,
-      readTime: "8 mins",
-    },
-    {
-      id: 4,
-      title: "CSS Grid vs Flexbox: Choosing the Right Layout Tool",
-      description:
-        "A practical comparison between CSS Grid and Flexbox, helping you decide which layout system is best for different scenarios.",
-      coverImage:
-      placeholder,
-      publishedAt: "2024-03-01",
-      articleLink: "https://medium.com/@yourname/css-grid-vs-flexbox",
-      tags: ["CSS", "Frontend", "Web Design"],
-      featured: false,
-      readTime: "4 mins",
-    },
-  ];
+  const { data, isLoading } = useResource<Article[]>(
+    ["articles"],
+    import.meta.env.VITE_ARTICLE_URL,
+    { fallback, timeoutMs: 3000 },
+  );
 
-  useEffect(() => {
-    const loadArticles = async () => {
-      setLoading(true);
-
-      try {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 3000);
-
-        const response = await axios.get(apiUrl, { signal: controller.signal });
-
-        clearTimeout(timeout);
-
-        const serverData = response.data?.data;
-
-        if (serverData && serverData.length > 0) {
-          setArticleData(serverData);
-        } else {
-          setArticleData(articles);
-        }
-      } catch (error) {
-        console.warn("Error fetching Articles:", error.message);
-        setArticleData(articles);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadArticles();
-  }, []);
+  const articleData = data ?? [];
 
   const allTags = [
     "all",
-    ...Array.from(new Set(articleData.flatMap((article) => article.tags))),
+    ...Array.from(new Set(articleData.flatMap((article) => article.tags ?? []))),
   ];
 
   const filteredArticles = articleData.filter((article) => {
@@ -126,96 +107,12 @@ const Articles = () => {
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       article.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesTag =
-      selectedTag === "all" || article.tags.includes(selectedTag);
+      selectedTag === "all" || (article.tags ?? []).includes(selectedTag);
     return matchesSearch && matchesTag;
   });
 
   const featuredArticles = articleData.filter((article) => article.featured);
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
-
-  if (loading) {
-    return (
-      <div className="min-h-screen py-12 px-4">
-        <div className="container mx-auto max-w-7xl">
-          {/* Header Skeleton */}
-          <div className="text-center mb-12">
-            <Skeleton className="h-12 w-80 mx-auto mb-6" />
-            <Skeleton className="h-6 w-96 mx-auto mb-2" />
-            <Skeleton className="h-6 w-80 mx-auto" />
-          </div>
-
-          {/* Stats Skeleton */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            {[1, 2, 3, 4].map((i) => (
-              <Card key={i} className="text-center shadow-soft">
-                <CardContent className="pt-6">
-                  <Skeleton className="h-6 w-16 mx-auto mb-2" />
-                  <Skeleton className="h-4 w-24 mx-auto" />
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {/* Search and Filter Skeleton */}
-          <div className="mb-8 space-y-4">
-            <Skeleton className="h-10 w-full max-w-md mx-auto" />
-            <div className="flex flex-wrap gap-2 justify-center">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <Skeleton key={i} className="h-8 w-20" />
-              ))}
-            </div>
-          </div>
-
-          {/* Featured Articles Skeleton */}
-          <div className="mb-12">
-            <Skeleton className="h-8 w-48 mb-6" />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {[1, 2].map((i) => (
-                <Card key={i} className="shadow-soft overflow-hidden">
-                  <Skeleton className="aspect-video w-full" />
-                  <CardHeader>
-                    <Skeleton className="h-6 w-3/4 mb-2" />
-                    <Skeleton className="h-4 w-full mb-1" />
-                    <Skeleton className="h-4 w-full" />
-                  </CardHeader>
-                  <CardContent>
-                    <Skeleton className="h-10 w-full" />
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          {/* All Articles Skeleton */}
-          <div>
-            <Skeleton className="h-8 w-32 mb-6" />
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <Card key={i} className="shadow-soft">
-                  <CardHeader>
-                    <Skeleton className="h-5 w-3/4 mb-2" />
-                    <Skeleton className="h-4 w-full mb-1" />
-                    <Skeleton className="h-4 w-2/3" />
-                  </CardHeader>
-                  <CardContent>
-                    <Skeleton className="h-9 w-full" />
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const showFeatured = selectedTag === "all" && searchTerm === "";
 
   return (
     <>
@@ -226,311 +123,126 @@ const Articles = () => {
         image="https://princesahni.com/og-images/princesahni-logo.png"
       />
 
-      <div className="min-h-screen py-12 px-4">
-        <div className="container mx-auto max-w-7xl">
-          {/* Header */}
-          <div className="text-center mb-12 animate-fade-in">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Articles on <span className="text-gradient">Medium</span>
-            </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-              Sharing knowledge and insights about web development, software
-              architecture, and technology trends with the developer community.
-            </p>
+      <section className="container mx-auto px-6 py-16">
+        <div className="max-w-2xl">
+          <span className="font-mono text-xs uppercase tracking-[0.1em] text-primary">
+            Medium
+          </span>
+          <h1 className="mt-3 font-display text-4xl text-foreground md:text-5xl">
+            Articles
+          </h1>
+          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+            Sharing knowledge and insights about web development, software
+            architecture, and technology trends with the developer community.
+          </p>
+        </div>
+
+        <div className="mt-10 flex flex-col gap-4">
+          <div className="relative max-w-md">
+            <Search
+              aria-hidden="true"
+              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+            />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search articles..."
+              className="w-full rounded-lg border border-border bg-card py-2 pl-10 pr-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            />
           </div>
 
-          {/* Stats Overview */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <Card className="text-center shadow-soft">
-              <CardContent className="pt-6">
-                <div className="text-2xl font-bold text-gradient mb-2">
-                  {articleData.length}
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Articles Published
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="text-center shadow-soft">
-              <CardContent className="pt-6">
-                <div className="text-2xl font-bold text-gradient mb-2">35K</div>
-                <p className="text-sm text-muted-foreground">Total Views</p>
-              </CardContent>
-            </Card>
-            <Card className="text-center shadow-soft">
-              <CardContent className="pt-6">
-                <div className="text-2xl font-bold text-gradient mb-2">50K</div>
-                <p className="text-sm text-muted-foreground">Total Claps</p>
-              </CardContent>
-            </Card>
-            <Card className="text-center shadow-soft">
-              <CardContent className="pt-6">
-                <div className="text-2xl font-bold text-gradient mb-2">
-                  200K
-                </div>
-                <p className="text-sm text-muted-foreground">Trending Now</p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Search and Filter */}
-          <div className="mb-8 space-y-4">
-            <div className="relative max-w-md mx-auto">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-              <Input
-                placeholder="Search articles..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-
-            <div className="flex flex-wrap gap-2 justify-center">
-              {allTags.map((tag) => (
-                <Button
+          <div className="flex flex-wrap gap-2">
+            {allTags.map((tag) => {
+              const active = selectedTag === tag;
+              return (
+                <button
                   key={tag}
-                  variant={selectedTag === tag ? "default" : "outline"}
-                  size="sm"
+                  type="button"
+                  aria-pressed={active}
                   onClick={() => setSelectedTag(tag)}
-                  className="capitalize"
+                  className={cn(
+                    "inline-flex items-center rounded-lg border px-3 py-1.5 font-mono text-xs capitalize transition-colors",
+                    active
+                      ? "border-foreground bg-foreground text-background"
+                      : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground",
+                  )}
                 >
-                  <Tag className="h-3 w-3 mr-1" />
                   {tag}
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          {/* Featured Articles */}
-          {selectedTag === "all" && searchTerm === "" && (
-            <div className="mb-12">
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-                <TrendingUp className="h-6 w-6 text-primary" />
-                Featured Articles
-              </h2>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {featuredArticles.slice(0, 2).map((article) => (
-                  <Card
-                    key={article.id}
-                    className="hover-lift shadow-soft overflow-hidden"
-                  >
-                    {/* Cover Image */}
-                    <div className="w-full aspect-video rounded-none overflow-hidden">
-                      <img
-                        src={article.coverImage}
-                        alt={article.title}
-                        className="w-full h-full object-fill"
-                      />
-                    </div>
-
-                    <CardHeader>
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1">
-                          <CardTitle className="text-xl mb-2 line-clamp-2 leading-tight">
-                            {article.title}
-                          </CardTitle>
-                          <CardDescription className="leading-relaxed">
-                            {article.description}
-                          </CardDescription>
-                        </div>
-                        <div className="flex flex-col gap-2 shrink-0">
-                          <Badge variant="default">Featured</Badge>
-                          {article.trending && (
-                            <Badge
-                              variant="secondary"
-                              className="bg-orange-100 text-orange-600 border-orange-200"
-                            >
-                              <TrendingUp className="h-3 w-3 mr-1" />
-                              Trending
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                    </CardHeader>
-
-                    <CardContent>
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between text-sm text-muted-foreground">
-                          <div className="flex items-center gap-4">
-                            <div className="flex items-center gap-1">
-                              <Calendar className="h-4 w-4" />
-                              {formatDate(article.publishedAt)}
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Clock className="h-4 w-4" />
-                              {article.readTime}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <div className="flex flex-wrap gap-2">
-                            {article.tags.slice(0, 2).map((tag, index) => (
-                              <Badge
-                                key={index}
-                                variant="outline"
-                                className="text-xs"
-                              >
-                                {tag}
-                              </Badge>
-                            ))}
-                          </div>
-                        </div>
-
-                        <Button className="w-full group" asChild>
-                          <a
-                            href={article.articleLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Read on Medium
-                            <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                          </a>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* All Articles */}
-          {filteredArticles.length > 0 ? (
-            <div className="mb-12">
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-                <TrendingUp className="h-6 w-6 text-primary" />
-                All Articles
-              </h2>
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {filteredArticles.map((article) => (
-                  <Card
-                    key={article.id}
-                    className="hover-lift shadow-soft overflow-hidden"
-                  >
-                    {/* Cover Image */}
-                    <div className="w-full aspect-video rounded-none overflow-hidden">
-                      <img
-                        src={article.coverImage}
-                        alt={article.title}
-                        className="w-full h-full object-fill"
-                      />
-                    </div>
-
-                    <CardHeader>
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1">
-                          <CardTitle className="text-xl mb-2 line-clamp-2 leading-tight">
-                            {article.title}
-                          </CardTitle>
-                          <CardDescription className="leading-relaxed">
-                            {article.description}
-                          </CardDescription>
-                        </div>
-                      </div>
-                    </CardHeader>
-
-                    <CardContent>
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between text-sm text-muted-foreground">
-                          <div className="flex items-center gap-4">
-                            <div className="flex items-center gap-1">
-                              <Calendar className="h-4 w-4" />
-                              {formatDate(article.publishedAt)}
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Clock className="h-4 w-4" />
-                              {article.readTime}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <div className="flex flex-wrap gap-2">
-                            {article.tags.slice(0, 2).map((tag, index) => (
-                              <Badge
-                                key={index}
-                                variant="outline"
-                                className="text-xs"
-                              >
-                                {tag}
-                              </Badge>
-                            ))}
-                          </div>
-                        </div>
-
-                        <Button className="w-full group" asChild>
-                          <a
-                            href={article.articleLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Read on Medium
-                            <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                          </a>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <Card className="shadow-soft">
-              <CardContent className="py-12 text-center">
-                <BookOpen className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                <h3 className="text-lg font-semibold mb-2">
-                  No articles found
-                </h3>
-                <p className="text-muted-foreground mb-4">
-                  Try adjusting your search terms or filters to find what you're
-                  looking for.
-                </p>
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setSearchTerm("");
-                    setSelectedTag("all");
-                  }}
-                >
-                  Clear Filters
-                </Button>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Follow CTA */}
-          <div className="mt-12">
-            <Card className="shadow-soft bg-gradient-card">
-              <CardContent className="py-8 text-center">
-                <h3 className="text-xl font-semibold mb-4">
-                  Follow me on Medium
-                </h3>
-                <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                  Stay updated with my latest articles about web development,
-                  software architecture, and technology insights. Get notified
-                  when new content is published.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <Button size="lg" asChild className="group">
-                    <a
-                      href="https://medium.com/@yourname"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <ExternalLink className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform" />
-                      Follow on Medium
-                    </a>
-                  </Button>
-                  <Button variant="outline" size="lg" asChild>
-                    <a href="/contact">Suggest Topics</a>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                </button>
+              );
+            })}
           </div>
         </div>
-      </div>
+
+        {isLoading ? (
+          <div className="mt-16">
+            <Skeleton variant="card" count={4} />
+          </div>
+        ) : (
+          <>
+            {showFeatured && featuredArticles.length > 0 && (
+              <div className="mt-16">
+                <SectionHeader index="01" title="Featured" />
+                <div className="mt-6 grid gap-6 md:grid-cols-2">
+                  {featuredArticles.slice(0, 2).map((article) => (
+                    <PostCard
+                      key={article.id ?? article.title}
+                      kind={formatDate(article.publishedAt)}
+                      readTime={article.readTime ?? ""}
+                      title={article.title}
+                      description={article.description}
+                      tags={article.tags ?? []}
+                      href={article.articleLink}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="mt-16">
+              <SectionHeader index="02" title="All Articles" />
+              <div className="mt-6">
+                {filteredArticles.length > 0 ? (
+                  <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                    {filteredArticles.map((article) => (
+                      <PostCard
+                        key={article.id ?? article.title}
+                        kind={formatDate(article.publishedAt)}
+                        readTime={article.readTime ?? ""}
+                        title={article.title}
+                        description={article.description}
+                        tags={article.tags ?? []}
+                        href={article.articleLink}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <EmptyState
+                    title="No articles found"
+                    hint="Try adjusting your search or tag filter."
+                  />
+                )}
+              </div>
+            </div>
+
+            <div className="mt-16 flex flex-col items-center gap-4 rounded-xl border border-border bg-card px-6 py-10 text-center">
+              <p className="font-display text-xl text-foreground md:text-2xl">
+                Follow along on Medium
+              </p>
+              <p className="max-w-md font-mono text-xs text-muted-foreground">
+                New articles on web development and software architecture,
+                published regularly.
+              </p>
+              <Button asChild variant="primary">
+                <a href={personalInfo.medium} target="_blank" rel="noreferrer">
+                  Follow on Medium
+                </a>
+              </Button>
+            </div>
+          </>
+        )}
+      </section>
     </>
   );
 };

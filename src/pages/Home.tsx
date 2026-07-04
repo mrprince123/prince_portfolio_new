@@ -1,50 +1,31 @@
 import { Seo } from "@/components/seo";
 import HeroSection from "@/components/sections/HeroSection";
-import AboutSection from "@/components/sections/AboutSection";
-import SkillsSection from "@/components/sections/SkillsSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
-import ContactSection from "@/components/sections/ContactSection";
+import ExperienceSection from "@/components/sections/ExperienceSection";
+import SkillsSection from "@/components/sections/SkillsSection";
+import WritingSection from "@/components/sections/WritingSection";
+import CoursesSection from "@/components/sections/CoursesSection";
+import AboutSection from "@/components/sections/AboutSection";
+import CtaSection from "@/components/sections/CtaSection";
 
-const Home = () => {
-  return (
-    <>
-      <Seo
-        title="Prince Kumar Sahni | Software Engineer"
-        description="Passionate Software Engineer specializing in building scalable, secure, and high-performing web and mobile applications. Turning innovative ideas into impactful digital products."
-        url="https://princesahni.com"
-        image="https://princesahni.com/og-images/princesahni-logo.png"
-      />
+const Home = () => (
+  <>
+    <Seo
+      title="Prince Kumar Sahni | Software Engineer"
+      description="Passionate Software Engineer specializing in building scalable, secure, and high-performing web and mobile applications. Turning innovative ideas into impactful digital products."
+      url="https://princesahni.com"
+      image="https://princesahni.com/og-images/princesahni-logo.png"
+    />
 
-      <div className="bg-transparent">
-        {/* Hero - Full viewport 3D scene */}
-        <HeroSection />
-
-        {/* Section Divider */}
-        <div className="section-divider" />
-
-        {/* About Me */}
-        <AboutSection />
-
-        {/* Section Divider */}
-        <div className="section-divider" />
-
-        {/* Skills & Technologies */}
-        <SkillsSection />
-
-        {/* Section Divider */}
-        <div className="section-divider" />
-
-        {/* Projects */}
-        <ProjectsSection />
-
-        {/* Section Divider */}
-        <div className="section-divider" />
-
-        {/* Contact */}
-        <ContactSection />
-      </div>
-    </>
-  );
-};
+    <HeroSection />
+    <ProjectsSection />
+    <ExperienceSection />
+    <SkillsSection />
+    <WritingSection />
+    <CoursesSection />
+    <AboutSection />
+    <CtaSection />
+  </>
+);
 
 export default Home;

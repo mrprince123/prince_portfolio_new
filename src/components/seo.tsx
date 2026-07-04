@@ -11,6 +11,9 @@ export const Seo = ({ title, description, url, image }: SeoProps) => (
   <Helmet>
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={url} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Prince Kumar Sahni" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={url} />
