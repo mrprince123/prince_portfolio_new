@@ -38,7 +38,7 @@ export const stats = [
 
 export const experiences = [
   {
-    title: "Associate Software Developer",
+    title: "Software Engineer",
     company: "Webkul Software Pvt Ltd.",
     location: "Noida, UP",
     period: "April 2025 - Present",
@@ -90,6 +90,15 @@ export const education = [
     gpa: "8.4/10",
     honors: "Graduated with CSE",
     relevant: ["Data Structures & Algorithms", "Software Engineering", "Database Systems", "Web Development"],
+  },
+  {
+    degree: "Class 12th (Science Stream)",
+    institution: "St. Xavier's Public School, Dalsingsarai",
+    location: "Dalsingsarai, Bihar",
+    period: "2018 - 2020",
+    gpa: "9.0/10",
+    honors: "Graduated with Science Stream",
+    relevant: ["Physics", "Chemistry", "Mathematics", "Computer Science"],
   },
 ];
 

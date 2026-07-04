@@ -8,6 +8,7 @@ export interface ProjectCardData {
   liveUrl?: string;
   githubUrl?: string;
   featured?: boolean;
+  coverImage?: string;
 }
 
 const resolveHref = (p: ProjectCardData) => {
@@ -26,12 +27,22 @@ export function ProjectCard({ project, index }: { project: ProjectCardData; inde
     <>
       {/* Gradient cover */}
       <div className="relative h-32 overflow-hidden bg-gradient-to-br from-primary/25 via-primary/10 to-transparent">
-        <div className="absolute inset-0 bg-grid opacity-40" />
-        <span className="absolute left-4 top-4 font-mono text-xs text-primary">
+        {project.coverImage ? (
+          <img
+            src={project.coverImage}
+            alt={project.title}
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-grid opacity-40" />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent/30" />
+        <span className="absolute left-4 top-4 font-mono text-xs text-primary bg-background/70 backdrop-blur-sm px-1.5 py-0.5 rounded-md">
           {String(index + 1).padStart(2, "0")}
         </span>
         {project.featured ? (
-          <span className="absolute right-4 top-4 rounded-md border border-primary/30 bg-primary/10 px-2 py-0.5 font-mono text-[10px] text-primary">
+          <span className="absolute right-4 top-4 rounded-md border border-primary/30 bg-primary/10 px-2 py-0.5 font-mono text-[10px] text-primary backdrop-blur-sm">
             featured
           </span>
         ) : null}
